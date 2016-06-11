@@ -13,15 +13,14 @@ public class Utils {
     /** Array of vowels. */
     public final static String[] VOWELS = {"a", "e", "i", "o", "u"};
     /** Array of consonants. */
-    public final static String[] CONSONANTS = 
-        {"b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", 
-            "r", "s", "t", "v", "w", "x", "y", "z"};
+    public final static String[] CONSONANTS = {"b", "c", "d", "f", "g", "h", 
+    "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"};
     /** List of consonants. */
     public final static List<String> CONSONANTS_LIST = 
-            new ArrayList<>(Arrays.asList(CONSONANTS));
+                                    new ArrayList<>(Arrays.asList(CONSONANTS));
     /** List of vowels. */
     public final static List<String> VOWELS_LIST = 
-            new ArrayList<>(Arrays.asList(VOWELS));
+                                    new ArrayList<>(Arrays.asList(VOWELS));
     /** Number of vowels. */
     public final static int NO_OF_VOWELS = VOWELS_LIST.size() - 1;
     /** Number of consonants. */
@@ -34,7 +33,7 @@ public class Utils {
      * @return list of random letters.
      */
     public static List<String> getRadomLetters(int noOfVowels, 
-            int noOfConsonants){
+        int noOfConsonants){
         Random rand = new Random();
         List<String> listOfLetters = new ArrayList<>();
         int letterIndex = 0;

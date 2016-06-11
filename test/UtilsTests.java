@@ -1,3 +1,5 @@
+package frog;
+
 import frog.Utils;
 import java.util.List;
 import org.junit.Assert;

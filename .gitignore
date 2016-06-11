@@ -5,3 +5,9 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+bazel-Frog
+bazel-bin
+bazel-genfiles
+bazel-out
+bazel-testlogs
+
