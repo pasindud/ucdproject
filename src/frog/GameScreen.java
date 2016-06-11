@@ -1,6 +1,8 @@
 
 package flog_gui_test;
 
+import frog.WordAutoGenerator;
+
 /**
  *
  * @author Dushan Galappaththi
@@ -90,6 +92,11 @@ public class GameScreen extends javax.swing.JFrame {
 
         btnAutoGen.setBackground(new java.awt.Color(255, 153, 102));
         btnAutoGen.setText("Auto Generate Word");
+        btnAutoGen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutoGenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPlayingContainerLayout = new javax.swing.GroupLayout(pnlPlayingContainer);
         pnlPlayingContainer.setLayout(pnlPlayingContainerLayout);
@@ -236,6 +243,12 @@ public class GameScreen extends javax.swing.JFrame {
     private void btnL5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnL5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnL5ActionPerformed
+
+    private void btnAutoGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoGenActionPerformed
+        //Dummy value for testing
+        WordAutoGenerator ag=new WordAutoGenerator("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l");
+        txtAns.setText(ag.getLongestWord());
+    }//GEN-LAST:event_btnAutoGenActionPerformed
 
     /**
      * @param args the command line arguments

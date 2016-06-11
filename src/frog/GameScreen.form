@@ -273,6 +273,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Auto Generate Word"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAutoGenActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
