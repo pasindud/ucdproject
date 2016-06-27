@@ -26,7 +26,7 @@ public class OpponentsUI extends JPanel
             super();
             me = this;
             this.setOpaque(false);
-                  
+      
             PanelOppPos panelOppPos = new PanelOppPos(pos);
             PanelOppInfo panelOppInfo = new PanelOppInfo(OppName, score, letterOne, letterTwo);
             add(panelOppPos);

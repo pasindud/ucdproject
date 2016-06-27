@@ -1,6 +1,11 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package FLOG_GUI;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -18,7 +23,9 @@ import javax.swing.plaf.BorderUIResource;
  */
 public class PanelPlaying extends javax.swing.JPanel {
 
-    
+    /**
+     * Creates new form PanelPlaying
+     */
     private Image bg;
     JPanel pnlOppList;
     JScrollPane jsp;
@@ -79,6 +86,7 @@ public class PanelPlaying extends javax.swing.JPanel {
         jsp.setBorder(null);
         jsp.getViewport().setOpaque(false);
         jsp.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
+       // jsp
         jPanel3.add(jsp).setBounds(1, 20, 230, 510);
         
     }
@@ -89,6 +97,16 @@ public class PanelPlaying extends javax.swing.JPanel {
          g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
     }
 
+    public Component[] getComps()
+    {
+        return this.pnlPlayingArea.getComponents();
+    
+    }
+    public Component getComp(int x)
+    {
+        return this.pnlPlayingArea.getComponent(x);
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,10 +116,9 @@ public class PanelPlaying extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        pnlTitle = new javax.swing.JPanel();
+        pnlContainer = new javax.swing.JPanel();
+        pnlPlayingArea = new javax.swing.JPanel();
         lblPlayerName = new javax.swing.JLabel();
         lblPos = new javax.swing.JLabel();
         lblScore = new javax.swing.JLabel();
@@ -123,69 +140,55 @@ public class PanelPlaying extends javax.swing.JPanel {
         btnVowels = new javax.swing.JLabel();
         btnConsonents = new javax.swing.JLabel();
         lblRound = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
 
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setOpaque(false);
-        jPanel1.setPreferredSize(new java.awt.Dimension(806, 90));
+        pnlTitle.setOpaque(false);
+        pnlTitle.setPreferredSize(new java.awt.Dimension(806, 90));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlTitleLayout = new javax.swing.GroupLayout(pnlTitle);
+        pnlTitle.setLayout(pnlTitleLayout);
+        pnlTitleLayout.setHorizontalGroup(
+            pnlTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 806, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlTitleLayout.setVerticalGroup(
+            pnlTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 90, Short.MAX_VALUE)
         );
 
-        add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        add(pnlTitle, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setBackground(new java.awt.Color(102, 255, 255));
-        jPanel2.setFocusable(false);
-        jPanel2.setMaximumSize(new java.awt.Dimension(806, 37000));
-        jPanel2.setMinimumSize(new java.awt.Dimension(806, 510));
-        jPanel2.setOpaque(false);
+        pnlContainer.setBackground(new java.awt.Color(102, 255, 255));
+        pnlContainer.setFocusable(false);
+        pnlContainer.setMaximumSize(new java.awt.Dimension(806, 37000));
+        pnlContainer.setMinimumSize(new java.awt.Dimension(806, 510));
+        pnlContainer.setOpaque(false);
 
-        jPanel3.setBackground(new java.awt.Color(102, 204, 255));
-        jPanel3.setFocusable(false);
-        jPanel3.setMaximumSize(new java.awt.Dimension(230, 37000));
-        jPanel3.setMinimumSize(new java.awt.Dimension(230, 510));
-        jPanel3.setOpaque(false);
-        jPanel3.setPreferredSize(new java.awt.Dimension(230, 510));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
-        );
-
-        jPanel4.setBackground(new java.awt.Color(255, 51, 51));
-        jPanel4.setFocusable(false);
-        jPanel4.setMaximumSize(new java.awt.Dimension(570, 510));
-        jPanel4.setMinimumSize(new java.awt.Dimension(570, 510));
-        jPanel4.setOpaque(false);
-        jPanel4.setPreferredSize(new java.awt.Dimension(570, 500));
+        pnlPlayingArea.setBackground(new java.awt.Color(255, 51, 51));
+        pnlPlayingArea.setFocusable(false);
+        pnlPlayingArea.setMaximumSize(new java.awt.Dimension(570, 510));
+        pnlPlayingArea.setMinimumSize(new java.awt.Dimension(570, 510));
+        pnlPlayingArea.setOpaque(false);
+        pnlPlayingArea.setPreferredSize(new java.awt.Dimension(570, 500));
 
         lblPlayerName.setFont(new java.awt.Font("Trebuchet MS", 0, 24)); // NOI18N
         lblPlayerName.setForeground(new java.awt.Color(255, 255, 255));
         lblPlayerName.setText("Player Name");
+        lblPlayerName.setName("PlayerName"); // NOI18N
 
         lblPos.setFont(new java.awt.Font("Trebuchet MS", 0, 24)); // NOI18N
         lblPos.setForeground(new java.awt.Color(255, 255, 255));
         lblPos.setText("Position :");
+        lblPos.setName("PlayerPosition"); // NOI18N
 
         lblScore.setFont(new java.awt.Font("Trebuchet MS", 0, 24)); // NOI18N
         lblScore.setForeground(new java.awt.Color(255, 255, 255));
         lblScore.setText("Score : ");
         lblScore.setToolTipText("");
+        lblScore.setName("PlayerScore"); // NOI18N
 
         txtAnswer.setBackground(new java.awt.Color(0, 91, 127));
         txtAnswer.setFont(new java.awt.Font("Trebuchet MS", 0, 36)); // NOI18N
@@ -202,6 +205,7 @@ public class PanelPlaying extends javax.swing.JPanel {
         lblL2.setToolTipText("");
         lblL2.setMaximumSize(new java.awt.Dimension(40, 43));
         lblL2.setMinimumSize(new java.awt.Dimension(40, 43));
+        lblL2.setName(""); // NOI18N
         lblL2.setOpaque(true);
         lblL2.setPreferredSize(new java.awt.Dimension(40, 43));
 
@@ -331,82 +335,67 @@ public class PanelPlaying extends javax.swing.JPanel {
         btnGenerate.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGenerate.setText("Generate");
+        btnGenerate.setName("Gen"); // NOI18N
         btnGenerate.setOpaque(true);
         btnGenerate.setPreferredSize(new java.awt.Dimension(140, 32));
-        btnGenerate.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGenerateMouseClicked(evt);
-            }
-        });
 
         btnSubmit.setBackground(new java.awt.Color(0, 153, 153));
         btnSubmit.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         btnSubmit.setForeground(new java.awt.Color(255, 255, 255));
         btnSubmit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnSubmit.setText("Submit");
+        btnSubmit.setName("Submit"); // NOI18N
         btnSubmit.setOpaque(true);
         btnSubmit.setPreferredSize(new java.awt.Dimension(140, 32));
-        btnSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSubmitMouseClicked(evt);
-            }
-        });
 
         btnVowels.setBackground(new java.awt.Color(0, 153, 153));
         btnVowels.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         btnVowels.setForeground(new java.awt.Color(255, 255, 255));
         btnVowels.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnVowels.setText("Vowels");
+        btnVowels.setName("Vowels"); // NOI18N
         btnVowels.setOpaque(true);
         btnVowels.setPreferredSize(new java.awt.Dimension(140, 32));
-        btnVowels.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnVowelsMouseClicked(evt);
-            }
-        });
 
         btnConsonents.setBackground(new java.awt.Color(0, 153, 153));
         btnConsonents.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         btnConsonents.setForeground(new java.awt.Color(255, 255, 255));
         btnConsonents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnConsonents.setText("Consonents");
+        btnConsonents.setName("Consonents"); // NOI18N
         btnConsonents.setOpaque(true);
         btnConsonents.setPreferredSize(new java.awt.Dimension(140, 32));
-        btnConsonents.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnConsonentsMouseClicked(evt);
-            }
-        });
 
         lblRound.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
         lblRound.setForeground(new java.awt.Color(255, 255, 255));
         lblRound.setText("Round :");
+        lblRound.setName("round"); // NOI18N
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlPlayingAreaLayout = new javax.swing.GroupLayout(pnlPlayingArea);
+        pnlPlayingArea.setLayout(pnlPlayingAreaLayout);
+        pnlPlayingAreaLayout.setHorizontalGroup(
+            pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                         .addComponent(lblPlayerName)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
+                        .addGroup(pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                                 .addComponent(lblL1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblL2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblL3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblPos))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
                                 .addComponent(lblScore)
                                 .addGap(30, 30, 30))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(lblL4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -426,40 +415,40 @@ public class PanelPlaying extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblL12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(txtAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78))
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                 .addGap(80, 80, 80)
                 .addComponent(btnVowels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnConsonents, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84))
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                 .addGap(206, 206, 206)
                 .addComponent(lblRound)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        pnlPlayingAreaLayout.setVerticalGroup(
+            pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPlayingAreaLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(lblPlayerName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPos)
                     .addComponent(lblScore))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(lblRound)
                 .addGap(39, 39, 39)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblL2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblL4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblL3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -473,61 +462,55 @@ public class PanelPlaying extends javax.swing.JPanel {
                     .addComponent(lblL11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblL12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVowels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConsonents, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(txtAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlPlayingAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(76, 76, 76))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel3.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel3.setFocusable(false);
+        jPanel3.setMaximumSize(new java.awt.Dimension(230, 37000));
+        jPanel3.setMinimumSize(new java.awt.Dimension(230, 510));
+        jPanel3.setOpaque(false);
+        jPanel3.setPreferredSize(new java.awt.Dimension(230, 510));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 230, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 510, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout pnlContainerLayout = new javax.swing.GroupLayout(pnlContainer);
+        pnlContainer.setLayout(pnlContainerLayout);
+        pnlContainerLayout.setHorizontalGroup(
+            pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContainerLayout.createSequentialGroup()
+                .addComponent(pnlPlayingArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+        pnlContainerLayout.setVerticalGroup(
+            pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlPlayingArea, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel4.getAccessibleContext().setAccessibleDescription("");
+        pnlPlayingArea.getAccessibleContext().setAccessibleDescription("");
 
-        add(jPanel2, java.awt.BorderLayout.LINE_END);
+        add(pnlContainer, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnGenerateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateMouseClicked
-        
-        //Generate Button Click Event
-        
-    }//GEN-LAST:event_btnGenerateMouseClicked
-
-    private void btnSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubmitMouseClicked
-        
-         //Submit Button Click Event
-        
-    }//GEN-LAST:event_btnSubmitMouseClicked
-
-    private void btnVowelsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVowelsMouseClicked
-         
-        //Vowels Button Click Event
-        
-    }//GEN-LAST:event_btnVowelsMouseClicked
-
-    private void btnConsonentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsonentsMouseClicked
-               
-        //Consonent Button Click Event
-        
-    }//GEN-LAST:event_btnConsonentsMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -535,10 +518,7 @@ public class PanelPlaying extends javax.swing.JPanel {
     private javax.swing.JLabel btnGenerate;
     private javax.swing.JLabel btnSubmit;
     private javax.swing.JLabel btnVowels;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblL1;
     private javax.swing.JLabel lblL10;
     private javax.swing.JLabel lblL11;
@@ -555,6 +535,9 @@ public class PanelPlaying extends javax.swing.JPanel {
     private javax.swing.JLabel lblPos;
     private javax.swing.JLabel lblRound;
     private javax.swing.JLabel lblScore;
+    private javax.swing.JPanel pnlContainer;
+    private javax.swing.JPanel pnlPlayingArea;
+    private javax.swing.JPanel pnlTitle;
     private javax.swing.JTextField txtAnswer;
     // End of variables declaration//GEN-END:variables
 }
