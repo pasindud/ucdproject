@@ -1,4 +1,4 @@
-package frog;
+package FLOG_LOGIC;
 
 import java.util.ArrayList;
 import java.util.Arrays;
