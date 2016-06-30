@@ -22,6 +22,26 @@ public class PanelMainMenu extends javax.swing.JPanel {
         bg = new ImageIcon(getClass().getResource("/images/bg_mainmenu.png")).getImage();
                      
     }
+    public Component getCompTop(int x)
+    {
+        Component[] cmpList = this.getComponents();
+        
+        for(int i =0;i<cmpList.length;i++)
+        {
+              System.out.println(i + " "+cmpList[i].getY()+" "+ cmpList[i].getName() );
+        }
+        return this.pnlTopBorder.getComponent(x);
+    }
+    public Component getCompCon(int x)
+    {
+        Component[] cmpList = this.getComponents();
+        
+        for(int i =0;i<cmpList.length;i++)
+        {
+              System.out.println(i + " "+cmpList[i].getY()+" "+ cmpList[i].getName() );
+        }
+        return this.getComponent(x);
+    }
 
      @Override
     protected void paintComponent(Graphics g) 
@@ -42,10 +62,11 @@ public class PanelMainMenu extends javax.swing.JPanel {
         btnSettings = new javax.swing.JLabel();
         btnHelp = new javax.swing.JLabel();
         btnAbout = new javax.swing.JLabel();
+        pnlTopBorder = new javax.swing.JPanel();
 
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(900, 619));
         setRequestFocusEnabled(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -93,6 +114,10 @@ public class PanelMainMenu extends javax.swing.JPanel {
         btnAbout.setOpaque(true);
         btnAbout.setPreferredSize(new java.awt.Dimension(282, 36));
         add(btnAbout, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, -1, -1));
+
+        pnlTopBorder.setName("top border"); // NOI18N
+        pnlTopBorder.setOpaque(false);
+        add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -102,6 +127,7 @@ public class PanelMainMenu extends javax.swing.JPanel {
     private javax.swing.JLabel btnHelp;
     private javax.swing.JLabel btnSettings;
     private javax.swing.JLabel btnStart;
+    private javax.swing.JPanel pnlTopBorder;
     // End of variables declaration//GEN-END:variables
 }
 
