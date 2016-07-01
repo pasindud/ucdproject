@@ -8,6 +8,7 @@ package FLOG_GUI;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -51,6 +52,13 @@ public class ControllerMainMenu
         System.exit(0);
     
     }
+    
+    
+    /**
+     *  The Following code is used to initialize event listeners 
+     *  and also adding custom 
+     * 
+     */
     
     private void initializeMainMenuListeners() 
     {
@@ -106,28 +114,34 @@ public class ControllerMainMenu
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgame_h.png"));
+                panelMainMenu.setIcon_Start(imgIcon);
                 startClick();
               
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgame_c.png"));
+                panelMainMenu.setIcon_Start(imgIcon);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgame_h.png"));
+                panelMainMenu.setIcon_Start(imgIcon);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgame_h.png"));
+                panelMainMenu.setIcon_Start(imgIcon);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgame_n.png"));
+                panelMainMenu.setIcon_Start(imgIcon);
             }
         });
         
@@ -135,27 +149,33 @@ public class ControllerMainMenu
 
            @Override
            public void mouseClicked(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_settings_h.png"));
+                panelMainMenu.setIcon_Settings(imgIcon);
                settingsClick();
            }
 
            @Override
            public void mousePressed(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_settings_c.png"));
+                panelMainMenu.setIcon_Settings(imgIcon);
            }
 
            @Override
            public void mouseReleased(MouseEvent e) {
-              
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_settings_h.png"));
+                panelMainMenu.setIcon_Settings(imgIcon);
            }
 
            @Override
            public void mouseEntered(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_settings_h.png"));
+                panelMainMenu.setIcon_Settings(imgIcon);
            }
 
            @Override
            public void mouseExited(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_settings_n.png"));
+                panelMainMenu.setIcon_Settings(imgIcon);
            }
        });
         
@@ -163,27 +183,33 @@ public class ControllerMainMenu
 
            @Override
            public void mouseClicked(MouseEvent e) {
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_help_h.png"));
+                panelMainMenu.setIcon_Help(imgIcon);
                helpClick();
            }
 
            @Override
            public void mousePressed(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_help_c.png"));
+                panelMainMenu.setIcon_Help(imgIcon);
            }
 
            @Override
            public void mouseReleased(MouseEvent e) {
-              
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_help_h.png"));
+                panelMainMenu.setIcon_Help(imgIcon);
            }
 
            @Override
            public void mouseEntered(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_help_h.png"));
+                panelMainMenu.setIcon_Help(imgIcon);
            }
 
            @Override
            public void mouseExited(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_help_n.png"));
+                panelMainMenu.setIcon_Help(imgIcon);
            }
        });
         
@@ -191,27 +217,33 @@ public class ControllerMainMenu
 
            @Override
            public void mouseClicked(MouseEvent e) {
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_credits_h.png"));
+                panelMainMenu.setIcon_Credits(imgIcon);
                aboutClick();
            }
 
            @Override
            public void mousePressed(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_credits_c.png"));
+                panelMainMenu.setIcon_Credits(imgIcon);
            }
 
            @Override
            public void mouseReleased(MouseEvent e) {
-              
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_credits_h.png"));
+                panelMainMenu.setIcon_Credits(imgIcon);
            }
 
            @Override
            public void mouseEntered(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_credits_h.png"));
+                panelMainMenu.setIcon_Credits(imgIcon);
            }
 
            @Override
            public void mouseExited(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_credits_n.png"));
+                panelMainMenu.setIcon_Credits(imgIcon);
            }
        });
         
@@ -219,27 +251,34 @@ public class ControllerMainMenu
 
            @Override
            public void mouseClicked(MouseEvent e) {
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_quit_c.png"));
+                panelMainMenu.setIcon_Quit(imgIcon);
                exitClick();
+               
            }
 
            @Override
            public void mousePressed(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_quit_c.png"));
+                panelMainMenu.setIcon_Quit(imgIcon);
            }
 
            @Override
            public void mouseReleased(MouseEvent e) {
-              
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_quit_n.png"));
+                panelMainMenu.setIcon_Quit(imgIcon);
            }
 
            @Override
            public void mouseEntered(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_quit_h.png"));
+                panelMainMenu.setIcon_Quit(imgIcon);
            }
 
            @Override
            public void mouseExited(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_quit_n.png"));
+                panelMainMenu.setIcon_Quit(imgIcon);
            }
        });
         
