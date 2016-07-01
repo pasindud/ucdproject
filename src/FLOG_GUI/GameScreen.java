@@ -3,24 +3,9 @@ package FLOG_GUI;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Panel;
-import java.awt.Point;
-import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.beans.EventHandler;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
 /**
@@ -88,26 +73,8 @@ public class GameScreen extends JFrame {
    
     }
     
-    
- 
-    public void showPlayScreen() 
-    {
-       /* //TestGUI_Inputs testing = new TestGUI_Inputs();
-
-        dataForUI data = new dataForUI();
-        ControllerGamePlay cgp = new ControllerGamePlay(panelPlaying,this);
-        panelPlaying.drawPlayerName("NoobSnakeEyes");
-        panelPlaying.drawPlayerPosition(3);
-        panelPlaying.drawPlayerScore(8888);
-        panelPlaying.drawRoundNumber(4);
-        panelPlaying.drawTweleveLetters(data.getLetters());
-        //panelPlaying.drawOpponents(data.getPdArray());
-
-        CardLayout cl = (CardLayout) (container.getLayout());
-        cl.show(container, "PlayingScreen");
-        this.validate();*/
-
-    }
+   
+     
     
     private void showMainMenu()
     {

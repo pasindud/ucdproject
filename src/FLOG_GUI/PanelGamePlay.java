@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package FLOG_GUI;
 
 import java.awt.BorderLayout;
@@ -478,7 +474,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         btnConsonents.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnConsonents.setName("Consonents"); // NOI18N
         btnConsonents.setPreferredSize(new java.awt.Dimension(140, 32));
-        pnlBottom.add(btnConsonents, new org.netbeans.lib.awtextra.AbsoluteConstraints(478, 110, 204, 39));
+        pnlBottom.add(btnConsonents, new org.netbeans.lib.awtextra.AbsoluteConstraints(478, 111, 204, 39));
 
         btnGenerate.setBackground(new java.awt.Color(0, 153, 153));
         btnGenerate.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
@@ -495,7 +491,6 @@ public class PanelGamePlay extends javax.swing.JPanel {
         btnSubmit.setForeground(new java.awt.Color(255, 255, 255));
         btnSubmit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnSubmit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_submit_n.png"))); // NOI18N
-        btnSubmit.setText("Submit");
         btnSubmit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSubmit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSubmit.setName("Submit"); // NOI18N

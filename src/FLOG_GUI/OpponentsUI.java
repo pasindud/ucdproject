@@ -7,14 +7,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.LayoutManager;
-import java.awt.Transparency;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
+
 
 /**
  *

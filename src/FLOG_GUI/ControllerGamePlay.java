@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package FLOG_GUI;
 
 import static FLOG_GUI.GameScreen.panelPlaying;
@@ -67,10 +63,6 @@ public class ControllerGamePlay
      {
          
      }
-     
-     
-    
-    
     
     
     
@@ -85,8 +77,7 @@ public class ControllerGamePlay
         final int _disconnect=1;
         final JTextField txt = (JTextField)panelPlaying.getCompBottom(_answer);
               
-        //ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_home_h.png"));
-          //  btnHome.setIcon(imgIcon);
+        
         panelPlaying.getCompTop(0).addMouseMotionListener(new MouseMotionListener() {
 
             @Override
@@ -137,27 +128,33 @@ public class ControllerGamePlay
             public void mouseClicked(MouseEvent e) 
             {
                 //System.out.println("[I] Submit was clicked | value on textbox : " + txt.getText().toString());
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_submit_h.png"));
+                panelPlaying.setIcon_Submit(imgIcon);
                 submitClick(txt.getText().toString());
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_submit_c.png"));
+                panelPlaying.setIcon_Submit(imgIcon);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_submit_h.png"));
+                panelPlaying.setIcon_Submit(imgIcon);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-              
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_submit_h.png"));
+                panelPlaying.setIcon_Submit(imgIcon);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-            
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_submit_n.png"));
+                panelPlaying.setIcon_Submit(imgIcon);
             }
 
         } );
@@ -166,27 +163,33 @@ public class ControllerGamePlay
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_autosearch_h.png"));
+                panelPlaying.setIcon_Gen(imgIcon);
                 generateClick();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_autosearch_c.png"));
+                panelPlaying.setIcon_Gen(imgIcon);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_autosearch_h.png"));
+                panelPlaying.setIcon_Gen(imgIcon);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_autosearch_h.png"));
+                panelPlaying.setIcon_Gen(imgIcon);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_autosearch_n.png"));
+                panelPlaying.setIcon_Gen(imgIcon);
             }
         });
         
@@ -194,6 +197,8 @@ public class ControllerGamePlay
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_vowels_h.png"));
+                panelPlaying.setIcon_Vowels(imgIcon);
                 vowelsClick();
             }
 
@@ -205,13 +210,14 @@ public class ControllerGamePlay
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_vowels_n.png"));
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_vowels_h.png"));
                 panelPlaying.setIcon_Vowels(imgIcon);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_vowels_h.png"));
+                panelPlaying.setIcon_Vowels(imgIcon);
             }
 
             @Override
@@ -225,27 +231,33 @@ public class ControllerGamePlay
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_consonent_h.png"));
+                panelPlaying.setIcon_Consonents(imgIcon);
                 consonentsClick();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_consonent_c.png"));
+                panelPlaying.setIcon_Consonents(imgIcon);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_consonent_h.png"));
+                panelPlaying.setIcon_Consonents(imgIcon);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_consonent_h.png"));
+                panelPlaying.setIcon_Consonents(imgIcon);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-               
+               ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_consonent_n.png"));
+                panelPlaying.setIcon_Consonents(imgIcon);
             }
         });
         
