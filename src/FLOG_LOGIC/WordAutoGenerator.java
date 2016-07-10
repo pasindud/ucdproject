@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package frog;
+package FLOG_LOGIC;
 
 /**
  *
@@ -14,11 +14,13 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import org.apache.commons.lang3.StringUtils;
 
-public class WordAutoGenerator {
+public class WordAutoGenerator{
+
     String c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12;
     private String longestWord = "";
     String z = "";
     String pattern;//= "^[a-zA-Z_]*$";
+    private static final long MAX_TIME_FOR_WORD_SEARCH = 5000;
 
     public WordAutoGenerator(String c1, String c2, String c3, String c4, String c5, String c6, String c7, String c8, String c9, String c10, String c11, String c12) {
         this.c1 = c1.toUpperCase();
@@ -49,7 +51,7 @@ public class WordAutoGenerator {
         pattern = patternGen();
         Pattern r = Pattern.compile(pattern);
         Matcher m = null;
-
+        long startTime = System.currentTimeMillis();
         int c1_count = StringUtils.countMatches(z, this.c1);
         int c2_count = StringUtils.countMatches(z, this.c2);
         int c3_count = StringUtils.countMatches(z, this.c3);
@@ -64,7 +66,7 @@ public class WordAutoGenerator {
         int c12_count = StringUtils.countMatches(z, this.c12);
 
         int i = 1;
-        
+
         try (BufferedReader br = new BufferedReader(new FileReader("words.txt"))) {
             String line = null;
 
@@ -88,10 +90,17 @@ public class WordAutoGenerator {
                                 && (StringUtils.countMatches(line, this.c12) <= c12_count)) {
 
                             this.longestWord = line;
+                            if (this.longestWord.length() == 12) {
+                                break;
+                            }
+                            if ((System.currentTimeMillis() - startTime) > 
+                        MAX_TIME_FOR_WORD_SEARCH ) {
+                    break;
+                }
                         }
 
                     } else if (this.longestWord.length() <= line.length()) {
-                       if ((StringUtils.countMatches(line, this.c1) <= c1_count)
+                        if ((StringUtils.countMatches(line, this.c1) <= c1_count)
                                 && (StringUtils.countMatches(line, this.c2) <= c2_count)
                                 && (StringUtils.countMatches(line, this.c3) <= c3_count)
                                 && (StringUtils.countMatches(line, this.c4) <= c4_count)
@@ -105,6 +114,13 @@ public class WordAutoGenerator {
                                 && (StringUtils.countMatches(line, this.c12) <= c12_count)) {
 
                             this.longestWord = line;
+                            if (this.longestWord.length() == 12) {
+                                break;
+                            }
+                            if ((System.currentTimeMillis() - startTime) > 
+                        MAX_TIME_FOR_WORD_SEARCH ) {
+                    break;
+                }
                         }
                     }
                 }
@@ -114,15 +130,17 @@ public class WordAutoGenerator {
 //        System.out.println("i : " + i);
 //        System.out.println("Word : " + this.longestWord);
 //        System.out.println("Length: " + this.longestWord.length());
-        
+
     }
 
     public String getLongestWord() {
-        if (longestWord.equals(null)){
-        longestWord="There are no words from these letters";
+        if (longestWord.equals(null)) {
+            longestWord = "There are no words from these letters";
         }
         return longestWord;
     }
-    
-    
+
+  
+   
+
 }

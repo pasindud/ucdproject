@@ -1,7 +1,7 @@
 
 package flog_gui_test;
 
-import frog.WordAutoGenerator;
+import FLOG_LOGIC.WordAutoGenerator;
 
 /**
  *
