@@ -1,6 +1,6 @@
 package frog;
 
-import frog.Utils;
+import FLOG_LOGIC.Utils;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
