@@ -2,6 +2,7 @@
 package FLOG_GUI;
 
 //import static FLOG_GUI.GameScreen.panelGamePlay;
+
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,8 +17,11 @@ import javax.swing.JTextField;
  */
 public class ControllerGamePlay 
 {
+    
     PanelGamePlay panelGamePlay;
     GameScreen gameScreen;
+    Thread timerThread;
+    static boolean stopTimer = false; 
     int mouseX=0;
     int mouseY=0;
     char[] letterArr = new char[12];
@@ -44,6 +48,7 @@ public class ControllerGamePlay
     
     private void submitClick(String ans)
     {
+             stopTimer = true;
              
     }
     
@@ -63,8 +68,34 @@ public class ControllerGamePlay
      {
          
      }
+     public void runTimer()
+     {
+         timerThread = new Thread(new ThreadTimer(panelGamePlay, 45));
+         timerThread.start();
+     }
     
+    public void resetTimer()
+    {
+        panelGamePlay.setTimer("00");
+    }
+    private void settingsClick()
+    {
+        gameScreen.changeScreen("Settings", "PlayingScreen");
+    }
     
+    private void disconnectClick()
+    {
+        int res = JOptionPane.showConfirmDialog(null, "Do you wan to disconnect?", "Warning", JOptionPane.YES_NO_OPTION);
+        if(res==JOptionPane.YES_OPTION)
+        {
+            if(timerThread.isAlive()){
+            stopTimer =true;
+            }
+            resetTimer();
+            gameScreen.changeScreen("MainMenu", null);
+        }
+        
+    }
     
     private void initializeGamePlayListeners()
     {
@@ -73,8 +104,8 @@ public class ControllerGamePlay
         final int _vowels=12;
         final int _consonent=13;
         final int _answer =16;
-        final int _settings =0;
-        final int _disconnect=1;
+        final int _settings =1;
+        final int _disconnect=0;
         final JTextField txt = (JTextField)panelGamePlay.getCompBottom(_answer);
               
         
@@ -261,11 +292,11 @@ public class ControllerGamePlay
             }
         });
         
-        panelGamePlay.getCompTopBorder(1).addMouseListener(new MouseListener() {
+        panelGamePlay.getCompTopBorder(_disconnect).addMouseListener(new MouseListener() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-               gameScreen.changeScreen("MainMenu", null);
+               disconnectClick();
                 
             }
 
@@ -287,6 +318,34 @@ public class ControllerGamePlay
             @Override
             public void mouseExited(MouseEvent e) {
                
+            }
+        });
+        
+        panelGamePlay.getCompTopBorder(_settings).addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                settingsClick();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+              
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+               
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                
             }
         });
         

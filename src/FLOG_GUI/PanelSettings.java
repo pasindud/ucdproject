@@ -112,6 +112,7 @@ public class PanelSettings extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlTopBorder.setName("top"); // NOI18N
+        pnlTopBorder.setOpaque(false);
         add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 30));
 
         btnBack.setText("back");

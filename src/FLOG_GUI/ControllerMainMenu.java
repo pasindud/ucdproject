@@ -15,18 +15,20 @@ public class ControllerMainMenu
     int mouseX=0;
     int mouseY=0;
     PanelMainMenu panelMainMenu;
+    ControllerGamePlay controllerGamePlay;
     GameScreen gameScreen;
 
-    public ControllerMainMenu(PanelMainMenu panelMainMenu, GameScreen gameScreen) {
+    public ControllerMainMenu(PanelMainMenu panelMainMenu, GameScreen gameScreen, ControllerGamePlay controllerGamePlay) {
         this.panelMainMenu = panelMainMenu;
         this.gameScreen = gameScreen;
+        this.controllerGamePlay = controllerGamePlay;
         initializeMainMenuListeners();
     }
     
     private void startClick()
     {
       gameScreen.changeScreen("PlayingScreen", null);
-        
+      controllerGamePlay.runTimer();  
     }
     
     private void settingsClick()

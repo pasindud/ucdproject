@@ -24,7 +24,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
     JPanel pnlOppList;
     JPanel pnlOppRow;
     JScrollPane jsp;
-
+    dataForUI DataForUI;
     private JLabel[] letter_label_array;
     private int swapLetterLabelIndex;
     private int noOfSwaps;
@@ -36,6 +36,9 @@ public class PanelGamePlay extends javax.swing.JPanel {
         bg = new ImageIcon(getClass().getResource("/images/bg_playscreen.png")).getImage();
         pnlOppList = new JPanel();
         pnlOppRow = new JPanel();
+        DataForUI = new dataForUI();
+        
+        lblTime.setText("");
         resetValuesForRound();
     }
 
@@ -189,6 +192,12 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
     }
 
+    public void setTimer(String tmr)
+     {
+         this.lblTime.setFont(DataForUI.LCD);       
+         this.lblTime.setText(tmr);
+     
+     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -229,6 +238,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         btnGenerate = new javax.swing.JLabel();
         btnSubmit = new javax.swing.JLabel();
         txtAnswer = new javax.swing.JTextField();
+        lblTime = new javax.swing.JLabel();
 
         jMenuItem1.setText("Swap Letter");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -257,42 +267,26 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
         pnlTopBorder.setName("dragingLabel"); // NOI18N
         pnlTopBorder.setOpaque(false);
-        pnlTopBorder.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnlTopBorderMousePressed(evt);
-            }
-        });
         pnlTopBorder.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 pnlTopBorderMouseDragged(evt);
             }
         });
+        pnlTopBorder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlTopBorderMousePressed(evt);
+            }
+        });
+        pnlTopBorder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnDisconnect.setText("close");
+        btnDisconnect.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnDisconnect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_disconnect_n.png"))); // NOI18N
         btnDisconnect.setName("close"); // NOI18N
+        pnlTopBorder.add(btnDisconnect, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 2, 36, 34));
 
         btnSettings.setText("settings");
         btnSettings.setName("settings"); // NOI18N
-
-        javax.swing.GroupLayout pnlTopBorderLayout = new javax.swing.GroupLayout(pnlTopBorder);
-        pnlTopBorder.setLayout(pnlTopBorderLayout);
-        pnlTopBorderLayout.setHorizontalGroup(
-            pnlTopBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopBorderLayout.createSequentialGroup()
-                .addGap(0, 832, Short.MAX_VALUE)
-                .addComponent(btnSettings)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDisconnect))
-        );
-        pnlTopBorderLayout.setVerticalGroup(
-            pnlTopBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopBorderLayout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addGroup(pnlTopBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDisconnect)
-                    .addComponent(btnSettings))
-                .addContainerGap())
-        );
+        pnlTopBorder.add(btnSettings, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
 
         pnlTop.add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
 
@@ -664,6 +658,11 @@ public class PanelGamePlay extends javax.swing.JPanel {
         });
         pnlBottom.add(txtAnswer, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 167, 400, 39));
 
+        lblTime.setFont(new java.awt.Font("Times New Roman", 0, 100)); // NOI18N
+        lblTime.setForeground(new java.awt.Color(255, 255, 255));
+        lblTime.setText("00");
+        pnlBottom.add(lblTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, -1, -1));
+
         add(pnlBottom, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 387, 900, 232));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -714,70 +713,81 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
     private void lblL3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL3MouseReleased
         if (evt.isPopupTrigger() && !lblL3.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL3.getX()+evt.getX(), pnlBottom.getY()+lblL3.getY()+evt.getY());
+            
+            
             swapLetterLabelIndex = 0;
         }
     }//GEN-LAST:event_lblL3MouseReleased
 
     private void lblL4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL4MouseReleased
         if (evt.isPopupTrigger() && !lblL4.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+           // jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL4.getX()+evt.getX(), pnlBottom.getY()+lblL4.getY()+evt.getY());
             swapLetterLabelIndex = 1;
         }
     }//GEN-LAST:event_lblL4MouseReleased
 
     private void lblL5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL5MouseReleased
         if (evt.isPopupTrigger() && !lblL5.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL5.getX()+evt.getX(), pnlBottom.getY()+lblL5.getY()+evt.getY());
             swapLetterLabelIndex = 2;
         }
     }//GEN-LAST:event_lblL5MouseReleased
 
     private void lblL6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL6MouseReleased
         if (evt.isPopupTrigger() && !lblL6.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL6.getX()+evt.getX(), pnlBottom.getY()+lblL6.getY()+evt.getY());
             swapLetterLabelIndex = 3;
         }
     }//GEN-LAST:event_lblL6MouseReleased
 
     private void lblL7MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL7MouseReleased
         if (evt.isPopupTrigger() && !lblL7.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL7.getX()+evt.getX(), pnlBottom.getY()+lblL7.getY()+evt.getY());
             swapLetterLabelIndex = 4;
         }
     }//GEN-LAST:event_lblL7MouseReleased
 
     private void lblL8MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL8MouseReleased
         if (evt.isPopupTrigger() && !lblL8.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL8.getX()+evt.getX(), pnlBottom.getY()+lblL8.getY()+evt.getY());
             swapLetterLabelIndex = 5;
         }
     }//GEN-LAST:event_lblL8MouseReleased
 
     private void lblL9MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL9MouseReleased
         if (evt.isPopupTrigger() && !lblL9.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL9.getX()+evt.getX(), pnlBottom.getY()+lblL9.getY()+evt.getY());
             swapLetterLabelIndex = 6;
         }
     }//GEN-LAST:event_lblL9MouseReleased
 
     private void lblL10MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL10MouseReleased
         if (evt.isPopupTrigger() && !lblL10.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+           jPopupMenu1.show(this, pnlBottom.getX()+lblL10.getX()+evt.getX(), pnlBottom.getY()+lblL10.getY()+evt.getY());
             swapLetterLabelIndex = 7;
         }
     }//GEN-LAST:event_lblL10MouseReleased
 
     private void lblL11MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL11MouseReleased
         if (evt.isPopupTrigger() && !lblL11.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+           // jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+           jPopupMenu1.show(this, pnlBottom.getX()+lblL11.getX()+evt.getX(), pnlBottom.getY()+lblL11.getY()+evt.getY());
             swapLetterLabelIndex = 8;
         }
     }//GEN-LAST:event_lblL11MouseReleased
 
     private void lblL12MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL12MouseReleased
         if (evt.isPopupTrigger() && !lblL12.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-            jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+            jPopupMenu1.show(this, pnlBottom.getX()+lblL12.getX()+evt.getX(), pnlBottom.getY()+lblL12.getY()+evt.getY());
             swapLetterLabelIndex = 9;
         }
     }//GEN-LAST:event_lblL12MouseReleased
@@ -997,6 +1007,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
     private javax.swing.JLabel lblPos;
     private javax.swing.JLabel lblRound;
     private javax.swing.JLabel lblScore;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JPanel pnlBottom;
     private javax.swing.JPanel pnlOpponents;
     private javax.swing.JPanel pnlTop;

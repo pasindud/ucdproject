@@ -4,6 +4,12 @@ package FLOG_GUI;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -42,6 +48,7 @@ public class GameScreen extends JFrame {
 
     public GameScreen() {
         createAndShowGUI();
+        
     }
     
     private void createAndShowGUI() 
@@ -77,7 +84,7 @@ public class GameScreen extends JFrame {
         TestGUI_Inputs testing = new TestGUI_Inputs();
         
       controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
-        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this);
+        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerGamePlay);
        controllerSettings = new ControllerSettings(panelSettings, this);
    
     }
@@ -126,6 +133,8 @@ public class GameScreen extends JFrame {
         this.setLocation(x -mX, y-mY);
         
     }
+
+    
     
    
 }
