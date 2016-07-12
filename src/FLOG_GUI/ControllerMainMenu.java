@@ -31,7 +31,7 @@ public class ControllerMainMenu
     
     private void settingsClick()
     {
-    
+        gameScreen.changeScreen("Settings", "MainMenu");
     }
     
     private void helpClick()
