@@ -16,9 +16,15 @@ public class GameScreen extends JFrame {
  
     //static GameScreen myFrame;
     static int countMe = 0;
-    static PanelGamePlay panelPlaying;
+    public static PanelGamePlay panelPlaying;
     private PanelMainMenu panelMainMenu;
+    private PanelSettings panelSettings;
+    
     private JPanel container;
+    ControllerGamePlay controllerGamePlay;
+    ControllerMainMenu controllerMainMenu;
+    ControllerSettings controllerSettings;
+    
     CardLayout mainPanelCards = new CardLayout();
     
     
@@ -63,13 +69,15 @@ public class GameScreen extends JFrame {
         container.setLayout(mainPanelCards);
         container.add(panelMainMenu, "MainMenu");
         container.add(panelPlaying,"PlayingScreen");
+        container.add(panelSettings,"Settings");
      
         this.getContentPane().add(container,BorderLayout.CENTER);
         
         TestGUI_Inputs testing = new TestGUI_Inputs();
         
-        ControllerGamePlay cgp = new ControllerGamePlay(panelPlaying,this);
-        ControllerMainMenu cmm = new ControllerMainMenu(panelMainMenu, this);
+      controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
+        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this);
+       controllerSettings = new ControllerSettings(panelSettings, this);
    
     }
     
@@ -84,8 +92,29 @@ public class GameScreen extends JFrame {
     
     public void changeScreen(String screenName, String invokerName)
     {
-        CardLayout cl = (CardLayout) (container.getLayout());
-        cl.show(container, screenName);
+         CardLayout cl = (CardLayout) (container.getLayout());
+        if (invokerName != null) 
+        {
+            switch (screenName) 
+            {
+                case "GamePlay":
+                    cl.show(container, screenName);
+                    break;
+
+                case "Settings":
+                    cl.show(container, screenName);
+                    controllerSettings.setReturnTo(invokerName);
+                    break;
+                default:
+                    cl.show(container, screenName);
+                    break;
+
+            }
+        } 
+        else 
+        {
+            cl.show(container, screenName);
+        }
         this.validate();
 
     }
