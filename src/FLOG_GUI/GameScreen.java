@@ -62,6 +62,7 @@ public class GameScreen extends JFrame {
     {
         panelMainMenu = new PanelMainMenu();
         panelPlaying = new PanelGamePlay();
+        panelSettings = new PanelSettings();
 
         //Adding Panels to Card Layout
         container = new JPanel();
