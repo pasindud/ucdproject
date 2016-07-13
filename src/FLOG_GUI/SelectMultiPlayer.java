@@ -44,11 +44,13 @@ public class SelectMultiPlayer extends JPanel {
         thrower.addThrowListener(catcher);
         
         // Check run
+        /*
         channelName = txtChannelName.getText();
         txtPlayerName.setText("pasindu");
         playerName = txtPlayerName.getText();
         multiplayer.joinNewPlayer(playerName, channelName);
         new Thread(new CheckQueueThread(multiplayer.getServerQueue(channelName), thrower)).start();
+        */
     }
     
     Multiplayer multiplayer = new Multiplayer();
