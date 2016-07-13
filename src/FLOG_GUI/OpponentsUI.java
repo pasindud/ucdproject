@@ -48,9 +48,7 @@ public class OpponentsUI extends JPanel
                 lblPos.setFont(font_Trebuchet);
                 
                 add(lblPos);
-            }
-            
-        
+            }                  
         }
         
         public class PanelOppInfo extends JPanel

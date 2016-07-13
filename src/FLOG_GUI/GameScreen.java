@@ -77,10 +77,7 @@ public class GameScreen extends JFrame {
      
     }
     
-    
- 
-    public void showPlayScreen() 
-    {
+    public void showPlayScreen() {
         TestGUI_Inputs testing = new TestGUI_Inputs();
 
         dataForUI data = new dataForUI();
@@ -95,17 +92,13 @@ public class GameScreen extends JFrame {
         CardLayout cl = (CardLayout) (container.getLayout());
         cl.show(container, "PlayingScreen");
         this.validate();
-
     }
     
-    private void showMainMenu()
-    {
+    private void showMainMenu() {
         CardLayout cl = (CardLayout) (container.getLayout());
         cl.show(container, "MainMenu");
         this.validate();
     }
-    
-    
     
      /** Click Events for buttons in Panels 
         
@@ -121,7 +114,23 @@ public class GameScreen extends JFrame {
      
      private void MM_StartClick()
      {
-         showPlayScreen();
+        CardLayout cl = (CardLayout) (container.getLayout());
+        
+        SelectMultiPlayer selectMultiPlayer = new SelectMultiPlayer();
+        container.add(selectMultiPlayer,"SelectMultiPlayer");
+        cl.show(container, "SelectMultiPlayer");
+        this.validate();
+         
+        
+//         SelectMultiPlayer selectMultiPlayer = new SelectMultiPlayer();
+//         selectMultiPlayer.show();
+//         selectMultiPlayer.setVisible(true);
+        // showPlayScreen();
+         
+//        CardLayout cl = (CardLayout) (container.getLayout());
+//        cl.show(container, "SelectMultiPlayer");
+//        this.validate();
+//        this.hide();
      }
      
      private void MM_SettingsClick()

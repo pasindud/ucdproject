@@ -11,6 +11,8 @@ import com.shephertz.app42.paas.sdk.java.user.UserService;
 
 import com.shephertz.app42.paas.sdk.java.App42API;  
 import com.shephertz.app42.paas.sdk.java.App42Log;
+import com.shephertz.app42.paas.sdk.java.message.Queue;
+import com.shephertz.app42.paas.sdk.java.message.QueueService;
 import com.shephertz.app42.paas.sdk.java.storage.Query;  
 import com.shephertz.app42.paas.sdk.java.storage.QueryBuilder;  
 import com.shephertz.app42.paas.sdk.java.storage.Storage;  
@@ -42,7 +44,7 @@ public class Multiplayer {
     /* Epoch time also know as unix time. */
     private long epoch;
 
-    
+    private boolean DEBUG = false;
     /**
      * Setup API keys.
      */
@@ -148,4 +150,67 @@ public class Multiplayer {
         }
     }
     
+    
+    private boolean createQueue(String name){
+        String queueDescription = "";
+        QueueService queueService = App42API.buildQueueService();   
+        Queue queue = queueService.createPullQueue(name, queueDescription); 
+        String jsonResponse = queue.toString();   
+        System.out.println("Log createQueue - " + queue.toString());
+        return true;
+    }
+
+    /**
+     *
+     * @param channelName the name of the channel to create.
+     */
+    public boolean createServer(String channelName){
+        createQueue(getServerQueue(channelName));
+        return true;
+    }
+    
+    private String getServerQueue(String channelName){
+        return channelName + "_server";
+    }
+    
+    /**
+     * This is joining a new non server user.
+     */
+    public void joinNewPlayer(String playerName, String channelName){
+        // First create a player queue.
+        // Typical player queue name is - playername_channel
+        String queueName = playerName + "_" + channelName;
+        createQueue(queueName);
+        
+        // Send the message to the channel queue.
+        
+        // Message format - 100 <player name>
+        String message = "100 " + playerName;
+        publishToQueue(channelName, message);
+    }
+    
+    /**
+     * Join the new user.
+     * 
+     * Start the game
+     *  Distribute letters
+     *  Subsitute letters
+     *  End the round
+     *  Calculate the game score
+     *  Run the penalty
+     *  Start the next round again
+     * End the game.
+     * 
+     */
+    
+    public boolean publishToQueue(String queueName, String message){
+        long  expiryTime = 10000;  
+        QueueService queueService = App42API.buildQueueService();   
+        Queue queue = queueService.sendMessage(queueName, message, expiryTime);
+        
+        if (DEBUG) {
+            System.out.println(queue.toString());
+        }
+        return true;
+    }
 }

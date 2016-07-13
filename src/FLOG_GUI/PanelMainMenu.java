@@ -37,11 +37,14 @@ public class PanelMainMenu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToolBar1 = new javax.swing.JToolBar();
         btnStart = new javax.swing.JLabel();
         btnExit = new javax.swing.JLabel();
         btnSettings = new javax.swing.JLabel();
         btnHelp = new javax.swing.JLabel();
         btnAbout = new javax.swing.JLabel();
+
+        jToolBar1.setRollover(true);
 
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -102,6 +105,7 @@ public class PanelMainMenu extends javax.swing.JPanel {
     private javax.swing.JLabel btnHelp;
     private javax.swing.JLabel btnSettings;
     private javax.swing.JLabel btnStart;
+    private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
 

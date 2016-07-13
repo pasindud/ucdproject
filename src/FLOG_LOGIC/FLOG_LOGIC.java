@@ -1,3 +1,4 @@
+
 package FLOG_LOGIC;
 
 import com.shephertz.app42.paas.sdk.java.App42API;
@@ -17,6 +18,11 @@ public class FLOG_LOGIC {
     FLOG_LOGIC() {
     }
 
+    public static void startServer(){
+        
+        
+    }
+    
     /**
      * This main method was for sep assignment2.
      */
