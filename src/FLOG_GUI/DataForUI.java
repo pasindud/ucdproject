@@ -21,6 +21,8 @@ public class DataForUI
     public static String[] letters;
     public static Font LCD;
     public static int RoundNum;
+    public static int RoundReadyUpTime = 10;
+    public static int RoundTime =10;
     public static final String STR_GAMEPLAY = "GamePlay";
     public static final String STR_SETTINGS = "Settings";
     public static final String STR_ROUNDREADYUP = "RoundReadyUp";
@@ -38,7 +40,7 @@ public class DataForUI
         
         PdArray = new PlayerData[playerCount];
         letters = new String[12];
-        RoundNum=0;
+        RoundNum=1;
         try {
             LCD = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src/fonts/LCD.ttf"))).deriveFont(Font.PLAIN, 100);
         } catch (FontFormatException ex) {

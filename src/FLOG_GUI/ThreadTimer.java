@@ -20,7 +20,7 @@ public class ThreadTimer implements Runnable
     
     int seconds=0;
 
-    public ThreadTimer(PanelGamePlay panelGamePlay, int seconds, ControllerGamePlay controllerGamePlay) {
+    public ThreadTimer(PanelGamePlay panelGamePlay, ControllerGamePlay controllerGamePlay, int seconds) {
         this.panelGamePlay = panelGamePlay;
         this.controllerGamePlay = controllerGamePlay;
         this.seconds =seconds;
