@@ -24,14 +24,16 @@ public class ControllerGamePlay
     int mouseX=0;
     int mouseY=0;
     char[] letterArr = new char[12];
-    
-    
+    DataForUI data;
+    TestGUI_Inputs testGUI_Inputs;
     //Constructor 
     public ControllerGamePlay(PanelGamePlay panelGamePlay, GameScreen gameScreen) 
     {
+        testGUI_Inputs = new TestGUI_Inputs(13);
+        
         this.panelGamePlay = panelGamePlay;
         this.gameScreen = gameScreen;
-        DataForUI data = new DataForUI();
+        data = new DataForUI();
         initializeGamePlayListeners();
         setPlayerInfo("Snake Eyes",999,5435,4);
         panelGamePlay.drawOpponents(data.getPdArray());
@@ -45,6 +47,11 @@ public class ControllerGamePlay
         panelGamePlay.drawPlayerScore(score);
         panelGamePlay.drawRoundNumber(round);
      
+    }
+    
+    public void drawOpponenets()
+    {
+        panelGamePlay.drawOpponents(data.getPdArray());
     }
     
     

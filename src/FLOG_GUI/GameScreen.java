@@ -1,6 +1,7 @@
 
 package FLOG_GUI;
 
+import FLOG_LOGIC.Game;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -95,8 +96,8 @@ public class GameScreen extends JFrame
      
         this.getContentPane().add(container,BorderLayout.CENTER);
         
-        TestGUI_Inputs testing = new TestGUI_Inputs();
-        
+        //TestGUI_Inputs testing = new TestGUI_Inputs();
+        initateGame();
       controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
       controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
@@ -113,7 +114,20 @@ public class GameScreen extends JFrame
         changeScreen(dataForUI.STR_MAINMENU, null);
       
     }
-    
+    private void initateGame()
+    {
+        Game game = new Game();
+        game.addPlayer("Pasindu");
+        game.addPlayer("Dushan");
+        game.addPlayer("Ishanka");
+        game.addPlayer("Dilshan");
+        game.addPlayer("Piumal");
+        game.addPlayer("Dinuka");
+        
+        
+        DataForUI.game = game;
+        DataForUI.getPlayerList();
+    }
     /**
      * The following Method will handle all change screen calls,
      * basic switching for the panels in the CardLayout
@@ -139,7 +153,6 @@ public class GameScreen extends JFrame
                     controllerSettings.setReturnTo(invokerName);
                     break;
                 case DataForUI.STR_ROUNDREADYUP:
-                    System.out.println("hit --------------------------------------------");
                     cl.show(container, screenName);
                     controllerRoundReadyUp.runTimer();
                     panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));

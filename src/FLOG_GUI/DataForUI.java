@@ -1,12 +1,15 @@
 
 package FLOG_GUI;
 
+import FLOG_LOGIC.Game;
+import FLOG_LOGIC.Player;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +22,8 @@ public class DataForUI
 {
     public static PlayerData[] PdArray;
     public static String[] letters;
+    public static Game game;
+    public static ArrayList<Player> playerList;
     
     //LCD Font for timers
     public static Font LCD;
@@ -48,7 +53,8 @@ public class DataForUI
     public DataForUI(int playerCount) //Calling this constructor is a must, But only once
     {
         
-        PdArray = new PlayerData[playerCount];
+        //PdArray = new PlayerData[playerCount];
+        //getPlayerList();
         letters = new String[12];
         RoundNum=1;
         try {
@@ -66,6 +72,24 @@ public class DataForUI
 
     public static String[] getLetters() {
         return letters;
+    }
+    
+    public static void getPlayerList()
+    {
+        playerList = game.getPlayerList();
+        parsePlayerList();
+    }
+    
+    private static void parsePlayerList()
+    {
+        int count=0;
+        PdArray = new PlayerData[playerList.size()];
+        for(Player p : playerList)
+        {
+            PlayerData pd = new PlayerData(p.getListIndex(),p.getName(),p.getTotalScore(), "A", "B"); //change
+            PdArray[count] = pd;
+            count++;
+        }
     }
         
     
