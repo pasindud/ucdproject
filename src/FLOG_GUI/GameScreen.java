@@ -65,7 +65,6 @@ public class GameScreen extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         preparePanels();
 //        showMainMenu();
-        
         this.setSize(new Dimension(900, 619)); 
         this.setUndecorated(true);
         this.setResizable(false);

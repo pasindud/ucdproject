@@ -11,6 +11,8 @@ import java.util.List;
 
 import FLOG_GUI.*;
 import com.shephertz.app42.paas.sdk.java.message.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,6 +26,7 @@ public class CheckQueueThread extends Thread {
     private Thrower thrower;
     private String decodeEventName = "messageInQueue";
 
+    private long POLLING_INTERVEL = 5000; // 5 Seconds
     public CheckQueueThread(String queueName, Thrower thrower) {
         this.queueName = queueName;
         this.thrower = thrower;
@@ -31,10 +34,22 @@ public class CheckQueueThread extends Thread {
 
     @Override
     public void run() {
-        List<String> messages = multiplayer.readQueue(queueName);
+        // Checks the queue every 5 seconds
+        // This should be killed with the parent thread.
+        while(true){
+            try {
+                sleep(POLLING_INTERVEL);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CheckQueueThread.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Closing the thread checking the queue " + queueName);
+                break;
+            }
+            List<String> messages = multiplayer.readQueue(queueName);
 
-        for (String message : messages) {
-            thrower.Throw(message);
+            for (String message : messages) {
+                thrower.Throw(message);
+                System.out.println("CheckQueue - Throw - " + message);
+            }
         }
     }
 

@@ -36,14 +36,17 @@ public class SelectMultiPlayer extends JPanel {
     Catcher catcher = new Catcher();
     Thrower thrower = new Thrower();
     List<String> playerNames = new ArrayList<String>();
+    Multiplayer multiplayer = new Multiplayer();
+    
     /**
      * Creates new form SelectMultiPlayer
      */
     public SelectMultiPlayer() {
         initComponents();
+        // Catch message thrown by the queue checker.
         thrower.addThrowListener(catcher);
         
-        // Check run
+        // Check run, only used for testing.
         /*
         channelName = txtChannelName.getText();
         txtPlayerName.setText("pasindu");
@@ -53,9 +56,12 @@ public class SelectMultiPlayer extends JPanel {
         */
     }
     
-    Multiplayer multiplayer = new Multiplayer();
      
+    /**
+     * Decode the message received by the server.
+     */
     public synchronized void decodeServerMessage(String message){
+        System.out.println("Decoding message to server message - " + message);
         String[] segments = message.split(" ");
         if (segments.length < 2) {
             return;
@@ -63,7 +69,7 @@ public class SelectMultiPlayer extends JPanel {
         String code = segments[0];
         String content = segments[1];
         switch(code) {
-            // New user joined formed 100 <player>,
+            // New user joined format - 100 <player name>
             case "100": 
                 setStatus("User " + content + " joined ");
                 playerNames.add(content.trim());
@@ -72,28 +78,43 @@ public class SelectMultiPlayer extends JPanel {
         
     }
     
+    /**
+     * Listens to messages thrown by checkQueueThread.
+     */
     public class Catcher implements ThrowListener {
         @Override
         public void Catch(String message) {
-            System.out.println("caught " + message);
+            System.out.println("Caught " + message);
+            // TODO: make another function to decode client message (message received by the client).
             decodeServerMessage(message);
         }
     }
     
-    private void startServerButtonMouseClicked(java.awt.event.MouseEvent evt) {
+    /**
+     * Start the server queues for the give {@code channelName}
+     */
+    private void startServerButtonMouseClicked(MouseEvent evt) {
         channelName = txtChannelName.getText();
         multiplayer.createServer(channelName);
         
+        // Server listen's to it's queue.
         String serverQueueName = multiplayer.getServerQueue(channelName);
         Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, thrower);
         backgroundServerQueueCheck.start();
+        
+        // TODO: Automattically run joinServerButtonActionClick so that the server
+        //       user can join the game.
     }
 
-    private void joinServerButtonActionClicked(java.awt.event.MouseEvent evt) {
+    /**
+     * Join the given server {@code channelName}
+     */
+    private void joinServerButtonActionClicked(MouseEvent evt) {
         channelName = txtChannelName.getText();
         playerName = txtPlayerName.getText();
         multiplayer.joinNewPlayer(playerName, channelName);
-
+        
+        // Listen to the client's queue.
         String clientQueueName =  multiplayer.getClientQueue(channelName, playerName);
         Thread backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, thrower);
         backgroundClientQueueCheck.start();

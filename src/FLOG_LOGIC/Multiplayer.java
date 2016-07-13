@@ -237,6 +237,9 @@ public class Multiplayer {
     }
     
     public List<String> readQueue(String queueName){
+        if (DEBUG) {
+            System.out.println("Reading queue - " + queueName);
+        }
         List<String> messages = new ArrayList<String>();
         try{
         long  receiveTimeOut = 10000; 
