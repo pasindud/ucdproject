@@ -83,6 +83,10 @@ public class SelectMultiPlayer extends JPanel {
     private void startServerButtonMouseClicked(java.awt.event.MouseEvent evt) {
         channelName = txtChannelName.getText();
         multiplayer.createServer(channelName);
+        
+        String serverQueueName = multiplayer.getServerQueue(channelName);
+        Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, thrower);
+        backgroundServerQueueCheck.start();
     }
 
     private void joinServerButtonActionClicked(java.awt.event.MouseEvent evt) {
@@ -90,7 +94,9 @@ public class SelectMultiPlayer extends JPanel {
         playerName = txtPlayerName.getText();
         multiplayer.joinNewPlayer(playerName, channelName);
 
-        new Thread(new CheckQueueThread(multiplayer.getServerQueue(channelName), thrower)).start();
+        String clientQueueName =  multiplayer.getClientQueue(channelName, playerName);
+        Thread backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, thrower);
+        backgroundClientQueueCheck.start();
     }
 
     /**

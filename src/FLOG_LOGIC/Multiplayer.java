@@ -174,6 +174,13 @@ public class Multiplayer {
     }
     
     /**
+     * Builds the client queue name.
+     */
+    public String getClientQueue(String channelName, String playerName){
+        return channelName + "_" + playerName;
+    }
+    
+    /**
      * Make the name of the channel server queue.
      * TODO fix issue of non server user pull messages from the server queue.
      */
@@ -190,7 +197,7 @@ public class Multiplayer {
         try {
         // First create a player queue.
         // Typical player queue name is - playername_channel
-        String queueName = playerName + "_" + channelName;
+        String queueName = getClientQueue(channelName, playerName);
         createQueue(queueName);
         
         // Send the message to the channel queue.
