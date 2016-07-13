@@ -68,7 +68,14 @@ public class ControllerGamePlay
      {
          
      }
-     public void runTimer()
+     
+     public void beginRound()
+     {
+         runTimer();
+         panelGamePlay.resetValuesForRound();
+     }
+     
+     private void runTimer()
      {
          timerThread = new Thread(new ThreadTimer(panelGamePlay, 45, this));
          timerThread.start();

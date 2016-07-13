@@ -32,7 +32,7 @@ public class ControllerRoundReadyUp {
     public void startRound()
     {
         gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);
-        controllerGamePlay.runTimer();
+        controllerGamePlay.beginRound();
     }
     
 }

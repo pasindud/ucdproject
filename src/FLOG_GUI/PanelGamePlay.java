@@ -43,7 +43,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         resetValuesForRound();
     }
 
-    private void resetValuesForRound() {
+    public void resetValuesForRound() {
         // Resets default values in each round
         noOfSwaps = 0;
         swapLetterLabelIndex = -99;
