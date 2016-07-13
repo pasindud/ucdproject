@@ -110,4 +110,9 @@ public class Game {
        playerList.set(playerNumber, player);
     }
     
+    public ArrayList<Player> getPlayerList()
+    {
+        return playerList;
+    }
+    
 }
