@@ -18,6 +18,7 @@ public class ControllerMainMenu
     ControllerRoundReadyUp controllerRoundReadyUp;
     GameScreen gameScreen;
 
+    //Constructor
     public ControllerMainMenu(PanelMainMenu panelMainMenu, GameScreen gameScreen,ControllerRoundReadyUp controllerRoundReadyUp) {
         this.panelMainMenu = panelMainMenu;
         this.gameScreen = gameScreen;
@@ -25,16 +26,18 @@ public class ControllerMainMenu
         initializeMainMenuListeners();
     }
     
+    /**
+     * When Start Game on the Mainmenu is click, then 
+     * [IMPORTANT] : connect multiplayer 
+     */
     private void startClick()
     {
         gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_MAINMENU);
         DataForUI.RoundNum=1;
-       // controllerRoundReadyUp.runTimer();
-      //gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);
-      //controllerGamePlay.runTimer();  
-      
+             
     }
     
+    //Change Screen to Settings
     private void settingsClick()
     {
         gameScreen.changeScreen(DataForUI.STR_SETTINGS, DataForUI.STR_MAINMENU);
@@ -49,6 +52,8 @@ public class ControllerMainMenu
     {
     
     }
+    
+    //Exit Game
     private void exitClick()
     {
         System.exit(0);
@@ -57,10 +62,10 @@ public class ControllerMainMenu
     
     
     /**
-     *  The Following code is used to initialize event listeners 
-     *  and also adding custom 
-     * 
-     */
+     * Below Code listens for events happening in the UI,
+     * which is the PanelMainMenu JPanel and Handles Label icon transition
+     * to give the feel of a custom button
+    */
     
     private void initializeMainMenuListeners() 
     {

@@ -137,7 +137,8 @@ public class ControllerGamePlay
     
     /**
      * Below Code listens for events happening in the UI,
-     * which is the PanelGamePlay JPanel
+     * which is the PanelGamePlay JPanel and Handles Label icon transition
+     * to give the feel of a custom button
     */
     
     private void initializeGamePlayListeners()

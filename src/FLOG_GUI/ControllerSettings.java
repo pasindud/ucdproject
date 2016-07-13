@@ -36,6 +36,7 @@ public class ControllerSettings
         isMute = false;//Add a way to get saved sound(on/off) from user save file.
     }
     
+    //Change screen back to where ever it was called.
     private void backClick()
     {
         gameScreen.changeScreen(this.returnTo, null);
@@ -91,6 +92,12 @@ public class ControllerSettings
      
     
     
+    /**
+     * Below Code listens for events happening in the UI,
+     * which is the 'PanelSettings' JPanel and Handles Label icon transition
+     * to give the feel of a custom button
+    */
+        
     private void initializeSettingsListeners()
     {
         final int _TopBorder=0;

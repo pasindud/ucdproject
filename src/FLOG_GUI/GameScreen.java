@@ -4,12 +4,6 @@ package FLOG_GUI;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -18,22 +12,36 @@ import javax.swing.SwingUtilities;
  *
  * @author Dushan Galappaththi
  */
-public class GameScreen extends JFrame {
- 
-    //static GameScreen myFrame;
+public class GameScreen extends JFrame 
+{
+ /**
+  * Panel initialization, setting up each panel to cardlayout and
+  * initializing controllers for each panel are done in this class.
+  * 
+  * Also manages changing screens and movement of the gamescreen (frame) 
+  * relative to the player's computer screen is handled through this class
+  * 
+  */
+    
+    
     static int countMe = 0;
     public static PanelGamePlay panelPlaying;
     private PanelMainMenu panelMainMenu;
     private PanelSettings panelSettings;
     private PanelRoundReadyUp panelRoundReadyUp;
     
-    private JPanel container;
+    //Holds the CardLayout
+    private JPanel container; 
+    
+    //Controllers for Panels 
     ControllerGamePlay controllerGamePlay;
     ControllerMainMenu controllerMainMenu;
     ControllerSettings controllerSettings;
     ControllerRoundReadyUp controllerRoundReadyUp;
     
+    //CardLayout which will hold all the panels
     CardLayout mainPanelCards = new CardLayout();
+        
     DataForUI dataForUI=new DataForUI();
     
     public static void main(String[] args) {
@@ -47,12 +55,13 @@ public class GameScreen extends JFrame {
         });
     }
     
-
+    //Constructor 
     public GameScreen() {
         createAndShowGUI();
         
     }
     
+    //JFrame setting up
     private void createAndShowGUI() 
     {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,6 +75,7 @@ public class GameScreen extends JFrame {
         this.validate();
         this.setVisible(true);
     }
+    
     
     private void preparePanels()
     {
@@ -104,6 +114,15 @@ public class GameScreen extends JFrame {
       
     }
     
+    /**
+     * The following Method will handle all change screen calls,
+     * basic switching for the panels in the CardLayout
+     * 
+     * @param screenName : The screen to change to
+     * @param invokerName : The screen where the change screen is called, 
+     * this parameter is used to return back to the previous screen
+     *
+     */
     public void changeScreen(String screenName, String invokerName)
     {
          CardLayout cl = (CardLayout) (container.getLayout());
@@ -139,6 +158,14 @@ public class GameScreen extends JFrame {
 
     }
     
+    /**
+     * The following method is used to move the game screen relative to the computer screen
+     * 
+     * @param x : mouse X Coordinate relative to JFrame
+     * @param y : mouse Y Coordinate relative to JFrame
+     * @param mX : mouse X Coordinate relative to the actual screen of the computer
+     * @param mY : mouse Y Coordinate relative to the actual screen of the computer
+     */
    
     public void moveScreen(int x, int y,int mX,int mY)
     {

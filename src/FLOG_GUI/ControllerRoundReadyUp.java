@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package FLOG_GUI;
 
 /**
@@ -22,13 +18,18 @@ public class ControllerRoundReadyUp {
     }
     
     
-    
+    /**
+      * Start Round ReadyUP Timer
+      * If you want to Change Round time, then change the value of
+      * the RoundReadyUpTime variable at DataForUI class 
+      */
     public void runTimer()
      {
          timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, DataForUI.RoundReadyUpTime));
          timerThread.start();
      }
     
+    //Switching to gameplay screen and begin the round
     public void startRound()
     {
         gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);

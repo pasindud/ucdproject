@@ -19,10 +19,20 @@ public class DataForUI
 {
     public static PlayerData[] PdArray;
     public static String[] letters;
+    
+    //LCD Font for timers
     public static Font LCD;
+    
+    //Current Round Number
     public static int RoundNum;
+    
+    //Set Round ready up time
     public static int RoundReadyUpTime = 10;
+    
+    //Set Round time
     public static int RoundTime =10;
+    
+    //Constants used to switch the cardlayout
     public static final String STR_GAMEPLAY = "GamePlay";
     public static final String STR_SETTINGS = "Settings";
     public static final String STR_ROUNDREADYUP = "RoundReadyUp";
