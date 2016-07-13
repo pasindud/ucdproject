@@ -25,14 +25,16 @@ public class GameScreen extends JFrame {
     public static PanelGamePlay panelPlaying;
     private PanelMainMenu panelMainMenu;
     private PanelSettings panelSettings;
+    private PanelRoundReadyUp panelRoundReadyUp;
     
     private JPanel container;
     ControllerGamePlay controllerGamePlay;
     ControllerMainMenu controllerMainMenu;
     ControllerSettings controllerSettings;
+    ControllerRoundReadyUp controllerRoundReadyUp;
     
     CardLayout mainPanelCards = new CardLayout();
-    
+    DataForUI dataForUI=new DataForUI();
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater( new Runnable() {
@@ -70,22 +72,26 @@ public class GameScreen extends JFrame {
         panelMainMenu = new PanelMainMenu();
         panelPlaying = new PanelGamePlay();
         panelSettings = new PanelSettings();
+        panelRoundReadyUp = new PanelRoundReadyUp();
 
         //Adding Panels to Card Layout
         container = new JPanel();
         
         container.setLayout(mainPanelCards);
-        container.add(panelMainMenu, "MainMenu");
-        container.add(panelPlaying,"PlayingScreen");
-        container.add(panelSettings,"Settings");
+        container.add(panelMainMenu, dataForUI.STR_MAINMENU);
+        container.add(panelPlaying,dataForUI.STR_GAMEPLAY);
+        container.add(panelSettings,dataForUI.STR_SETTINGS);
+        container.add(panelRoundReadyUp,dataForUI.STR_ROUNDREADYUP);
      
         this.getContentPane().add(container,BorderLayout.CENTER);
         
         TestGUI_Inputs testing = new TestGUI_Inputs();
         
       controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
-        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerGamePlay);
+      controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
+       controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
        controllerSettings = new ControllerSettings(panelSettings, this);
+       
    
     }
     
@@ -94,7 +100,7 @@ public class GameScreen extends JFrame {
     
     private void showMainMenu()
     {
-        changeScreen("MainMenu", null);
+        changeScreen(dataForUI.STR_MAINMENU, null);
       
     }
     
@@ -105,13 +111,19 @@ public class GameScreen extends JFrame {
         {
             switch (screenName) 
             {
-                case "GamePlay":
+                case DataForUI.STR_MAINMENU:
                     cl.show(container, screenName);
                     break;
 
-                case "Settings":
+                case DataForUI.STR_SETTINGS:
                     cl.show(container, screenName);
                     controllerSettings.setReturnTo(invokerName);
+                    break;
+                case DataForUI.STR_ROUNDREADYUP:
+                    System.out.println("hit --------------------------------------------");
+                    cl.show(container, screenName);
+                    controllerRoundReadyUp.runTimer();
+                    panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));
                     break;
                 default:
                     cl.show(container, screenName);

@@ -15,25 +15,29 @@ public class ControllerMainMenu
     int mouseX=0;
     int mouseY=0;
     PanelMainMenu panelMainMenu;
-    ControllerGamePlay controllerGamePlay;
+    ControllerRoundReadyUp controllerRoundReadyUp;
     GameScreen gameScreen;
 
-    public ControllerMainMenu(PanelMainMenu panelMainMenu, GameScreen gameScreen, ControllerGamePlay controllerGamePlay) {
+    public ControllerMainMenu(PanelMainMenu panelMainMenu, GameScreen gameScreen,ControllerRoundReadyUp controllerRoundReadyUp) {
         this.panelMainMenu = panelMainMenu;
         this.gameScreen = gameScreen;
-        this.controllerGamePlay = controllerGamePlay;
+        this.controllerRoundReadyUp= controllerRoundReadyUp;
         initializeMainMenuListeners();
     }
     
     private void startClick()
     {
-      gameScreen.changeScreen("PlayingScreen", null);
-      controllerGamePlay.runTimer();  
+        gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_MAINMENU);
+        DataForUI.RoundNum=0;
+       // controllerRoundReadyUp.runTimer();
+      //gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);
+      //controllerGamePlay.runTimer();  
+      
     }
     
     private void settingsClick()
     {
-        gameScreen.changeScreen("Settings", "MainMenu");
+        gameScreen.changeScreen(DataForUI.STR_SETTINGS, DataForUI.STR_MAINMENU);
     }
     
     private void helpClick()

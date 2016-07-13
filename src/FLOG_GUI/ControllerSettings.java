@@ -12,7 +12,7 @@ import org.omg.CORBA.MARSHAL;
  */
 public class ControllerSettings 
 {
-    String returnTo = "MainMenu";
+    String returnTo = DataForUI.STR_MAINMENU;
     PanelSettings panelSettings;
     GameScreen gameScreen;
     int mouseX=0;

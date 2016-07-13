@@ -31,7 +31,7 @@ public class ControllerGamePlay
     public ControllerGamePlay(PanelGamePlay panelGamePlay, GameScreen gameScreen) {
         this.panelGamePlay = panelGamePlay;
         this.gameScreen = gameScreen;
-        dataForUI data = new dataForUI();
+        DataForUI data = new DataForUI();
         initializeGamePlayListeners();
         setPlayerInfo("Snake Eyes",999,5435,4);
         panelGamePlay.drawOpponents(data.getPdArray());
@@ -70,7 +70,7 @@ public class ControllerGamePlay
      }
      public void runTimer()
      {
-         timerThread = new Thread(new ThreadTimer(panelGamePlay, 45));
+         timerThread = new Thread(new ThreadTimer(panelGamePlay, 45, this));
          timerThread.start();
      }
     
@@ -78,9 +78,18 @@ public class ControllerGamePlay
     {
         panelGamePlay.setTimer("00");
     }
+    public void startNextRound()
+    {
+        if(DataForUI.RoundNum<5)
+        {
+            DataForUI.RoundNum= DataForUI.RoundNum +1;
+        }
+        gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_GAMEPLAY);
+    }
+    
     private void settingsClick()
     {
-        gameScreen.changeScreen("Settings", "PlayingScreen");
+        gameScreen.changeScreen(DataForUI.STR_SETTINGS, DataForUI.STR_GAMEPLAY);
     }
     
     private void disconnectClick()
@@ -92,7 +101,7 @@ public class ControllerGamePlay
             stopTimer =true;
             }
             resetTimer();
-            gameScreen.changeScreen("MainMenu", null);
+            gameScreen.changeScreen(DataForUI.STR_MAINMENU, null);
         }
         
     }

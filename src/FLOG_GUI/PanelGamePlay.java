@@ -2,6 +2,7 @@ package FLOG_GUI;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.BoxLayout;
@@ -24,7 +25,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
     JPanel pnlOppList;
     JPanel pnlOppRow;
     JScrollPane jsp;
-    dataForUI DataForUI;
+    DataForUI DataForUI;
     private JLabel[] letter_label_array;
     private int swapLetterLabelIndex;
     private int noOfSwaps;
@@ -36,7 +37,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         bg = new ImageIcon(getClass().getResource("/images/bg_playscreen.png")).getImage();
         pnlOppList = new JPanel();
         pnlOppRow = new JPanel();
-        DataForUI = new dataForUI();
+        DataForUI = new DataForUI();
         
         lblTime.setText("");
         resetValuesForRound();

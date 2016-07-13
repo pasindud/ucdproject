@@ -7,10 +7,10 @@ package FLOG_GUI;
  */
 public class TestGUI_Inputs 
 {
-    dataForUI data;
+    DataForUI data;
     public TestGUI_Inputs() 
     {
-        data = new dataForUI(13); // Set Number of Players here
+        data = new DataForUI(13); // Set Number of Players here
         listOfPlayers();
         setLetters();
     }
