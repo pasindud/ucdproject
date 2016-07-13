@@ -123,6 +123,13 @@ public class GameScreen extends JFrame
         game.addPlayer("Dilshan");
         game.addPlayer("Piumal");
         game.addPlayer("Dinuka");
+        game.addPlayer("snake");
+        game.addPlayer("fff");
+        game.addPlayer("ghgfh");
+        game.addPlayer("ffgff");
+        game.addPlayer("ffghghhf");
+        game.addPlayer("ffghghf");
+        
         
         
         DataForUI.game = game;
@@ -155,6 +162,9 @@ public class GameScreen extends JFrame
                 case DataForUI.STR_ROUNDREADYUP:
                     cl.show(container, screenName);
                     controllerRoundReadyUp.runTimer();
+                    controllerRoundReadyUp.drawPlayers();
+                    if(DataForUI.RoundNum>=2){controllerRoundReadyUp.setTitlePlayers(false);}
+                    else{controllerRoundReadyUp.setTitlePlayers(true);}
                     panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));
                     break;
                 default:

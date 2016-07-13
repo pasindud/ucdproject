@@ -35,14 +35,20 @@ public class ControllerRoundReadyUp {
         TestGUI_Inputs testing = new TestGUI_Inputs();
         if(DataForUI.RoundNum==2)
         {
-            
             //testing.listOfPlayers2();
             //controllerGamePlay
             controllerGamePlay.drawOpponenets();
         }
-       
+         
         gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);
         controllerGamePlay.beginRound();
     }
-    
+    public void drawPlayers()
+    {
+        panelRoundReadyUp.drawPlayers();
+    }
+    public void setTitlePlayers(boolean isPlayers)
+    {
+        panelRoundReadyUp.setTitlePlayers(isPlayers);
+    }
 }

@@ -8,7 +8,10 @@ package FLOG_GUI;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -25,6 +28,7 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
         initComponents();
         bg = new ImageIcon(getClass().getResource("/images/bg_roundReadyUp.png")).getImage();
         DataForUI= new DataForUI();
+        lblTitlePlayersInfo.setVisible(false);
     }
     
     public void setTimer(String tmr)
@@ -38,8 +42,50 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
     {
         this.lblRound.setText(round);
     }
+    private void updatePlayersUI()
+    {
+        pnlPlayerInfoContainer.removeAll();
+        revalidate();
+        repaint();
+    }
     
+    /**
+     * Dynamically display round score board/ready up player list
+     */
+    public void drawPlayers()
+    {
+        pnlPlayerInfoContainer.setLayout(null);
+        updatePlayersUI();
+        JScrollPane jsp;
+        JPanel pnlA = new JPanel();
+        pnlA.setOpaque(false);
+        pnlA.setLayout(new BoxLayout(pnlA, BoxLayout.PAGE_AXIS));
+        pnlA.setBounds(0,0, 700, 290);
+        for(int i=0;i<DataForUI.PdArray.length;i++)
+       {
+          pnlA.add(new ReadyPlayersUI(true,i));
+       }
+        
+        jsp = new JScrollPane(pnlA);
+        jsp.setOpaque(false);
+        jsp.setBorder(null);
+        jsp.getViewport().setOpaque(false);
+        pnlPlayerInfoContainer.add(jsp).setBounds(-82,0, 800, 290);
+    }
     
+    public void setTitlePlayers(boolean isPlayers)
+    {
+        if(isPlayers)
+        {
+            lblTitlePlayers.setVisible(true);
+            lblTitlePlayersInfo.setVisible(false);
+        }
+        else
+        {
+            lblTitlePlayers.setVisible(false);
+            lblTitlePlayersInfo.setVisible(true);
+        }
+    }
     @Override
     protected void paintComponent(Graphics g) {
          g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
@@ -57,9 +103,13 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
 
         lblReadyUpTimer = new javax.swing.JLabel();
         lblRound = new javax.swing.JLabel();
+        pnlPlayerInfoContainer = new javax.swing.JPanel();
+        lblTitlePlayers = new javax.swing.JLabel();
+        lblTitlePlayersInfo = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(900, 619));
         setMinimumSize(new java.awt.Dimension(900, 619));
+        setPreferredSize(new java.awt.Dimension(900, 619));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblReadyUpTimer.setFont(new java.awt.Font("Times New Roman", 0, 40)); // NOI18N
@@ -71,11 +121,26 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
         lblRound.setForeground(new java.awt.Color(255, 255, 255));
         lblRound.setText("1");
         add(lblRound, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 142, -1, -1));
+
+        pnlPlayerInfoContainer.setBackground(new java.awt.Color(204, 255, 255));
+        pnlPlayerInfoContainer.setOpaque(false);
+        pnlPlayerInfoContainer.setLayout(null);
+        add(pnlPlayerInfoContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 240, 616, 290));
+
+        lblTitlePlayers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lbl_players.png"))); // NOI18N
+        lblTitlePlayers.setToolTipText("");
+        add(lblTitlePlayers, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 198, -1, -1));
+
+        lblTitlePlayersInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lbl_players_full.png"))); // NOI18N
+        add(lblTitlePlayersInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 198, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblReadyUpTimer;
     private javax.swing.JLabel lblRound;
+    private javax.swing.JLabel lblTitlePlayers;
+    private javax.swing.JLabel lblTitlePlayersInfo;
+    private javax.swing.JPanel pnlPlayerInfoContainer;
     // End of variables declaration//GEN-END:variables
 }
