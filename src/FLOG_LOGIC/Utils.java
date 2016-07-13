@@ -11,10 +11,10 @@ import java.util.Random;
 public class Utils {
     
     /** Array of vowels. */
-    public final static String[] VOWELS = {"a", "e", "i", "o", "u"};
+    public final static String[] VOWELS = {"A", "E", "I", "O", "U"};
     /** Array of consonants. */
-    public final static String[] CONSONANTS = {"b", "c", "d", "f", "g", "h", 
-    "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"};
+    public final static String[] CONSONANTS = {"B", "C", "D", "F", "G", "H", 
+    "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"};
     /** List of consonants. */
     public final static List<String> CONSONANTS_LIST = 
                                     new ArrayList<>(Arrays.asList(CONSONANTS));
@@ -53,5 +53,36 @@ public class Utils {
             listOfLetters.add(letter);
         }   
         return listOfLetters;
+    }
+    
+    public static String getRandomVowel(){
+        Random rand = new Random();
+        int letterIndex = rand.nextInt(NO_OF_VOWELS);
+        return VOWELS_LIST.get(letterIndex);
+        
+    }
+    
+    public static String getRandomConsonant(){
+        Random rand = new Random();
+        int letterIndex = rand.nextInt(NO_OF_CONSONANTS);
+        return CONSONANTS_LIST.get(letterIndex);
+        
+    }
+    
+    public static String SwapLetter(String letter){
+        String result="";
+        if(Arrays.asList(VOWELS).contains(letter)){
+            result=getRandomVowel();
+            if(result.equalsIgnoreCase(letter)){
+                SwapLetter(letter);
+            }
+        }
+        else{
+        result=getRandomConsonant();
+            if(result.equalsIgnoreCase(letter)){
+                SwapLetter(letter);
+            }
+        }
+        return result;
     }
 }

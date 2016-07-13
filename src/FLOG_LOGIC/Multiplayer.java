@@ -44,14 +44,14 @@ public class Multiplayer {
     /* Epoch time also know as unix time. */
     private long epoch;
 
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
     /**
      * Setup API keys.
      */
-    Multiplayer(){
+    public Multiplayer(){
         App42API.initialize(API_KEY, SECRET_KEY);
         // Used for debugging only.
-        // App42Log.setDebug(true);
+//         App42Log.setDebug(true);
     }
     
     /**
@@ -152,11 +152,15 @@ public class Multiplayer {
     
     
     private boolean createQueue(String name){
-        String queueDescription = "";
+        try{
+        String queueDescription = "a";
         QueueService queueService = App42API.buildQueueService();   
         Queue queue = queueService.createPullQueue(name, queueDescription); 
         String jsonResponse = queue.toString();   
         System.out.println("Log createQueue - " + queue.toString());
+        } catch(Exception e){
+        
+        }
         return true;
     }
 
@@ -169,14 +173,21 @@ public class Multiplayer {
         return true;
     }
     
-    private String getServerQueue(String channelName){
+    /**
+     * Make the name of the channel server queue.
+     * TODO fix issue of non server user pull messages from the server queue.
+     */
+    public String getServerQueue(String channelName){
         return channelName + "_server";
     }
     
     /**
      * This is joining a new non server user.
      */
+    
+    
     public void joinNewPlayer(String playerName, String channelName){
+        try {
         // First create a player queue.
         // Typical player queue name is - playername_channel
         String queueName = playerName + "_" + channelName;
@@ -184,9 +195,13 @@ public class Multiplayer {
         
         // Send the message to the channel queue.
         
-        // Message format - 100 <player name>
+        // Message format to put in the server queue - 100 <player name>
         String message = "100 " + playerName;
-        publishToQueue(channelName, message);
+        publishToQueue(getServerQueue(channelName), message);
+        
+        } catch(Exception e){
+        
+        }
     }
     
     /**
@@ -212,5 +227,27 @@ public class Multiplayer {
             System.out.println(queue.toString());
         }
         return true;
+    }
+    
+    public List<String> readQueue(String queueName){
+        List<String> messages = new ArrayList<String>();
+        try{
+        long  receiveTimeOut = 10000; 
+        QueueService queueService = App42API.buildQueueService();   
+        Queue queue = queueService.getMessages(queueName, receiveTimeOut);    
+        ArrayList<Queue.Message> messageList = queue.getMessageList();    
+        for(Queue.Message message : messageList)    
+        {   
+            messages.add(message.getPayLoad());
+            if (DEBUG) {
+                System.out.println("correlationId is " + message.getCorrelationId());    
+                System.out.println("messageId is " + message.getMessageId());    
+                System.out.println("payLoad is " + message.getPayLoad());    
+            }      
+        }
+        } catch (Exception e){
+        
+        }
+        return messages;
     }
 }
