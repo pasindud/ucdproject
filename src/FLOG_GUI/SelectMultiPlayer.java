@@ -71,7 +71,13 @@ public class SelectMultiPlayer extends JPanel {
         switch(code) {
             // New user joined format - 100 <player name>
             case "100": 
+                String playerName = content;
                 setStatus("User " + content + " joined ");
+                String playerQueue = multiplayer.getClientQueue(channelName, playerName);
+                
+                // Message to acknowledge that the server received the message 
+                String clientMessage = "200 ackJoinServer";
+                multiplayer.publishToQueue(playerQueue, clientMessage);
                 playerNames.add(content.trim());
             break;
         }

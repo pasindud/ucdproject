@@ -51,7 +51,7 @@ public class Multiplayer {
     public Multiplayer(){
         App42API.initialize(API_KEY, SECRET_KEY);
         // Used for debugging only.
-//         App42Log.setDebug(true);
+        // App42Log.setDebug(true);
     }
     
     /**
@@ -131,6 +131,7 @@ public class Multiplayer {
             return false;
         }
     }
+    
     /**
      * Register new users.
      * @param username of the user been registered.
@@ -150,7 +151,9 @@ public class Multiplayer {
         }
     }
     
-    
+    /**
+     * Create a queue for the given name.
+     */
     private boolean createQueue(String name){
         try{
         String queueDescription = "a";
@@ -159,7 +162,8 @@ public class Multiplayer {
         String jsonResponse = queue.toString();   
         System.out.println("Log createQueue - " + queue.toString());
         } catch(Exception e){
-        
+            // No internet
+            // Queue has already been created.
         }
         return true;
     }
@@ -191,8 +195,6 @@ public class Multiplayer {
     /**
      * This is joining a new non server user.
      */
-    
-    
     public void joinNewPlayer(String playerName, String channelName){
         try {
         // First create a player queue.
@@ -207,7 +209,8 @@ public class Multiplayer {
         publishToQueue(getServerQueue(channelName), message);
         
         } catch(Exception e){
-        
+            // No internet 
+            // Queue already created.
         }
     }
     
@@ -256,7 +259,8 @@ public class Multiplayer {
             }      
         }
         } catch (Exception e){
-        
+            // No internet.
+            // Queue has not been created.
         }
         return messages;
     }
