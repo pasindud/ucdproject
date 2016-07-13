@@ -77,7 +77,7 @@ public class ControllerGamePlay
      
      private void runTimer()
      {
-         timerThread = new Thread(new ThreadTimer(panelGamePlay, 45, this));
+         timerThread = new Thread(new ThreadTimer(panelGamePlay, this, DataForUI.RoundTime));
          timerThread.start();
      }
     

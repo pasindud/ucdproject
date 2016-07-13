@@ -28,7 +28,7 @@ public class ControllerMainMenu
     private void startClick()
     {
         gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_MAINMENU);
-        DataForUI.RoundNum=0;
+        DataForUI.RoundNum=1;
        // controllerRoundReadyUp.runTimer();
       //gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);
       //controllerGamePlay.runTimer();  

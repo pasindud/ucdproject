@@ -67,8 +67,10 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
         lblReadyUpTimer.setText("  ");
         add(lblReadyUpTimer, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 140, -1, -1));
 
-        lblRound.setText("jLabel1");
-        add(lblRound, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, -1, -1));
+        lblRound.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
+        lblRound.setForeground(new java.awt.Color(255, 255, 255));
+        lblRound.setText("1");
+        add(lblRound, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 142, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 

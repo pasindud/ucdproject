@@ -25,7 +25,7 @@ public class ControllerRoundReadyUp {
     
     public void runTimer()
      {
-         timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, 10));
+         timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, DataForUI.RoundReadyUpTime));
          timerThread.start();
      }
     
