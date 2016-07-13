@@ -63,6 +63,11 @@ public class PanelGamePlay extends javax.swing.JPanel {
         bl10 = true;
         bl11 = true;
         bl12 = true;
+        
+        for (JLabel x : letter_label_array) {
+            x.setText("-");
+
+        }
     }
 
     private boolean checkAllLetters() {
