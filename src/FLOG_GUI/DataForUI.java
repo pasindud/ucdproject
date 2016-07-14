@@ -48,11 +48,8 @@ public class DataForUI
     public static final String STR_SETTINGS = "Settings";
     public static final String STR_ROUNDREADYUP = "RoundReadyUp";
     public static final String STR_MAINMENU = "MainMenu";
-<<<<<<< HEAD
     public static final String SelectMultiplayer = "SelectMultiPlayer";
-=======
     public static final String STR_WINNER = "WinnerList";
->>>>>>> dev
       
     
     public DataForUI() 
