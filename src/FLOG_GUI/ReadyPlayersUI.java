@@ -44,7 +44,7 @@ public class ReadyPlayersUI extends JPanel
         }
         else
         {
-            otherRounds();
+            otherRounds(playerIndex);
         }
     }
         @Override
@@ -65,9 +65,43 @@ public class ReadyPlayersUI extends JPanel
        
     }
 
-    private void otherRounds()
+    private void otherRounds(int i)
     {
-        
+            JLabel lblName = new JLabel();
+            lblName.setText(DataForUI.PdArray[i].getName());
+            lblName.setHorizontalAlignment(SwingConstants.CENTER);
+            lblName.setHorizontalTextPosition(SwingConstants.CENTER);
+            lblName.setBounds(74, 0,126 ,30);
+            
+            JLabel lblRank = new JLabel();
+            lblRank.setText(String.valueOf(DataForUI.PdArray[i].getPosition()));
+            lblRank.setHorizontalAlignment(SwingConstants.CENTER);
+            lblRank.setHorizontalTextPosition(SwingConstants.CENTER);
+            lblRank.setBounds(0, 0,74 ,30);
+            
+            JLabel lblLetters = new JLabel();
+            lblLetters.setText(DataForUI.PdArray[i].getName());
+            lblLetters.setHorizontalAlignment(SwingConstants.CENTER);
+            lblLetters.setHorizontalTextPosition(SwingConstants.CENTER);
+            lblLetters.setBounds(204, 0,151 ,30);
+            
+            JLabel lblWord = new JLabel();
+            lblWord.setText(DataForUI.PdArray[i].getName());
+            lblWord.setHorizontalAlignment(SwingConstants.CENTER);
+            lblWord.setHorizontalTextPosition(SwingConstants.CENTER);
+            lblWord.setBounds(358, 0,135 ,30);
+            
+            JLabel lblScore = new JLabel();
+            lblScore.setText(String.valueOf(DataForUI.PdArray[i].getScore()));
+            lblScore.setHorizontalAlignment(SwingConstants.CENTER);
+            lblScore.setHorizontalTextPosition(SwingConstants.CENTER);
+            lblScore.setBounds(497, 0,100 ,30);
+            
+            this.add(lblRank);
+            this.add(lblName);
+            this.add(lblLetters);
+            this.add(lblWord);
+            this.add(lblScore);
         
     }
     
