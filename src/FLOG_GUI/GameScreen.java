@@ -1,7 +1,7 @@
 
 package FLOG_GUI;
 
-<<<<<<< HEAD
+import FLOG_LOGIC.Game;
 import static FLOG_GUI.DataForUI.SelectMultiplayer;
 =======
 import FLOG_LOGIC.Game;
@@ -94,8 +94,8 @@ public class GameScreen extends JFrame
         panelPlaying = new PanelGamePlay();
         panelSettings = new PanelSettings();
         panelRoundReadyUp = new PanelRoundReadyUp();
-<<<<<<< HEAD
-
+        panelWinners = new PanelWinners();
+        
         SelectMultiPlayer selectMultiPlayer = new SelectMultiPlayer();
 =======
         panelWinners = new PanelWinners();
@@ -113,14 +113,13 @@ public class GameScreen extends JFrame
         container.add(panelWinners,dataForUI.STR_WINNER);
         this.getContentPane().add(container,BorderLayout.CENTER);
         
-<<<<<<< HEAD
-        TestGUI_Inputs testing = new TestGUI_Inputs();
-        
+        //TestGUI_Inputs testing = new TestGUI_Inputs();
+        initateGame();
         controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
         controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
         controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
         controllerSettings = new ControllerSettings(panelSettings, this);
-=======
+       controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
         //TestGUI_Inputs testing = new TestGUI_Inputs();
         initateGame();
       controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
