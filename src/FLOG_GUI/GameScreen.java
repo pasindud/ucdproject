@@ -58,6 +58,13 @@ public class GameScreen extends JFrame {
         container = new JPanel();
         container.setLayout(mainPanelCards);
         container.add(selectMultiPlayer, dataForUI.SelectMultiplayer);
+        
+        SelectMultiPlayer selectMultiPlayer2 = new SelectMultiPlayer();
+        JFrame ui2=new JFrame("ui2");
+        ui2.setSize(new Dimension(900, 619)); 
+        ui2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ui2.add(selectMultiPlayer2);
+        ui2.setVisible(true);
     }
     
     private void createAndShowGUI() 
@@ -66,7 +73,7 @@ public class GameScreen extends JFrame {
         preparePanels();
 //        showMainMenu();
         this.setSize(new Dimension(900, 619)); 
-        this.setUndecorated(true);
+        //this.setUndecorated(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.validate();

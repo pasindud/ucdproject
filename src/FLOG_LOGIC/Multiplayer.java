@@ -215,6 +215,24 @@ public class Multiplayer {
     }
     
     /**
+     * This is starting a new game
+     */
+    public void startNewgame( String channelName){
+        try {
+        
+        
+        // Send the message to the channel queue.
+        
+        // Message format to put in the server queue - 100 <player name>
+        String message = "101 Start";
+        publishToQueue(getServerQueue(channelName), message);
+        
+        } catch(Exception e){
+            // No internet 
+            // Queue already created.
+        }
+    }
+    /**
      * Join the new user.
      * 
      * Start the game
