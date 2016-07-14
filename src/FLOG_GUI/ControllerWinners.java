@@ -19,6 +19,7 @@ public class ControllerWinners {
         this.panelWinners = panelWinners;
         this.gameScreen = gameScreen;
         this.controllerGamePlay = controllerGamePlay;
+        initializeWinnersUIListeners();
     }
     
     public void drawPlayers()
@@ -29,6 +30,14 @@ public class ControllerWinners {
     public void setWinner(int rank)
     {
         panelWinners.setWinnerLabel(rank);
+    }
+
+    private void initializeWinnersUIListeners() {
+        
+      final int _exit =0;
+      final int _back =0;
+      final int _backToMainmenu=0;
+        
     }
     
     
