@@ -204,7 +204,6 @@ public class SelectMultiPlayer extends JPanel {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        
         jScrollPane1 = new javax.swing.JScrollPane();
         txtChannelName = new javax.swing.JTextPane();
         startServerButton = new javax.swing.JButton();
