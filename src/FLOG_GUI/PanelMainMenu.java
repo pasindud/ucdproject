@@ -26,20 +26,20 @@ public class PanelMainMenu extends javax.swing.JPanel {
     {
         Component[] cmpList = this.getComponents();
         
-        for(int i =0;i<cmpList.length;i++)
+       /* for(int i =0;i<cmpList.length;i++)
         {
               System.out.println(i + " "+cmpList[i].getY()+" "+ cmpList[i].getName() );
-        }
+        }*/
         return this.pnlTopBorder.getComponent(x);
     }
     public Component getCompCon(int x)
     {
         Component[] cmpList = this.getComponents();
-        
+        /*
         for(int i =0;i<cmpList.length;i++)
         {
               System.out.println(i + " "+cmpList[i].getY()+" "+ cmpList[i].getName() );
-        }
+        }*/
         return this.getComponent(x);
     }
     

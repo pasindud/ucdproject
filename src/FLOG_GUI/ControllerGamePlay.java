@@ -1,7 +1,6 @@
 
 package FLOG_GUI;
 
-//import static FLOG_GUI.GameScreen.panelGamePlay;
 
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -25,18 +24,22 @@ public class ControllerGamePlay
     int mouseX=0;
     int mouseY=0;
     char[] letterArr = new char[12];
-    
-    
-    
-    public ControllerGamePlay(PanelGamePlay panelGamePlay, GameScreen gameScreen) {
+    DataForUI data;
+    TestGUI_Inputs testGUI_Inputs;
+    //Constructor 
+    public ControllerGamePlay(PanelGamePlay panelGamePlay, GameScreen gameScreen) 
+    {
+        testGUI_Inputs = new TestGUI_Inputs(13);
+        
         this.panelGamePlay = panelGamePlay;
         this.gameScreen = gameScreen;
-        DataForUI data = new DataForUI();
+        data = new DataForUI();
         initializeGamePlayListeners();
         setPlayerInfo("Snake Eyes",999,5435,4);
         panelGamePlay.drawOpponents(data.getPdArray());
     }
     
+    //Use this method to update the player's info
     public void setPlayerInfo(String playerName, int Rank, int score, int round)
     {
         panelGamePlay.drawPlayerName(playerName);
@@ -46,10 +49,16 @@ public class ControllerGamePlay
      
     }
     
+    public void drawOpponenets()
+    {
+        panelGamePlay.drawOpponents(data.getPdArray());
+    }
+    
+    
     private void submitClick(String ans)
     {
              stopTimer = true;
-             
+          
     }
     
      private void generateClick() 
@@ -69,22 +78,36 @@ public class ControllerGamePlay
          
      }
      
+     //To be called externally to start the round
      public void beginRound()
      {
          runTimer();
          panelGamePlay.resetValuesForRound();
      }
      
+     
+     /**
+      * Start Round Timer
+      * If you want to Change Round time, then change the value of
+      * the RoundTime variable at DataForUI class 
+      */
      private void runTimer()
      {
          timerThread = new Thread(new ThreadTimer(panelGamePlay, this, DataForUI.RoundTime));
          timerThread.start();
      }
     
+    //Reset Timer 
     public void resetTimer()
     {
         panelGamePlay.setTimer("00");
     }
+    
+    /**
+     * This method is automatically called when the timer stops,
+     * this method will simply change the screen to Round ready up screen and
+     * prepare it for the next round
+     */
     public void startNextRound()
     {
         if(DataForUI.RoundNum<5)
@@ -94,11 +117,20 @@ public class ControllerGamePlay
         gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_GAMEPLAY);
     }
     
-    private void settingsClick()
+    public void endGame()
     {
+        gameScreen.changeScreen(DataForUI.STR_WINNER, DataForUI.STR_GAMEPLAY);
+    }
+    //Change screen to settings
+    private void settingsClick()
+    {        
         gameScreen.changeScreen(DataForUI.STR_SETTINGS, DataForUI.STR_GAMEPLAY);
     }
     
+    /**
+     * Directly disconnect from the current game,
+     * user will be prompted to confirm their action.
+     */
     private void disconnectClick()
     {
         int res = JOptionPane.showConfirmDialog(null, "Do you wan to disconnect?", "Warning", JOptionPane.YES_NO_OPTION);
@@ -113,8 +145,16 @@ public class ControllerGamePlay
         
     }
     
+    
+    /**
+     * Below Code listens for events happening in the UI,
+     * which is the PanelGamePlay JPanel and Handles Label icon transition
+     * to give the feel of a custom button
+    */
+    
     private void initializeGamePlayListeners()
     {
+        //Component ID's
         final int _submit=15;
         final int _generate=14;
         final int _vowels=12;
@@ -122,6 +162,8 @@ public class ControllerGamePlay
         final int _answer =16;
         final int _settings =1;
         final int _disconnect=0;
+        
+        
         final JTextField txt = (JTextField)panelGamePlay.getCompBottom(_answer);
               
         

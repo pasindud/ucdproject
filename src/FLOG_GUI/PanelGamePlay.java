@@ -86,8 +86,18 @@ public class PanelGamePlay extends javax.swing.JPanel {
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
     }
 
+    public void updateOpponents()
+    {
+        pnlOpponents.removeAll();
+        pnlOppList = new JPanel();
+        pnlOppRow = new JPanel();
+        revalidate();
+        repaint();
+    }
+    
     public void drawOpponents(PlayerData[] pdArr) {
 
+        updateOpponents();
         int count = 0;
         int div3 = (int) pdArr.length / 3;
         int loopTimes = div3 + 1;
@@ -154,27 +164,27 @@ public class PanelGamePlay extends javax.swing.JPanel {
     public Component getCompTop(int x) {
         Component[] cmpList = this.getComponents();
 
-        for (int i = 0; i < cmpList.length; i++) {
+       /* for (int i = 0; i < cmpList.length; i++) {
             System.out.println(i + " " + cmpList[i].getY() + " " + cmpList[i].getName());
-        }
+        }*/
         return this.pnlTop.getComponent(x);
     }
 
     public Component getCompBottom(int x) {
         Component[] cmpList = this.pnlBottom.getComponents();
 
-        for (int i = 0; i < cmpList.length; i++) {
+        /*for (int i = 0; i < cmpList.length; i++) {
             System.out.println(i + " " + cmpList[i].getY() + " " + cmpList[i].getName());
-        }
+        }*/
         return this.pnlBottom.getComponent(x);
     }
 
     public Component getCompTopBorder(int x) {
         Component[] cmpList = this.pnlTopBorder.getComponents();
 
-        for (int i = 0; i < cmpList.length; i++) {
+        /*for (int i = 0; i < cmpList.length; i++) {
             System.out.println(i + " " + cmpList[i].getY() + " " + cmpList[i].getName());
-        }
+        }*/
         return this.pnlTopBorder.getComponent(x);
     }
 
@@ -674,12 +684,12 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
     private void pnlTopBorderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
 
-        System.out.println("dragged");
+        //System.out.println("dragged");
 
     }//GEN-LAST:event_pnlTopBorderMouseDragged
 
     private void pnlTopBorderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMousePressed
-        System.out.println("pressed");
+        //System.out.println("pressed");
     }//GEN-LAST:event_pnlTopBorderMousePressed
 
     private void btnGenerateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateMouseClicked

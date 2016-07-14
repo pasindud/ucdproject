@@ -76,11 +76,18 @@ public class ThreadTimer implements Runnable
             }
         }
     
-        controllerGamePlay.startNextRound();
+        if(DataForUI.RoundNum<DataForUI.RoundLimit)
+        {
+            controllerGamePlay.startNextRound();
+        }
+        else
+        {
+            controllerGamePlay.endGame();
+        }
     }
      private void startReadyUpCountDown(int sec)
     {
-        System.out.println("read up timer thread started");
+        
         for(int i=sec;i>=0;i--)
         {
                         
@@ -92,7 +99,7 @@ public class ThreadTimer implements Runnable
             if(i<10)
             {
                 panelRoundReadyUp.setTimer("0"+i);
-                System.out.println(""+i);
+                
             }
             else
             {
