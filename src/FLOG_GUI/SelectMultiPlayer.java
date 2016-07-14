@@ -28,16 +28,10 @@ public class SelectMultiPlayer extends JPanel {
     /** Name of the player. */
     private String playerName = null;
     int posX=0,posY=0;
-    
+    private boolean IS_USER_JOINED = false;
     // Consumer producer client
-    Catcher clientCatcher = new Catcher(false);
+    Catcher clientCatcher = new Catcher();
     Thrower clientThrower = new Thrower();
-    
-    // Consumer producer server 
-    Catcher serverCatcher = new Catcher(true);
-    Thrower serverThrower = new Thrower();
-    
-    List<String> playerNames = new ArrayList<String>();
     Multiplayer multiplayer = new Multiplayer();
     
     /**
@@ -45,18 +39,10 @@ public class SelectMultiPlayer extends JPanel {
      */
     public SelectMultiPlayer() {
         initComponents();
-        // Catch message thrown by the queue checker.
         clientThrower.addThrowListener(clientCatcher);
-        serverThrower.addThrowListener(serverCatcher);
-        // Check run, only used for testing.
-        /*
-        channelName = txtChannelName.getText();
-        txtPlayerName.setText("pasindu");
-        playerName = txtPlayerName.getText();
-        multiplayer.joinNewPlayer(playerName, channelName);
-        new Thread(new CheckQueueThread(multiplayer.getServerQueue(channelName), thrower)).start();
-        */
     }
+    
+    private Server server = null;
     
     /**
      * Decode the message received by the client
@@ -66,71 +52,30 @@ public class SelectMultiPlayer extends JPanel {
         String[] segments = message.split(" ");
         if (segments.length < 2) {
             return;
-    }
+        }
         String code = segments[0];
         String content = segments[1];
         switch (code) {
-            case "300":
+            case "200":
+                // User joined the correctly.
+                break;
+            case "201":
                 this.playerName = txtPlayerName.getText().trim();
-                MultiPlayerTestGUI gui = new MultiPlayerTestGUI(this.channelName, this.playerName, playerNames);
+                // TODO add player names.
+                MultiPlayerTestGUI gui = new MultiPlayerTestGUI(this.channelName, this.playerName, null);
                 gui.setVisible(true);
                 break;
         }
     }
     
     /**
-     * Decode the message received by the server.
-     */
-    public synchronized void decodeServerMessage(String message){
-        System.out.println("Decoding message to server message - " + message);
-        String[] segments = message.split(" ");
-        if (segments.length < 2) {
-            return;
-        }
-        String code = segments[0];
-        String content = segments[1];
-        switch(code) {
-            // New user joined format - 100 <player name>
-            case "100": 
-                String playerName = content;
-                setServerStatus("User " + content + " joined ");
-                String playerQueue = multiplayer.getClientQueue(channelName, playerName);
-                
-                // Message to acknowledge that the server received the message 
-                String clientMessage = "200 ackJoinServer";
-                multiplayer.publishToQueue(playerQueue, clientMessage);
-                playerNames.add(content.trim());
-            break;
-            // Start new game window
-            case "101":
-                String clientMessagestart = "300 startgamegui";
-                for (String player : playerNames) {
-                    String startplayerQueue = multiplayer.getClientQueue(channelName, player);
-                    multiplayer.publishToQueue(startplayerQueue, clientMessagestart);
-        }
-        }
-        
-    }
-    
-    /**
      * Listens to messages thrown by checkQueueThread.
      */
     public class Catcher implements ThrowListener {
-
-        private boolean isServerCatch = true;
-
-        public Catcher(boolean isServerCatch) {
-            this.isServerCatch = isServerCatch;
-        }
-        
         @Override
         public void Catch(String message) {
             System.out.println("Caught " + message);
-            if (isServerCatch) {    
-                decodeServerMessage(message);
-            } else {
-                decodeClientMessage(message);
-            }
+            decodeClientMessage(message);
         }
     }
     
@@ -140,17 +85,19 @@ public class SelectMultiPlayer extends JPanel {
     private void startServerButtonMouseClicked(MouseEvent evt) {
         channelName = txtChannelName.getText();
         multiplayer.createServer(channelName);
-        
+        setServerStatus("Starting Server");
         // Server listen's to it's queue.
-        String serverQueueName = multiplayer.getServerQueue(channelName);
-        Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, serverThrower);
-        backgroundServerQueueCheck.start();
+        server = new Server(channelName);
+        server.start();
+        setServerStatus("Sever started");
+        startServerButton.setEnabled(false);
     }
 
     /**
      * Join the given server {@code channelName}
      */
     private void joinServerButtonMouseClicked(MouseEvent evt) {
+        setClientStatus("Joining server");
         channelName = txtChannelName.getText();
         playerName = txtPlayerName.getText();
         multiplayer.joinNewPlayer(playerName, channelName);
@@ -159,19 +106,7 @@ public class SelectMultiPlayer extends JPanel {
         String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
         Thread backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
         backgroundClientQueueCheck.start();
-    }
-    
-    /**
-     * starts the game
-     */
-    private void startGameButtonActionClicked(MouseEvent evt) {
-        channelName = txtChannelName.getText();
-        playerName = txtPlayerName.getText();
-        multiplayer.startNewgame(channelName);
-
-        String serverQueueName = multiplayer.getServerQueue(channelName);
-        Thread backgroundServerQueueCheck = new CheckQueueThread(serverQueueName, serverThrower);
-        backgroundServerQueueCheck.start();
+        joinServerButton.setEnabled(false);
     }
 
     /**
@@ -182,7 +117,9 @@ public class SelectMultiPlayer extends JPanel {
         String text = jTextPane2.getText();
         jTextPane2.setText(text += "\n" + status);
     }
-
+    
+    
+    /** Set of the server status. */
     public synchronized void setClientStatus(String status){
         System.out.println("Set status client - " + status);
         String text = txtClientMessages.getText();
@@ -202,7 +139,7 @@ public class SelectMultiPlayer extends JPanel {
         txtChannelName = new javax.swing.JTextPane();
         startServerButton = new javax.swing.JButton();
         joinServerButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnStartGame = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -227,7 +164,12 @@ public class SelectMultiPlayer extends JPanel {
             }
         });
 
-        jButton1.setText("Start Game");
+        btnStartGame.setText("Start Game");
+        btnStartGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStartGameMouseClicked(evt);
+            }
+        });
 
         jTextPane2.setText("Server messages - ");
         jTextPane2.setToolTipText("");
@@ -253,7 +195,7 @@ public class SelectMultiPlayer extends JPanel {
                         .addComponent(jScrollPane1)
                         .addComponent(startServerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(joinServerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnStartGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(102, Short.MAX_VALUE))
@@ -275,15 +217,21 @@ public class SelectMultiPlayer extends JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(joinServerButton)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnStartGame)
                 .addContainerGap(154, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnStartGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseClicked
+        channelName = txtChannelName.getText();
+        playerName = txtPlayerName.getText();
+        server.startGame();
+    }//GEN-LAST:event_btnStartGameMouseClicked
+
     // Listen
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnStartGame;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

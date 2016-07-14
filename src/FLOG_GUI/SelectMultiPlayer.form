@@ -25,7 +25,7 @@
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Component id="startServerButton" max="32767" attributes="0"/>
                       <Component id="joinServerButton" pref="186" max="32767" attributes="0"/>
-                      <Component id="jButton1" max="32767" attributes="0"/>
+                      <Component id="btnStartGame" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -53,7 +53,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="joinServerButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnStartGame" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="154" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -90,10 +90,13 @@
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="joinServerButtonMouseClicked"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnStartGame">
       <Properties>
         <Property name="text" type="java.lang.String" value="Start Game"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnStartGameMouseClicked"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>

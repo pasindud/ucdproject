@@ -117,13 +117,6 @@ public class GameScreen extends JFrame {
         controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
         controllerSettings = new ControllerSettings(panelSettings, this);
         controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
-        //TestGUI_Inputs testing = new TestGUI_Inputs();
-        initateGame();
-        controllerGamePlay = new ControllerGamePlay(panelPlaying, this);
-        controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp, this, controllerGamePlay);
-        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
-        controllerSettings = new ControllerSettings(panelSettings, this);
-        controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
     }
 
     private void showMainMenu() {

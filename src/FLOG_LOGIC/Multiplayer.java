@@ -219,8 +219,6 @@ public class Multiplayer {
      */
     public void startNewgame( String channelName){
         try {
-        
-        
         // Send the message to the channel queue.
         
         // Message format to put in the server queue - 100 <player name>
@@ -281,5 +279,13 @@ public class Multiplayer {
             // Queue has not been created.
         }
         return messages;
+    }
+    
+    public void broadcast(String channelName,
+            ArrayList<String> playerNames, String message){
+        for (String player : playerNames) {
+            String playerQueueName = getClientQueue(channelName, player);
+            publishToQueue(playerQueueName, message);
+        }
     }
 }

@@ -54,7 +54,6 @@ public class MultiPlayerTestGUI extends javax.swing.JFrame {
         this.playerNames = playerlist;
         lbll1.setText(FLOG_LOGIC.Utils.getRandomVowel());
         lbll2.setText(FLOG_LOGIC.Utils.getRandomConsonant());
-
     }
 
     /**
