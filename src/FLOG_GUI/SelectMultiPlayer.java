@@ -10,16 +10,11 @@ import FLOG_LOGIC.Multiplayer;
 import FLOG_LOGIC.Thrower;
 import FLOG_LOGIC.ThrowListener;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import java.*;
-import java.awt.event.ActionEvent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
@@ -63,10 +58,24 @@ public class SelectMultiPlayer extends JPanel {
         */
     }
     
-    
-    /** Decode the message received by the client  */
-    public synchronized void decodeClientMessage(String message){
+    /**
+     * Decode the message received by the client
+     */
+    public synchronized void decodeClientMessage(String message) {
         setClientStatus("Message in client - " + message);
+        String[] segments = message.split(" ");
+        if (segments.length < 2) {
+            return;
+    }
+        String code = segments[0];
+        String content = segments[1];
+        switch (code) {
+            case "300":
+                this.playerName = txtPlayerName.getText().trim();
+                MultiPlayerTestGUI gui = new MultiPlayerTestGUI(this.channelName, this.playerName, playerNames);
+                gui.setVisible(true);
+                break;
+        }
     }
     
     /**
@@ -92,6 +101,13 @@ public class SelectMultiPlayer extends JPanel {
                 multiplayer.publishToQueue(playerQueue, clientMessage);
                 playerNames.add(content.trim());
             break;
+            // Start new game window
+            case "101":
+                String clientMessagestart = "300 startgamegui";
+                for (String player : playerNames) {
+                    String startplayerQueue = multiplayer.getClientQueue(channelName, player);
+                    multiplayer.publishToQueue(startplayerQueue, clientMessagestart);
+        }
         }
         
     }
@@ -100,6 +116,7 @@ public class SelectMultiPlayer extends JPanel {
      * Listens to messages thrown by checkQueueThread.
      */
     public class Catcher implements ThrowListener {
+
         private boolean isServerCatch = true;
 
         public Catcher(boolean isServerCatch) {
@@ -144,6 +161,19 @@ public class SelectMultiPlayer extends JPanel {
         backgroundClientQueueCheck.start();
     }
     
+    /**
+     * starts the game
+     */
+    private void startGameButtonActionClicked(MouseEvent evt) {
+        channelName = txtChannelName.getText();
+        playerName = txtPlayerName.getText();
+        multiplayer.startNewgame(channelName);
+
+        String serverQueueName = multiplayer.getServerQueue(channelName);
+        Thread backgroundServerQueueCheck = new CheckQueueThread(serverQueueName, serverThrower);
+        backgroundServerQueueCheck.start();
+    }
+
     /**
      * Set the status from the queue reading.
      */
