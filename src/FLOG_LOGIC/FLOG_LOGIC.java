@@ -29,7 +29,7 @@ public class FLOG_LOGIC {
         game.addPlayer("Rashmika");
         game.addPlayer("Navka");
         game.addPlayer("Shaf");
-        
+                               
         // Run a new round
         game.startNewRound();
         

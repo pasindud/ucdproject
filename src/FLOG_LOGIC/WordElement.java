@@ -8,13 +8,13 @@ import java.util.List;
  * @author Pasindu
  * Used to calculate the word points.
  */
-class WordElement extends FlogElement {
+public class WordElement extends FlogElement {
     /** Letter of the words. */    
     private String letters[];
     /** The word. */
     private String word;
 
-    WordElement(String word){
+    public WordElement(String word){
        this.word = word;
        this.letters = word.split("");
     }
