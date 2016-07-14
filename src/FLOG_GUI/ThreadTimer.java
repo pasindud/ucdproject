@@ -76,7 +76,14 @@ public class ThreadTimer implements Runnable
             }
         }
     
-        controllerGamePlay.startNextRound();
+        if(DataForUI.RoundNum<DataForUI.RoundLimit)
+        {
+            controllerGamePlay.startNextRound();
+        }
+        else
+        {
+            controllerGamePlay.endGame();
+        }
     }
      private void startReadyUpCountDown(int sec)
     {

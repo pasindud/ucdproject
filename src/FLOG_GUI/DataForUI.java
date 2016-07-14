@@ -25,8 +25,14 @@ public class DataForUI
     public static Game game;
     public static ArrayList<Player> playerList;
     
+    //Holds information of Player
+    public static Player player;
+    
     //LCD Font for timers
     public static Font LCD;
+    
+    //Limits of rounds per game
+    public static int RoundLimit =5;
     
     //Current Round Number
     public static int RoundNum;
@@ -42,6 +48,7 @@ public class DataForUI
     public static final String STR_SETTINGS = "Settings";
     public static final String STR_ROUNDREADYUP = "RoundReadyUp";
     public static final String STR_MAINMENU = "MainMenu";
+    public static final String STR_WINNER = "WinnerList";
       
     
     public DataForUI() 
@@ -64,6 +71,13 @@ public class DataForUI
         } catch (IOException ex) {
             System.out.println(ex.getMessage().toString());
         }
+    }
+    
+    public static void setPlayer(int rank, String name,int score)
+    {
+        player.setName(name);
+        player.setListIndex(rank);
+        player.setTotalScore(score);
     }
 
     public static PlayerData[] getPdArray() {

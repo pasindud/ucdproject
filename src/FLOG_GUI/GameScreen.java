@@ -30,7 +30,7 @@ public class GameScreen extends JFrame
     private PanelMainMenu panelMainMenu;
     private PanelSettings panelSettings;
     private PanelRoundReadyUp panelRoundReadyUp;
-    
+    private PanelWinners panelWinners;
     //Holds the CardLayout
     private JPanel container; 
     
@@ -39,6 +39,7 @@ public class GameScreen extends JFrame
     ControllerMainMenu controllerMainMenu;
     ControllerSettings controllerSettings;
     ControllerRoundReadyUp controllerRoundReadyUp;
+    ControllerWinners controllerWinners;
     
     //CardLayout which will hold all the panels
     CardLayout mainPanelCards = new CardLayout();
@@ -84,7 +85,8 @@ public class GameScreen extends JFrame
         panelPlaying = new PanelGamePlay();
         panelSettings = new PanelSettings();
         panelRoundReadyUp = new PanelRoundReadyUp();
-
+        panelWinners = new PanelWinners();
+        
         //Adding Panels to Card Layout
         container = new JPanel();
         
@@ -93,7 +95,7 @@ public class GameScreen extends JFrame
         container.add(panelPlaying,dataForUI.STR_GAMEPLAY);
         container.add(panelSettings,dataForUI.STR_SETTINGS);
         container.add(panelRoundReadyUp,dataForUI.STR_ROUNDREADYUP);
-     
+        container.add(panelWinners,dataForUI.STR_WINNER);
         this.getContentPane().add(container,BorderLayout.CENTER);
         
         //TestGUI_Inputs testing = new TestGUI_Inputs();
@@ -102,6 +104,7 @@ public class GameScreen extends JFrame
       controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
        controllerSettings = new ControllerSettings(panelSettings, this);
+       controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
        
    
     }
@@ -159,6 +162,7 @@ public class GameScreen extends JFrame
                     cl.show(container, screenName);
                     controllerSettings.setReturnTo(invokerName);
                     break;
+                    
                 case DataForUI.STR_ROUNDREADYUP:
                     cl.show(container, screenName);
                     controllerRoundReadyUp.runTimer();
@@ -166,6 +170,13 @@ public class GameScreen extends JFrame
                     if(DataForUI.RoundNum>=2){controllerRoundReadyUp.setTitlePlayers(false);}
                     else{controllerRoundReadyUp.setTitlePlayers(true);}
                     panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));
+                    break;
+                    
+                case DataForUI.STR_WINNER:
+                    cl.show(container, screenName);
+                    controllerWinners.drawPlayers();
+                    controllerWinners.setWinner(2);
+                    //controllerWinners.setWinner(dataForUI.player.getListIndex());
                     break;
                 default:
                     cl.show(container, screenName);

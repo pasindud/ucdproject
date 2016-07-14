@@ -117,6 +117,10 @@ public class ControllerGamePlay
         gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_GAMEPLAY);
     }
     
+    public void endGame()
+    {
+        gameScreen.changeScreen(DataForUI.STR_WINNER, DataForUI.STR_GAMEPLAY);
+    }
     //Change screen to settings
     private void settingsClick()
     {        
