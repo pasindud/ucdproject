@@ -31,6 +31,9 @@ public class GameScreen extends JFrame
     private PanelSettings panelSettings;
     private PanelRoundReadyUp panelRoundReadyUp;
     private PanelWinners panelWinners;
+    private PanelLogin panelLogin;
+    private PanelRegister panelRegister;    
+    
     //Holds the CardLayout
     private JPanel container; 
     
@@ -40,6 +43,8 @@ public class GameScreen extends JFrame
     ControllerSettings controllerSettings;
     ControllerRoundReadyUp controllerRoundReadyUp;
     ControllerWinners controllerWinners;
+    ControllerLogin controllerLogin;
+    ControllerRegister controllerRegister;
     
     //CardLayout which will hold all the panels
     CardLayout mainPanelCards = new CardLayout();
@@ -86,6 +91,8 @@ public class GameScreen extends JFrame
         panelSettings = new PanelSettings();
         panelRoundReadyUp = new PanelRoundReadyUp();
         panelWinners = new PanelWinners();
+        panelLogin = new PanelLogin();
+        panelRegister = new PanelRegister();
         
         //Adding Panels to Card Layout
         container = new JPanel();
@@ -96,15 +103,19 @@ public class GameScreen extends JFrame
         container.add(panelSettings,dataForUI.STR_SETTINGS);
         container.add(panelRoundReadyUp,dataForUI.STR_ROUNDREADYUP);
         container.add(panelWinners,dataForUI.STR_WINNER);
+        container.add(panelLogin,dataForUI.STR_LOGIN);
+        container.add(panelRegister,dataForUI.STR_REGISTER);
         this.getContentPane().add(container,BorderLayout.CENTER);
         
         //TestGUI_Inputs testing = new TestGUI_Inputs();
         initateGame();
-      controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
-      controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
+       controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
+       controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
        controllerSettings = new ControllerSettings(panelSettings, this);
        controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
+       controllerLogin = new ControllerLogin(panelLogin, this);
+       controllerRegister = new ControllerRegister(panelRegister, this);
        
    
     }
@@ -114,7 +125,8 @@ public class GameScreen extends JFrame
     
     private void showMainMenu()
     {
-        changeScreen(dataForUI.STR_MAINMENU, null);
+        //changeScreen(dataForUI.STR_MAINMENU, null);
+        changeScreen(DataForUI.STR_LOGIN, DataForUI.STR_MAINMENU);
       
     }
     private void initateGame()
@@ -178,6 +190,13 @@ public class GameScreen extends JFrame
                     controllerWinners.setWinner(2);
                     //controllerWinners.setWinner(dataForUI.player.getListIndex());
                     break;
+                
+                case DataForUI.STR_LOGIN:
+                    cl.show(container, screenName);
+                    
+                case DataForUI.STR_REGISTER:
+                    cl.show(container, screenName);
+                    
                 default:
                     cl.show(container, screenName);
                     break;

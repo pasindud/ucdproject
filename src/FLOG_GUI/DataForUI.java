@@ -49,6 +49,8 @@ public class DataForUI
     public static final String STR_ROUNDREADYUP = "RoundReadyUp";
     public static final String STR_MAINMENU = "MainMenu";
     public static final String STR_WINNER = "WinnerList";
+    public static final String STR_LOGIN ="Login";
+    public static final String STR_REGISTER="Register";
       
     
     public DataForUI() 
