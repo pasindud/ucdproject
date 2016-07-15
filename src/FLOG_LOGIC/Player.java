@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public class Player {
     private String name;
-    private PlayerRound[] playerRounds = new PlayerRound[5];
+    private PlayerRound[] playerRounds = new PlayerRound[6]; //[dushan] : made this 6 instead of 5
     private int totalScore;
     private boolean isKicked = false;
     private int listIndex;
