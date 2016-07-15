@@ -85,7 +85,8 @@ public class ThreadTimer implements Runnable
             controllerGamePlay.endGame();
         }
     }
-     private void startReadyUpCountDown(int sec)
+    
+    private void startReadyUpCountDown(int sec)
     {
         
         for(int i=sec;i>=0;i--)

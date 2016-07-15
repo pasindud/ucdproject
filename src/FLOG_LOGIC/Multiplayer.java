@@ -44,7 +44,7 @@ public class Multiplayer {
     /* Epoch time also know as unix time. */
     private long epoch;
 
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
     /**
      * Setup API keys.
      */

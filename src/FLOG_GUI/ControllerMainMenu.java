@@ -30,13 +30,13 @@ public class ControllerMainMenu {
      * multiplayer
      */
     private void startClick() {
-        gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_MAINMENU);
+        // gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_MAINMENU);
+        gameScreen.changeScreen(DataForUI.SelectMultiplayer, DataForUI.STR_MAINMENU);
         DataForUI.RoundNum = 1;
-
     }
 
     private void multiplayerClick() {
-        gameScreen.changeScreen(DataForUI.SelectMultiplayer, DataForUI.STR_MAINMENU);
+//        gameScreen.changeScreen(DataForUI.SelectMultiplayer, DataForUI.STR_MAINMENU);
 
     }
 

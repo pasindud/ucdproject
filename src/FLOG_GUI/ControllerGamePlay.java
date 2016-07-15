@@ -33,9 +33,12 @@ public class ControllerGamePlay
         
         this.panelGamePlay = panelGamePlay;
         this.gameScreen = gameScreen;
-        data = new DataForUI();
+//        data = new DataForUI();
         initializeGamePlayListeners();
         setPlayerInfo("Snake Eyes",999,5435,4);
+        if (data == null) {
+            return;
+        }
         panelGamePlay.drawOpponents(data.getPdArray());
     }
     
@@ -78,13 +81,15 @@ public class ControllerGamePlay
          
      }
      
+     public void preRoundStart(){
+        panelGamePlay.resetValuesForRound();
+     }
+     
      //To be called externally to start the round
      public void beginRound()
      {
          runTimer();
-         panelGamePlay.resetValuesForRound();
      }
-     
      
      /**
       * Start Round Timer

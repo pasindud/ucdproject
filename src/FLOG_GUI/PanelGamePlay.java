@@ -29,6 +29,10 @@ public class PanelGamePlay extends javax.swing.JPanel {
     private JLabel[] letter_label_array;
     private int swapLetterLabelIndex;
     private int noOfSwaps;
+    public String firstLetter;
+    public String secondLetter;
+    public String channelName;
+    public String username;
     //Use to check if the letter was clicked
     private boolean bl1, bl2, bl3, bl4, bl5, bl6, bl7, bl8, bl9, bl10, bl11, bl12;
 
@@ -43,12 +47,15 @@ public class PanelGamePlay extends javax.swing.JPanel {
         resetValuesForRound();
     }
 
+    
     public void resetValuesForRound() {
         // Resets default values in each round
         noOfSwaps = 0;
         swapLetterLabelIndex = -99;
-        lblL1.setText(FLOG_LOGIC.Utils.getRandomConsonant());
-        lblL2.setText(FLOG_LOGIC.Utils.getRandomVowel());
+        firstLetter = FLOG_LOGIC.Utils.getRandomConsonant();
+        secondLetter = FLOG_LOGIC.Utils.getRandomVowel(); 
+        lblL1.setText(firstLetter);
+        lblL2.setText(secondLetter);
         letter_label_array = new JLabel[]{lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
 
         bl1 = true;
@@ -235,6 +242,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         lblScore = new javax.swing.JLabel();
         lblPos = new javax.swing.JLabel();
         lblRound = new javax.swing.JLabel();
+        channeltxt = new javax.swing.JLabel();
         pnlOpponents = new javax.swing.JPanel();
         pnlBottom = new javax.swing.JPanel();
         lblL1 = new javax.swing.JLabel();
@@ -317,6 +325,9 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
         lblRound.setText("jLabel1");
         pnlTop.add(lblRound, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 50, -1, -1));
+
+        channeltxt.setText("jLabel1");
+        pnlTop.add(channeltxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         add(pnlTop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 72));
 
@@ -1003,6 +1014,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
     private javax.swing.JLabel btnSettings;
     private javax.swing.JLabel btnSubmit;
     private javax.swing.JLabel btnVowels;
+    private javax.swing.JLabel channeltxt;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;

@@ -24,10 +24,26 @@ public class ControllerRoundReadyUp {
       * the RoundReadyUpTime variable at DataForUI class 
       */
     public void runTimer()
-     {
-         timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, DataForUI.RoundReadyUpTime));
-         timerThread.start();
-     }
+    {
+        controllerGamePlay.preRoundStart();
+        // Exameple 304 intialLetters pasindu 0 a e
+        //          304 intialLetters <player name> <round number> <letter 1> <letter 2>
+        String username = gameScreen.username;
+        String firstLetter = gameScreen.panelPlaying.firstLetter;
+        String secondLetter = gameScreen.panelPlaying.secondLetter;
+        int roundNum = gameScreen.dataForUI.RoundNum;
+        String message = "304 initialLetters " + username + " " + roundNum + " " + firstLetter + " " + secondLetter;
+        String channelName = gameScreen.channelName;
+        // Update his users data also.
+        String[] initLetters = {firstLetter, secondLetter};
+        gameScreen.dataForUI.game.getPlayerRoundForRound(username, roundNum).setIntialLetters(initLetters);
+                
+        gameScreen.multiplayer.broadcast(channelName, gameScreen.otherPlayerNames, message);
+        gameScreen.multiplayer.publishToQueue(gameScreen.serverQueueName, message);
+        
+        timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, DataForUI.RoundReadyUpTime));
+        timerThread.start();
+    }
     
     //Switching to gameplay screen and begin the round
     public void startRound()

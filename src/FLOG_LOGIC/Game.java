@@ -21,6 +21,16 @@ public class Game {
         playerList.add(player);
     }
     
+    public int getIndexByPlayerName(String name){
+        for (int i = 0; i < playerList.size(); i++) {
+            String currentName = playerList.get(i).getName();
+            if (name.equals(currentName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public int getCurrentRound(){
         return currentRound;
     }
@@ -115,4 +125,8 @@ public class Game {
         return playerList;
     }
     
+    public PlayerRound getPlayerRoundForRound(String name, int round){
+        int userIndex = getIndexByPlayerName(name);
+        return getPlayerList().get(userIndex).getPlayerRound(round);
+    }    
 }

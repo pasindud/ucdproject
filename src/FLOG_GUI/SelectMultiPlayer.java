@@ -38,6 +38,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     int posX=0,posY=0;
     private boolean IS_USER_JOINED = false;
     
+    GameScreen gameScreen;
     // Consumer producer client
     Catcher clientCatcher = new Catcher();
     Thrower clientThrower = new Thrower();
@@ -45,10 +46,15 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     Multiplayer multiplayer = new Multiplayer();
     Thread backgroundClientQueueCheck;
     
+    /*public SelectMultiPlayer(){
+        this.gameScreen = new GameScreen();
+    }*/
+    
     /**
      * Creates new form SelectMultiPlayer
      */
-    public SelectMultiPlayer() {
+    public SelectMultiPlayer(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
         initComponents();
         clientThrower.addThrowListener(clientCatcher);
     }
@@ -76,8 +82,9 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                     System.err.println("Start game does not have a name list");
                     return;
                 }
-//                this.setVisible(false);
-                this.playerName = txtPlayerName.getText().trim();
+                
+                // Channing the UI to the game playing deck.
+                /*this.playerName = txtPlayerName.getText().trim();
                 // TODO add player names.
                 if (backgroundClientQueueCheck != null) {
                     backgroundClientQueueCheck.interrupt();
@@ -87,34 +94,14 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                         this.playerName, 
                         Utils.getPlayerNamesFromString(segments[2]));
                 gui.setSize(new Dimension(800, 340));
-                gui.setVisible(true);
+                gui.setVisible(true);*/
                 
-//        JFrame ui2=new JFrame("ui2 gui");
-//        ui2.setSize(new Dimension(900, 619)); 
-//        ui2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        ui2.add(gui);
-//        ui2.setVisible(true);
-        
-               this.setVisible(true);
-                removeAll();
-                remove(this);
-
-//                this.add(gui);
-                
-        /*
-                JPanel container;
-        container = new JPanel();
-        container.setLayout(mainPanelCards);
-        container.add(gui, DataForUI.SelectMultiplayer);
-        this.getContentPane().add(container, BorderLayout.CENTER);
-        */        
-//        add(gui);
-//                this.setLayout(new BoxLayout);
-//                this.add(gui, BorderLayout.NORTH);
-        
-//                backgroundClientQueueCheck.interrupt();
-//                this.getContentPane().add(gui);
-                //this.add(gui, BorderLayout.CENTER);
+                gameScreen.channelName = channelName;
+                gameScreen.username = playerName;
+                gameScreen.otherPlayerNames = new ArrayList<String>();
+                gameScreen.otherPlayerNames = Utils.getPlayerNamesFromString(segments[2]);
+                gameScreen.setupMultiplayerForGamePlay();
+                gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.SelectMultiplayer);
                 break;
         }
     }
@@ -302,14 +289,30 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         /*ControllerGamePlay controllerGamePlay;
         panelPlaying = new PanelGamePlay();
         controllerGamePlay = new ControllerGamePlay(panelPlaying,new GameScreen());*/
-        PanelGamePlay panelPlaying = new PanelGamePlay();
+        
+        /**
+         * Testing game play panel.
+         */
+        
+        
+        
+        /*PanelGamePlay panelPlaying = new PanelGamePlay();
         JFrame ui1 =new JFrame("ui1 panelPlaying");
         ui1.setSize(new Dimension(900, 619)); 
         ui1.setLocation(300, 300);
         ui1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ui1.add(panelPlaying);
-        ui1.setVisible(true);
-//        decodeClientMessage("201 startgame pasindu,json");
+        ui1.setVisible(true);*/
+        gameScreen.panelPlaying.channelName = channelName;
+        Game game = new Game();
+        game.addPlayer("Json");
+        game.addPlayer("Mark");
+        gameScreen.dataForUI.game = game;
+        gameScreen.dataForUI.getPlayerList();
+        gameScreen.controllerGamePlay.drawOpponenets();
+        gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.SelectMultiplayer);
+        
+        //decodeClientMessage("201 startgame pasindu,json");
     }//GEN-LAST:event_jButton1MouseClicked
 
     // Listen
