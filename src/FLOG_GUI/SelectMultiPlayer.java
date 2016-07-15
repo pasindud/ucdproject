@@ -4,35 +4,46 @@
  * and open the template in the editor.
  */
 package FLOG_GUI;
+import static FLOG_GUI.GameScreen.panelPlaying;
 import FLOG_LOGIC.*;
 import FLOG_LOGIC.Multiplayer;
 
 import FLOG_LOGIC.Thrower;
 import FLOG_LOGIC.ThrowListener;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
 
 import java.awt.event.MouseEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JPanel;
-
+import javax.swing.JFrame;
+import javax.swing.BoxLayout;
 
 /**
  *
  * @author Pasindu
  */
-public class SelectMultiPlayer extends JPanel {
+public class SelectMultiPlayer extends javax.swing.JPanel {
+    
+    CardLayout mainPanelCards = new CardLayout();
     /** Name of the channel the user is hosting or joined. */
     public String channelName = null;
     /** Name of the player. */
     private String playerName = null;
     int posX=0,posY=0;
     private boolean IS_USER_JOINED = false;
+    
     // Consumer producer client
     Catcher clientCatcher = new Catcher();
     Thrower clientThrower = new Thrower();
+    
     Multiplayer multiplayer = new Multiplayer();
+    Thread backgroundClientQueueCheck;
     
     /**
      * Creates new form SelectMultiPlayer
@@ -60,14 +71,54 @@ public class SelectMultiPlayer extends JPanel {
                 // User joined the correctly.
                 break;
             case "201":
+                // Format - 201 startgame <player names>
+                if (segments.length != 3) {
+                    System.err.println("Start game does not have a name list");
+                    return;
+                }
+//                this.setVisible(false);
                 this.playerName = txtPlayerName.getText().trim();
                 // TODO add player names.
-                MultiPlayerTestGUI gui = new MultiPlayerTestGUI(this.channelName, this.playerName, null);
+                if (backgroundClientQueueCheck != null) {
+                    backgroundClientQueueCheck.interrupt();
+                }
+                MultiPlayerTestGUI gui = new MultiPlayerTestGUI(
+                        this.channelName, 
+                        this.playerName, 
+                        Utils.getPlayerNamesFromString(segments[2]));
+                gui.setSize(new Dimension(800, 340));
                 gui.setVisible(true);
+                
+//        JFrame ui2=new JFrame("ui2 gui");
+//        ui2.setSize(new Dimension(900, 619)); 
+//        ui2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        ui2.add(gui);
+//        ui2.setVisible(true);
+        
+               this.setVisible(true);
+                removeAll();
+                remove(this);
+
+//                this.add(gui);
+                
+        /*
+                JPanel container;
+        container = new JPanel();
+        container.setLayout(mainPanelCards);
+        container.add(gui, DataForUI.SelectMultiplayer);
+        this.getContentPane().add(container, BorderLayout.CENTER);
+        */        
+//        add(gui);
+//                this.setLayout(new BoxLayout);
+//                this.add(gui, BorderLayout.NORTH);
+        
+//                backgroundClientQueueCheck.interrupt();
+//                this.getContentPane().add(gui);
+                //this.add(gui, BorderLayout.CENTER);
                 break;
         }
     }
-    
+   
     /**
      * Listens to messages thrown by checkQueueThread.
      */
@@ -83,6 +134,7 @@ public class SelectMultiPlayer extends JPanel {
      * Start the server queues for the give {@code channelName}
      */
     private void startServerButtonMouseClicked(MouseEvent evt) {
+        startServerButton.setEnabled(false);
         channelName = txtChannelName.getText();
         multiplayer.createServer(channelName);
         setServerStatus("Starting Server");
@@ -90,13 +142,17 @@ public class SelectMultiPlayer extends JPanel {
         server = new Server(channelName);
         server.start();
         setServerStatus("Sever started");
-        startServerButton.setEnabled(false);
     }
 
     /**
      * Join the given server {@code channelName}
      */
     private void joinServerButtonMouseClicked(MouseEvent evt) {
+        joinServerButton.setEnabled(false);
+        if (IS_USER_JOINED) {
+            return;
+        }
+        IS_USER_JOINED = true;
         setClientStatus("Joining server");
         channelName = txtChannelName.getText();
         playerName = txtPlayerName.getText();
@@ -104,9 +160,8 @@ public class SelectMultiPlayer extends JPanel {
 
         // Listen to the client's queue.
         String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
-        Thread backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
+        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
         backgroundClientQueueCheck.start();
-        joinServerButton.setEnabled(false);
     }
 
     /**
@@ -146,6 +201,7 @@ public class SelectMultiPlayer extends JPanel {
         txtPlayerName = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtClientMessages = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
         txtChannelName.setText("ChannelName");
         jScrollPane1.setViewportView(txtChannelName);
@@ -182,6 +238,13 @@ public class SelectMultiPlayer extends JPanel {
         txtClientMessages.setText("Client messages -");
         jScrollPane4.setViewportView(txtClientMessages);
 
+        jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,6 +262,10 @@ public class SelectMultiPlayer extends JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(102, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(234, 234, 234))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +285,9 @@ public class SelectMultiPlayer extends JPanel {
                 .addComponent(joinServerButton)
                 .addGap(18, 18, 18)
                 .addComponent(btnStartGame)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(84, 84, 84))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -228,10 +297,26 @@ public class SelectMultiPlayer extends JPanel {
         server.startGame();
     }//GEN-LAST:event_btnStartGameMouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        /*ControllerGamePlay controllerGamePlay;
+        panelPlaying = new PanelGamePlay();
+        controllerGamePlay = new ControllerGamePlay(panelPlaying,new GameScreen());*/
+        PanelGamePlay panelPlaying = new PanelGamePlay();
+        JFrame ui1 =new JFrame("ui1 panelPlaying");
+        ui1.setSize(new Dimension(900, 619)); 
+        ui1.setLocation(300, 300);
+        ui1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ui1.add(panelPlaying);
+        ui1.setVisible(true);
+//        decodeClientMessage("201 startgame pasindu,json");
+    }//GEN-LAST:event_jButton1MouseClicked
+
     // Listen
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartGame;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

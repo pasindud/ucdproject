@@ -41,7 +41,8 @@ public class GameScreen extends JFrame {
     ControllerSettings controllerSettings;
     ControllerRoundReadyUp controllerRoundReadyUp;
     ControllerWinners controllerWinners;
-
+    
+    
     //CardLayout which will hold all the panels
     CardLayout mainPanelCards = new CardLayout();
 
@@ -49,12 +50,9 @@ public class GameScreen extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
-
             @Override
             public void run() {
-
                 GameScreen myFrame = new GameScreen();
-
             }
         });
     }
@@ -62,24 +60,27 @@ public class GameScreen extends JFrame {
     //Constructor 
     public GameScreen() {
         // Tempory.
-        createAndShowGUI();
-        SelectMultiPlayer selectMultiPlayer = new SelectMultiPlayer();
-        container = new JPanel();
-        container.setLayout(mainPanelCards);
-        container.add(selectMultiPlayer, dataForUI.SelectMultiplayer);
-        
         SelectMultiPlayer selectMultiPlayer2 = new SelectMultiPlayer();
         JFrame ui2=new JFrame("ui2");
         ui2.setSize(new Dimension(900, 619)); 
         ui2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ui2.add(selectMultiPlayer2);
         ui2.setVisible(true);
+        
+        SelectMultiPlayer selectMultiPlayer1 = new SelectMultiPlayer();
+        JFrame ui1 =new JFrame("ui1");
+        ui1.setSize(new Dimension(900, 619)); 
+        ui1.setLocation(300, 300);
+        ui1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ui1.add(selectMultiPlayer1);
+        ui1.setVisible(true);
+        
     }
 
     //JFrame setting up
     private void createAndShowGUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        preparePanels();
+//        preparePanels();
 //        showMainMenu();
         this.setSize(new Dimension(900, 619));
         //this.setUndecorated(true);
@@ -95,28 +96,25 @@ public class GameScreen extends JFrame {
         panelSettings = new PanelSettings();
         panelRoundReadyUp = new PanelRoundReadyUp();
         panelWinners = new PanelWinners();
-
-        SelectMultiPlayer selectMultiPlayer = new SelectMultiPlayer();
-        panelWinners = new PanelWinners();
+        
         //Adding Panels to Card Layout
         container = new JPanel();
-
+        
         container.setLayout(mainPanelCards);
-        container.add(selectMultiPlayer, dataForUI.SelectMultiplayer);
         container.add(panelMainMenu, dataForUI.STR_MAINMENU);
-        container.add(panelPlaying, dataForUI.STR_GAMEPLAY);
-        container.add(panelSettings, dataForUI.STR_SETTINGS);
-        container.add(panelRoundReadyUp, dataForUI.STR_ROUNDREADYUP);
-        container.add(panelWinners, dataForUI.STR_WINNER);
-        this.getContentPane().add(container, BorderLayout.CENTER);
-
+        container.add(panelPlaying,dataForUI.STR_GAMEPLAY);
+        container.add(panelSettings,dataForUI.STR_SETTINGS);
+        container.add(panelRoundReadyUp,dataForUI.STR_ROUNDREADYUP);
+        container.add(panelWinners,dataForUI.STR_WINNER);
+        this.getContentPane().add(container,BorderLayout.CENTER);
+        
         //TestGUI_Inputs testing = new TestGUI_Inputs();
         initateGame();
-        controllerGamePlay = new ControllerGamePlay(panelPlaying, this);
-        controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp, this, controllerGamePlay);
-        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
-        controllerSettings = new ControllerSettings(panelSettings, this);
-        controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
+       controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
+       controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
+       controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
+       controllerSettings = new ControllerSettings(panelSettings, this);
+       controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
     }
 
     private void showMainMenu() {

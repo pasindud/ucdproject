@@ -5,6 +5,7 @@
  */
 package FLOG_GUI;
 
+import FLOG_LOGIC.CheckQueueThread;
 import FLOG_LOGIC.Multiplayer;
 import FLOG_LOGIC.ThrowListener;
 
@@ -14,48 +15,98 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+
 /**
  *
  * @author DILSHAN FERNANDO
  */
-public class MultiPlayerTestGUI extends javax.swing.JFrame {
+public class MultiPlayerTestGUI extends JFrame {
 
     /**
      * Name of the channel the user is hosting or joined.
      */
     public String channelName = null;
+    public String serverQueueName = "";
     /**
      * Name of the player.
      */
     private String playerName = null;
 
-    // Consumer producer client
-    Catcher clientCatcher = new Catcher(false);
+    Catcher clientCatcher = new Catcher();
     Thrower clientThrower = new Thrower();
-
-    // Consumer producer server 
-    Catcher serverCatcher = new Catcher(true);
-    Thrower serverThrower = new Thrower();
 
     List<String> playerNames = new ArrayList<String>();
     Multiplayer multiplayer = new Multiplayer();
-
+    
+    Thread backgroundClientQueueCheck;
     /**
      * Creates new form MultiPlayerTestGUI
      */
     public MultiPlayerTestGUI() {
         initComponents();
+        clientThrower.addThrowListener(clientCatcher);
     }
 
+    /**
+     * Listens to messages thrown by checkQueueThread.
+     */
+    public class Catcher implements ThrowListener {
+        @Override
+        public void Catch(String message) {
+            System.out.println("Caught " + message);
+            decodeClientMessage(message);
+        }
+    }
+    
+    /**
+     * Decode the message received by the client
+     */
+    public synchronized void decodeClientMessage(String message) {
+        // setClientStatus("Message in client - " + message);
+        String[] segments = message.split(" ");
+        if (segments.length < 2) {
+            return;
+        }
+        String code = segments[0];
+        String content = segments[1];
+        switch (code) {
+            case "200":
+                // User joined the correctly.
+                break;
+        }
+    }
+    
+    public void startQueueSystem(){
+        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
+        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
+        backgroundClientQueueCheck.start();
+    }
+    
+    ArrayList<String> otherUserNames = new ArrayList<String>();
     public MultiPlayerTestGUI(String channel, String player, List<String> playerlist) {
+        this.serverQueueName = multiplayer.getServerQueue(channelName);
         initComponents();
         this.channelName = channel;
         this.playerName = player;
         this.playerNames = playerlist;
         lbll1.setText(FLOG_LOGIC.Utils.getRandomVowel());
         lbll2.setText(FLOG_LOGIC.Utils.getRandomConsonant());
-    }
+        startQueueSystem();
+        txtPlayerName.setText(this.playerName);
+        // Delete the current user.
+        playerlist.remove(player);
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        for (String otherPlayerName : playerlist) {
+            otherUserNames.add(otherPlayerName);
+            model.addRow(new Object[]{ otherPlayerName, "", "", "0"});
 
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,8 +139,7 @@ public class MultiPlayerTestGUI extends javax.swing.JFrame {
         cmdGenerate = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,67 +151,73 @@ public class MultiPlayerTestGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 700, 80));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 700, 80));
 
         lbll1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lbll1.setText("-");
-        getContentPane().add(lbll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
+        add(lbll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
         lbll2.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lbll2.setText("-");
-        getContentPane().add(lbll2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, -1, -1));
+        add(lbll2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, -1, -1));
 
         lbll3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll3.setText("-");
-        getContentPane().add(lbll3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
+        add(lbll3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
 
         lbll4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll4.setText("-");
-        getContentPane().add(lbll4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
+        add(lbll4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
 
         lbll5.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll5.setText("-");
-        getContentPane().add(lbll5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, -1, -1));
+        add(lbll5, new org.netbeans.lib.awtextra.AbsoluteConstraints(243, 130, 20, -1));
 
         lbll6.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll6.setText("-");
-        getContentPane().add(lbll6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, -1, -1));
+        add(lbll6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, -1, -1));
 
         lbll7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll7.setText("-");
-        getContentPane().add(lbll7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
+        add(lbll7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
 
         lbll8.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll8.setText("-");
-        getContentPane().add(lbll8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, -1, -1));
+        add(lbll8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, -1, -1));
 
         lbll9.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll9.setText("-");
-        getContentPane().add(lbll9, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
+        add(lbll9, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
 
         lbll10.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll10.setText("-");
-        getContentPane().add(lbll10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, -1, -1));
+        add(lbll10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, -1, -1));
 
         lbll11.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll11.setText("-");
-        getContentPane().add(lbll11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
+        add(lbll11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
 
         lbll12.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbll12.setText("-");
-        getContentPane().add(lbll12, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, -1, -1));
+        add(lbll12, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, -1, -1));
 
         jLabel1.setText("player");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
-        getContentPane().add(txtPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 90, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
+
+        txtPlayerName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPlayerNameActionPerformed(evt);
+            }
+        });
+        add(txtPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 90, -1));
 
         jLabel2.setText("Vowels");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, -1));
-        getContentPane().add(txtNoV, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 90, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, -1));
+        add(txtNoV, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 90, -1));
 
         jLabel3.setText("consonants");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 250, 80, -1));
-        getContentPane().add(txtNoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 90, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 250, 80, -1));
+        add(txtNoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 90, -1));
 
         cmdGenerate.setText("Generate letters");
         cmdGenerate.addActionListener(new java.awt.event.ActionListener() {
@@ -169,18 +225,17 @@ public class MultiPlayerTestGUI extends javax.swing.JFrame {
                 cmdGenerateActionPerformed(evt);
             }
         });
-        getContentPane().add(cmdGenerate, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, -1, 50));
+        add(cmdGenerate, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, -1, 50));
 
         jButton1.setText("simiulate letters selection time was up");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 220, 50));
-
-        pack();
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 220, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGenerateActionPerformed
         try {
             int nv=Integer.parseInt(txtNoV.getText());
             int nc=Integer.parseInt(txtNoC.getText());
+            String message = "104 letters";
             if(nv+nc==10){
                 List<String> letters=FLOG_LOGIC.Utils.getRadomLetters(nv, nc);
                 lbll3.setText(letters.get(0));
@@ -193,16 +248,26 @@ public class MultiPlayerTestGUI extends javax.swing.JFrame {
                 lbll10.setText(letters.get(7));
                 lbll11.setText(letters.get(8));
                 lbll12.setText(letters.get(9));
+                
+                for (int i = 0; i < letters.size(); i++) {
+                    message += "," + letters.get(i);
+                }
+                multiplayer.publishToQueue(serverQueueName, message);
             }
             else{
                 JOptionPane.showMessageDialog(this, "#Vowels + #Consonants should be equal to 10");
             }
+            
             
         } catch (Exception ex) {
                 
                 }
        
     }//GEN-LAST:event_cmdGenerateActionPerformed
+
+    private void txtPlayerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlayerNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPlayerNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,10 +304,6 @@ public class MultiPlayerTestGUI extends javax.swing.JFrame {
         });
     }
 
-    public synchronized void decodeClientMessage(String message) {
-
-    }
-
     /**
      * Decode the message received by the server.
      */
@@ -257,39 +318,9 @@ public class MultiPlayerTestGUI extends javax.swing.JFrame {
         switch (code) {
             // New user joined format - 100 <player name>
             case "100":
-//                String playerName = content;
-//                setStatus("User " + content + " joined ");
-//                String playerQueue = multiplayer.getClientQueue(channelName, playerName);
-//                
-//                // Message to acknowledge that the server received the message 
-//                String clientMessage = "200 ackJoinServer";
-//                multiplayer.publishToQueue(playerQueue, clientMessage);
-//                playerNames.add(content.trim());
                 break;
         }
 
-    }
-
-    /**
-     * Listens to messages thrown by checkQueueThread.
-     */
-    public class Catcher implements ThrowListener {
-
-        private boolean isServerCatch = true;
-
-        public Catcher(boolean isServerCatch) {
-            this.isServerCatch = isServerCatch;
-        }
-
-        @Override
-        public void Catch(String message) {
-            System.out.println("Caught " + message);
-            if (isServerCatch) {
-                decodeServerMessage(message);
-            } else {
-                decodeClientMessage(message);
-            }
-        }
     }
 
     public synchronized void setStatus(String status) {

@@ -20,8 +20,10 @@ public class Server {
     Catcher serverCatcher = new Catcher();
     Thrower serverThrower = new Thrower();
     private boolean isServerStart = false;
+    private Game game = null;
     // Consumer producer client
     public Server(String channelName){
+        
         this.channelName = channelName;
         multiplayer = new Multiplayer();
         serverThrower.addThrowListener(serverCatcher);
@@ -33,13 +35,18 @@ public class Server {
             System.err.println("Server is already started");
             return;
         }
+        game = new Game();
         Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, serverThrower);
         backgroundServerQueueCheck.start();
         isServerStart = true;
     }
     
     public void startGame(){
-        String message = "201 startgame";
+        // Format - 201 startgame <player names>
+        // TODO player names should not have spaces.
+        String strPlagerNames = String.join(",", playerNames);
+        strPlagerNames = strPlagerNames.replaceFirst("^,", "");
+        String message = "201 startgame " + strPlagerNames;
         multiplayer.broadcast(channelName, playerNames, message);
     }
     
@@ -75,8 +82,20 @@ public class Server {
                 // Message to acknowledge that the server received the message 
                 String clientMessage = "200 ackJoinServer";
                 multiplayer.publishToQueue(playerQueue, clientMessage);
-                playerNames.add(content.trim());
-            break;
+                String name = content.trim();
+                playerNames.add(name);
+                game.addPlayer(name);
+                break;
+            // User start .   
+            case "102":
+                
+                break;
+            case "105":
+                // Format - 104 letters <player name> a,s,d,g,e,q,q,r,t
+                String letters = segments[2];
+                letters = letters.replaceFirst("^,", "");
+                String[] lettersArray = letters.split(",");
+                break;
         }
         
     }

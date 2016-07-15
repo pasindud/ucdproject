@@ -85,4 +85,9 @@ public class Utils {
         }
         return result;
     }
+    
+    public static ArrayList<String> getPlayerNamesFromString(
+            String strPlayerNames){
+        return new ArrayList(Arrays.asList(strPlayerNames.split(",")));
+    }
 }
