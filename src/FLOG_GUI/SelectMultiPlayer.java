@@ -13,6 +13,8 @@ import FLOG_LOGIC.ThrowListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 
 import java.awt.event.MouseEvent;
 
@@ -23,12 +25,18 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author Pasindu
  */
 public class SelectMultiPlayer extends javax.swing.JPanel {
+    
+    private Image bg;
+    int mouseX=0;
+    int mouseY=0;
+    
     
     CardLayout mainPanelCards = new CardLayout();
     /** Name of the channel the user is hosting or joined. */
@@ -57,7 +65,16 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         this.gameScreen = gameScreen;
         initComponents();
         clientThrower.addThrowListener(clientCatcher);
+        bg = new ImageIcon(getClass().getResource("/images/bg_multiplayer.png")).getImage();
+        jButton1.setVisible(false);//What is this button???? [IMPORTANT]
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+    }
+    
+    
     
     private Server server = null;
     
@@ -121,34 +138,14 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
      * Start the server queues for the give {@code channelName}
      */
     private void startServerButtonMouseClicked(MouseEvent evt) {
-        startServerButton.setEnabled(false);
-        channelName = txtChannelName.getText();
-        multiplayer.createServer(channelName);
-        setServerStatus("Starting Server");
-        // Server listen's to it's queue.
-        server = new Server(channelName);
-        server.start();
-        setServerStatus("Sever started");
+        
     }
 
     /**
      * Join the given server {@code channelName}
      */
     private void joinServerButtonMouseClicked(MouseEvent evt) {
-        joinServerButton.setEnabled(false);
-        if (IS_USER_JOINED) {
-            return;
-        }
-        IS_USER_JOINED = true;
-        setClientStatus("Joining server");
-        channelName = txtChannelName.getText();
-        playerName = txtPlayerName.getText();
-        multiplayer.joinNewPlayer(playerName, channelName);
-
-        // Listen to the client's queue.
-        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
-        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
-        backgroundClientQueueCheck.start();
+        
     }
 
     /**
@@ -177,54 +174,33 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtChannelName = new javax.swing.JTextPane();
-        startServerButton = new javax.swing.JButton();
-        joinServerButton = new javax.swing.JButton();
-        btnStartGame = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtPlayerName = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtClientMessages = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        pnlTopBorder = new javax.swing.JPanel();
+        btnExit = new javax.swing.JLabel();
+        btnStartServer = new javax.swing.JLabel();
+        btnJoin = new javax.swing.JLabel();
+        btnStartGame = new javax.swing.JLabel();
+        txtPlayerName = new javax.swing.JTextField();
+        txtChannelName = new javax.swing.JTextField();
 
-        txtChannelName.setText("ChannelName44");
-        jScrollPane1.setViewportView(txtChannelName);
-
-        startServerButton.setText("Start Server");
-        startServerButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                startServerButtonMouseClicked(evt);
-            }
-        });
-
-        joinServerButton.setText("Join Multiplayer");
-        joinServerButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                joinServerButtonMouseClicked(evt);
-            }
-        });
-
-        btnStartGame.setText("Start Game");
-        btnStartGame.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnStartGameMouseClicked(evt);
-            }
-        });
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextPane2.setText("Server messages - ");
         jTextPane2.setToolTipText("");
         jScrollPane2.setViewportView(jTextPane2);
 
-        txtPlayerName.setText("asd");
-        jScrollPane3.setViewportView(txtPlayerName);
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 230, 145));
 
         txtClientMessages.setColumns(20);
         txtClientMessages.setRows(5);
         txtClientMessages.setText("Client messages -");
         jScrollPane4.setViewportView(txtClientMessages);
+
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, -1, 145));
 
         jButton1.setText("jButton1");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -232,59 +208,73 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 340, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1)
-                        .addComponent(startServerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(joinServerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                        .addComponent(btnStartGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(234, 234, 234))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(startServerButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(joinServerButton)
-                .addGap(18, 18, 18)
-                .addComponent(btnStartGame)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(84, 84, 84))
-        );
+        pnlTopBorder.setOpaque(false);
+        pnlTopBorder.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnlTopBorderMouseDragged(evt);
+            }
+        });
+        pnlTopBorder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlTopBorderMousePressed(evt);
+            }
+        });
+        pnlTopBorder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnExit.setText("exit");
+        btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExitMouseClicked(evt);
+            }
+        });
+        pnlTopBorder.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, -1, -1));
+
+        add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
+
+        btnStartServer.setText("Start Server");
+        btnStartServer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStartServerMouseClicked(evt);
+            }
+        });
+        add(btnStartServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 500, -1, -1));
+
+        btnJoin.setText("Join Server");
+        btnJoin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnJoinMouseClicked(evt);
+            }
+        });
+        add(btnJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 500, -1, -1));
+
+        btnStartGame.setText("Start Game");
+        btnStartGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStartGameMouseClicked(evt);
+            }
+        });
+        add(btnStartGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 500, -1, -1));
+
+        txtPlayerName.setText("playerNameDc");
+        txtPlayerName.setBorder(null);
+        txtPlayerName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPlayerNameActionPerformed(evt);
+            }
+        });
+        add(txtPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 190, 35));
+
+        txtChannelName.setText("ChannelNameDC");
+        txtChannelName.setBorder(null);
+        add(txtChannelName, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 375, 190, 35));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnStartGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseClicked
-        btnStartGame.setEnabled(false);
-        channelName = txtChannelName.getText();
-        playerName = txtPlayerName.getText();
-        server.startGame();
-    }//GEN-LAST:event_btnStartGameMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
@@ -317,21 +307,83 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         //decodeClientMessage("201 startgame pasindu,json");
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void pnlTopBorderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
+        // TODO add your handling code here:
+        gameScreen.moveScreen(evt.getXOnScreen(), evt.getYOnScreen(),mouseX,mouseY);
+    }//GEN-LAST:event_pnlTopBorderMouseDragged
+
+    private void pnlTopBorderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMousePressed
+        // TODO add your handling code here:
+        mouseX = evt.getX();
+        mouseY = evt.getY();
+    }//GEN-LAST:event_pnlTopBorderMousePressed
+
+    private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
+        // TODO add your handling code here:
+        gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.SelectMultiplayer);
+    }//GEN-LAST:event_btnExitMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnStartServerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseClicked
+        // TODO add your handling code here:
+        btnStartServer.setEnabled(false);
+        channelName = txtChannelName.getText();
+        multiplayer.createServer(channelName);
+        setServerStatus("Starting Server");
+        // Server listen's to it's queue.
+        server = new Server(channelName);
+        server.start();
+        setServerStatus("Sever started");
+    }//GEN-LAST:event_btnStartServerMouseClicked
+
+    private void btnJoinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseClicked
+        // TODO add your handling code here:
+        btnJoin.setEnabled(false);
+        if (IS_USER_JOINED) {
+            return;
+        }
+        IS_USER_JOINED = true;
+        setClientStatus("Joining server");
+        channelName = txtChannelName.getText();
+        playerName = txtPlayerName.getText();
+        multiplayer.joinNewPlayer(playerName, channelName);
+
+        // Listen to the client's queue.
+        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
+        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
+        backgroundClientQueueCheck.start();
+    }//GEN-LAST:event_btnJoinMouseClicked
+
+    private void btnStartGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseClicked
+        // TODO add your handling code here:
+        btnStartGame.setEnabled(false);
+        channelName = txtChannelName.getText();
+        playerName = txtPlayerName.getText();
+        server.startGame();
+    }//GEN-LAST:event_btnStartGameMouseClicked
+
+    private void txtPlayerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlayerNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPlayerNameActionPerformed
+
     // Listen
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnStartGame;
+    private javax.swing.JLabel btnExit;
+    private javax.swing.JLabel btnJoin;
+    private javax.swing.JLabel btnStartGame;
+    private javax.swing.JLabel btnStartServer;
     private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextPane jTextPane2;
-    private javax.swing.JButton joinServerButton;
-    private javax.swing.JButton startServerButton;
-    private javax.swing.JTextPane txtChannelName;
+    private javax.swing.JPanel pnlTopBorder;
+    private javax.swing.JTextField txtChannelName;
     private javax.swing.JTextArea txtClientMessages;
-    private javax.swing.JTextPane txtPlayerName;
+    private javax.swing.JTextField txtPlayerName;
     // End of variables declaration//GEN-END:variables
 }
 

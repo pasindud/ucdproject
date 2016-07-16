@@ -21,7 +21,7 @@ public class PanelLogin extends javax.swing.JPanel {
     private Image bg;
     public PanelLogin() {
         initComponents();
-        bg = new ImageIcon(getClass().getResource("/images/bg_mainmenu.png")).getImage();
+        bg = new ImageIcon(getClass().getResource("/images/bg_login.png")).getImage();
     }
 
     
@@ -81,11 +81,13 @@ public class PanelLogin extends javax.swing.JPanel {
         btnRegister.setName("reg"); // NOI18N
         add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 430, -1, -1));
 
+        txtUsername.setBorder(null);
         txtUsername.setName("username"); // NOI18N
-        add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 90, -1));
+        add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(437, 265, 145, 24));
 
+        txtPassword.setBorder(null);
         txtPassword.setName("pass"); // NOI18N
-        add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, 90, -1));
+        add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(437, 312, 145, 24));
 
         pnlTopBorder.setName("topBorder"); // NOI18N
         pnlTopBorder.setOpaque(false);
