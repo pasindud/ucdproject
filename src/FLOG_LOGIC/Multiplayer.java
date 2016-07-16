@@ -216,6 +216,49 @@ public class Multiplayer {
         }
     }
     
+     /**
+     * This is starting the new game
+     */
+    public void ackstartNewGame(String playerName, String channelName){
+        try {
+        
+        // send 103 ackGameStarted-playername to server       
+        String message = "103 ackGameStarted-" + playerName;
+        publishToQueue(getServerQueue(channelName), message);
+        
+        } catch(Exception e){
+            // No internet 
+            // Queue already created.
+        }
+    }
+    
+    /**
+     * This is passing letters to server
+     */
+    public void sendLettersToServer(String playerName, String channelName,ArrayList<String> players, String letter1, String letter2) {
+        try {
+
+            // send letters
+            //send letters to server
+            //Format 104 <Playername>^<Letter1>^<Letter2>
+            //Ex: 104 dilshan^A^B
+            
+            String message = "104 "+ playerName + "^" + letter1 + "^" + letter2;
+			System.out.println(message);
+            publishToQueue(getServerQueue(channelName), message);
+
+            //broadcast letters other players
+            //Format 300 <Playername>^<Letter1>^<Letter2>
+            //Ex: 300 dilshan^A^B
+            message = "300 "+ playerName + "^" + letter1 + "^" + letter2;
+            
+            this.broadcast(channelName, players, message);
+        } catch (Exception e) {
+            // No internet 
+            // Queue already created.
+        }
+    }
+
     /**
      * This is starting a new game
      */
@@ -235,14 +278,9 @@ public class Multiplayer {
     /**
      * Join the new user.
      * 
-     * Start the game
-     *  Distribute letters
-     *  Subsitute letters
-     *  End the round
-     *  Calculate the game score
-     *  Run the penalty
-     *  Start the next round again
-     * End the game.
+     * Start the game Distribute letters Subsitute letters End the round
+     * Calculate the game score Run the penalty Start the next round again End
+     * the game.
      * 
      */
    

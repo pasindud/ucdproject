@@ -63,7 +63,7 @@ public class ControllerRoundReadyUp {
             controllerGamePlay.drawOpponenets();
         }
          
-        gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);
+        gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, DataForUI.SelectMultiplayer);
         controllerGamePlay.beginRound();
     }
     public void drawPlayers()

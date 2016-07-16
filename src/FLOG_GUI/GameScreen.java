@@ -39,6 +39,9 @@ public class GameScreen extends JFrame {
     private PanelRoundReadyUp panelRoundReadyUp;
     private PanelWinners panelWinners;
     private SelectMultiPlayer panelSelectMultiPlayer;
+    private PanelLogin panelLogin;
+    private PanelRegister panelRegister;
+    
     //Holds the CardLayout
     private JPanel container;
     
@@ -48,6 +51,8 @@ public class GameScreen extends JFrame {
     ControllerSettings controllerSettings;
     ControllerRoundReadyUp controllerRoundReadyUp;
     ControllerWinners controllerWinners;
+    ControllerLogin controllerLogin;
+    ControllerRegister controllerRegister;
     
     
     //CardLayout which will hold all the panels
@@ -104,6 +109,10 @@ public class GameScreen extends JFrame {
         panelRoundReadyUp = new PanelRoundReadyUp();
         panelWinners = new PanelWinners();
         panelSelectMultiPlayer = new SelectMultiPlayer(this);
+        panelLogin = new PanelLogin();
+        panelRegister = new PanelRegister();
+        
+        
         //Adding Panels to Card Layout
         container = new JPanel();
         
@@ -114,6 +123,8 @@ public class GameScreen extends JFrame {
         container.add(panelRoundReadyUp,dataForUI.STR_ROUNDREADYUP);
         container.add(panelWinners,dataForUI.STR_WINNER);
         container.add(panelSelectMultiPlayer,dataForUI.SelectMultiplayer);
+        container.add(panelLogin,dataForUI.STR_LOGIN);
+        container.add(panelRegister,dataForUI.STR_REGISTER);
         this.getContentPane().add(container,BorderLayout.CENTER);
         
         //TestGUI_Inputs testing = new TestGUI_Inputs();
@@ -123,11 +134,14 @@ public class GameScreen extends JFrame {
         controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
         controllerSettings = new ControllerSettings(panelSettings, this);
         controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
+        controllerLogin = new ControllerLogin(panelLogin, this);
+        controllerRegister = new ControllerRegister(panelRegister, this);
     }
 
     private void showMainMenu() {
-        System.out.println("showmainmenu");
-        changeScreen(dataForUI.STR_MAINMENU, null);
+        //System.out.println("showmainmenu");
+        //changeScreen(dataForUI.STR_MAINMENU, null);
+        changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
     }
 /*
     private void initateGame() {
@@ -177,6 +191,19 @@ public class GameScreen extends JFrame {
                     controllerWinners.setWinner(2);
                     //controllerWinners.setWinner(dataForUI.player.getListIndex());
                     break;
+                    
+                case DataForUI.STR_GAMEPLAY:
+                    DataForUI.getPlayerList();
+                    controllerGamePlay.drawOpponenets();
+                     cl.show(container, screenName);
+                     break;
+                     
+                case DataForUI.STR_LOGIN:
+                    cl.show(container, screenName);
+                    
+                case DataForUI.STR_REGISTER:
+                    cl.show(container, screenName);
+                    
                 default:
                     cl.show(container, screenName);
                     break;

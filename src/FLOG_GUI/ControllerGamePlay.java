@@ -162,7 +162,7 @@ public class ControllerGamePlay
             stopTimer =true;
             }
             resetTimer();
-            gameScreen.changeScreen(DataForUI.STR_MAINMENU, null);
+            gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.STR_GAMEPLAY);
         }
         
     }
