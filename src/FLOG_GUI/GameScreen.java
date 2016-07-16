@@ -180,6 +180,13 @@ public class GameScreen extends JFrame {
                     controllerGamePlay.drawOpponenets();
                      cl.show(container, screenName);
                      break;
+                     
+                case DataForUI.STR_LOGIN:
+                    cl.show(container, screenName);
+                    
+                case DataForUI.STR_REGISTER:
+                    cl.show(container, screenName);
+                    
                 default:
                     cl.show(container, screenName);
                     break;
