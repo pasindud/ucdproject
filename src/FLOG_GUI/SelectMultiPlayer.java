@@ -137,15 +137,35 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     /**
      * Start the server queues for the give {@code channelName}
      */
-    private void startServerButtonMouseClicked(MouseEvent evt) {
-        
+    private void startServerClicked() {
+        btnStartServer.setEnabled(false);
+        channelName = txtChannelName.getText();
+        multiplayer.createServer(channelName);
+        setServerStatus("Starting Server");
+        // Server listen's to it's queue.
+        server = new Server(channelName);
+        server.start();
+        setServerStatus("Sever started");
     }
 
     /**
      * Join the given server {@code channelName}
      */
-    private void joinServerButtonMouseClicked(MouseEvent evt) {
-        
+    private void joinServerClicked() {
+         btnJoin.setEnabled(false);
+        if (IS_USER_JOINED) {
+            return;
+        }
+        IS_USER_JOINED = true;
+        setClientStatus("Joining server");
+        channelName = txtChannelName.getText();
+        playerName = txtPlayerName.getText();
+        multiplayer.joinNewPlayer(playerName, channelName);
+
+        // Listen to the client's queue.
+        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
+        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
+        backgroundClientQueueCheck.start();
     }
 
     /**
@@ -238,29 +258,65 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
 
         add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
 
-        btnStartServer.setText("Start Server");
+        btnStartServer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_hostserver_n.png"))); // NOI18N
         btnStartServer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnStartServerMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnStartServerMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnStartServerMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnStartServerMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnStartServerMouseReleased(evt);
+            }
         });
-        add(btnStartServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 500, -1, -1));
+        add(btnStartServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 478, -1, -1));
 
-        btnJoin.setText("Join Server");
+        btnJoin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_joinserver_n.png"))); // NOI18N
         btnJoin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnJoinMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnJoinMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnJoinMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnJoinMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnJoinMouseReleased(evt);
+            }
         });
-        add(btnJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 500, -1, -1));
+        add(btnJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 478, -1, -1));
 
-        btnStartGame.setText("Start Game");
+        btnStartGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_startgamem_n.png"))); // NOI18N
         btnStartGame.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnStartGameMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnStartGameMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnStartGameMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnStartGameMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnStartGameMouseReleased(evt);
+            }
         });
-        add(btnStartGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 500, -1, -1));
+        add(btnStartGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 478, -1, -1));
 
         txtPlayerName.setText("playerNameDc");
         txtPlayerName.setBorder(null);
@@ -329,36 +385,26 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
 
     private void btnStartServerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseClicked
         // TODO add your handling code here:
-        btnStartServer.setEnabled(false);
-        channelName = txtChannelName.getText();
-        multiplayer.createServer(channelName);
-        setServerStatus("Starting Server");
-        // Server listen's to it's queue.
-        server = new Server(channelName);
-        server.start();
-        setServerStatus("Sever started");
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_h.png"));
+        btnStartServer.setIcon(imgIcon);
+        
+        startServerClicked();
     }//GEN-LAST:event_btnStartServerMouseClicked
 
     private void btnJoinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseClicked
         // TODO add your handling code here:
-        btnJoin.setEnabled(false);
-        if (IS_USER_JOINED) {
-            return;
-        }
-        IS_USER_JOINED = true;
-        setClientStatus("Joining server");
-        channelName = txtChannelName.getText();
-        playerName = txtPlayerName.getText();
-        multiplayer.joinNewPlayer(playerName, channelName);
-
-        // Listen to the client's queue.
-        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
-        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
-        backgroundClientQueueCheck.start();
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_h.png"));
+        btnJoin.setIcon(imgIcon);
+        
+       joinServerClicked();
     }//GEN-LAST:event_btnJoinMouseClicked
 
     private void btnStartGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseClicked
         // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_h.png"));
+       btnStartGame.setIcon(imgIcon);
+        
+        
         btnStartGame.setEnabled(false);
         channelName = txtChannelName.getText();
         playerName = txtPlayerName.getText();
@@ -368,6 +414,78 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private void txtPlayerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlayerNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPlayerNameActionPerformed
+
+    private void btnStartServerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMousePressed
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_c.png"));
+        btnStartServer.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartServerMousePressed
+
+    private void btnStartServerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseEntered
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_h.png"));
+        btnStartServer.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartServerMouseEntered
+
+    private void btnStartServerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseExited
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_n.png"));
+        btnStartServer.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartServerMouseExited
+
+    private void btnStartServerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseReleased
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_h.png"));
+        btnStartServer.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartServerMouseReleased
+
+    private void btnJoinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseEntered
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_h.png"));
+        btnJoin.setIcon(imgIcon);
+    }//GEN-LAST:event_btnJoinMouseEntered
+
+    private void btnJoinMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseExited
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_n.png"));
+        btnJoin.setIcon(imgIcon);
+    }//GEN-LAST:event_btnJoinMouseExited
+
+    private void btnJoinMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMousePressed
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_c.png"));
+        btnJoin.setIcon(imgIcon);
+    }//GEN-LAST:event_btnJoinMousePressed
+
+    private void btnJoinMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseReleased
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_h.png"));
+        btnJoin.setIcon(imgIcon);
+    }//GEN-LAST:event_btnJoinMouseReleased
+
+    private void btnStartGameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseEntered
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_h.png"));
+       btnStartGame.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartGameMouseEntered
+
+    private void btnStartGameMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseReleased
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_h.png"));
+       btnStartGame.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartGameMouseReleased
+
+    private void btnStartGameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseExited
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_n.png"));
+       btnStartGame.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartGameMouseExited
+
+    private void btnStartGameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMousePressed
+        // TODO add your handling code here:
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_c.png"));
+       btnStartGame.setIcon(imgIcon);
+    }//GEN-LAST:event_btnStartGameMousePressed
 
     // Listen
  

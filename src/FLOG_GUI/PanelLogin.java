@@ -75,11 +75,11 @@ public class PanelLogin extends javax.swing.JPanel {
 
         btnLogin.setText("login");
         btnLogin.setName("login"); // NOI18N
-        add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 430, -1, -1));
+        add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, -1, -1));
 
         btnRegister.setText("Register");
         btnRegister.setName("reg"); // NOI18N
-        add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 430, -1, -1));
+        add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, -1, -1));
 
         txtUsername.setBorder(null);
         txtUsername.setName("username"); // NOI18N
