@@ -174,6 +174,12 @@ public class GameScreen extends JFrame {
                     controllerWinners.setWinner(2);
                     //controllerWinners.setWinner(dataForUI.player.getListIndex());
                     break;
+                    
+                case DataForUI.STR_GAMEPLAY:
+                    DataForUI.getPlayerList();
+                    controllerGamePlay.drawOpponenets();
+                     cl.show(container, screenName);
+                     break;
                 default:
                     cl.show(container, screenName);
                     break;
