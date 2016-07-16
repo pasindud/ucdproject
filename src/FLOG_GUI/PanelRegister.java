@@ -64,6 +64,7 @@ public class PanelRegister extends javax.swing.JPanel {
         txtConPass = new javax.swing.JPasswordField();
         btnSignUp = new javax.swing.JLabel();
         btnCancel = new javax.swing.JLabel();
+        txtemail = new javax.swing.JTextField();
 
         setMaximumSize(new java.awt.Dimension(900, 619));
         setMinimumSize(new java.awt.Dimension(900, 619));
@@ -96,6 +97,7 @@ public class PanelRegister extends javax.swing.JPanel {
         btnCancel.setText("cancel");
         btnCancel.setName("cancel-reg"); // NOI18N
         add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, -1, -1));
+        add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 110, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -107,5 +109,6 @@ public class PanelRegister extends javax.swing.JPanel {
     private javax.swing.JPasswordField txtConPass;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtemail;
     // End of variables declaration//GEN-END:variables
 }

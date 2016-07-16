@@ -5,10 +5,12 @@
  */
 package FLOG_GUI;
 
-import com.sun.java.swing.plaf.motif.MotifButtonListener;
+import FLOG_LOGIC.Multiplayer;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -23,7 +25,16 @@ public class ControllerRegister {
     int mouseY=0;
     PanelRegister panelRegister;
     GameScreen gameScreen;
-
+    FLOG_LOGIC.Multiplayer multiplayer=new Multiplayer();
+    
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+}
+    
     public ControllerRegister(PanelRegister panelRegister, GameScreen gameScreen) {
         this.panelRegister = panelRegister;
         this.gameScreen = gameScreen;
@@ -35,24 +46,34 @@ public class ControllerRegister {
         gameScreen.changeScreen(DataForUI.STR_LOGIN, DataForUI.STR_REGISTER);
     }
     
-    private void signUpClick(String uname, String pass, String conPass)
+    private void signUpClick(String email,String uname, String pass, String conPass)
     {
-        if(!isUsernameExists(uname))
+                if(!isUsernameExists(uname))
         {
-            if(validatePass(pass, conPass))
-            {
+            if(validateEmail(email)){
+                if(validatePass(pass, conPass))
+                {
                 //code for registering user on server
-                JOptionPane.showMessageDialog(gameScreen, "You have Successfully Registered!","Registered",JOptionPane.INFORMATION_MESSAGE);
-                gameScreen.changeScreen(DataForUI.STR_LOGIN, DataForUI.STR_REGISTER);
+                    if(multiplayer.registerUser(uname, email, pass)){
+                    JOptionPane.showMessageDialog(gameScreen, "You have Successfully Registered!","Registered",JOptionPane.INFORMATION_MESSAGE);
+                    gameScreen.changeScreen(DataForUI.STR_LOGIN, DataForUI.STR_REGISTER);
+                    }
+                    else{
+                    JOptionPane.showMessageDialog(gameScreen, "Something went wrong!","Try Again", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else
+                {
+                JOptionPane.showMessageDialog(gameScreen, "Passwords does Not match!","Try Again", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            else
-            {
-               JOptionPane.showMessageDialog(gameScreen, "Passwords does Not match!","Try Again", JOptionPane.ERROR_MESSAGE);
+            else{
+               JOptionPane.showMessageDialog(gameScreen, "Invalid email!","Try Again", JOptionPane.ERROR_MESSAGE);
             }
         }
         else
         {
-            JOptionPane.showMessageDialog(gameScreen, "User '"+uname+"' Already exists","Try Again", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(gameScreen, "User '"+uname+"' Already exists!","Try Again", JOptionPane.ERROR_MESSAGE);
         
         }
     
@@ -92,6 +113,7 @@ public class ControllerRegister {
         final int _conpass = 3;
         final int _exit=0;
         final int _TopBorder=0;
+        final int _email=6;
         
         panelRegister.getCompCon(_TopBorder).addMouseListener(new MouseListener() {
             @Override
@@ -164,13 +186,19 @@ public class ControllerRegister {
             @Override
             public void mouseClicked(MouseEvent e) {
                 
+                JTextField email = (JTextField)panelRegister.getCompCon(_email);
                 JTextField uname = (JTextField)panelRegister.getCompCon(_username);
                 JPasswordField pass = (JPasswordField)panelRegister.getCompCon(_pass);
                 JPasswordField conPass = (JPasswordField)panelRegister.getCompCon(_conpass);
                 String str_pass = new String(pass.getPassword());
                 String str_conPass = new String(conPass.getPassword());
+                if(!(email.toString().equals("")||str_pass.equals("")||str_conPass.equals("")||uname.equals(""))){
+                    signUpClick(email.getText(),uname.getText(), str_pass,str_pass);
+                }
+                else{
+                    JOptionPane.showMessageDialog(gameScreen, "Details incomplete!","Try Again", JOptionPane.ERROR_MESSAGE);
+                }
                 
-                signUpClick(uname.getText(), str_pass,str_pass);
             }
 
             @Override
