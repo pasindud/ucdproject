@@ -10,6 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import FLOG_LOGIC.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,9 +35,10 @@ public class GameScreen extends JFrame {
     private PanelSettings panelSettings;
     private PanelRoundReadyUp panelRoundReadyUp;
     private PanelWinners panelWinners;
+    private SelectMultiPlayer panelSelectMultiPlayer;
     //Holds the CardLayout
     private JPanel container;
-
+    
     //Controllers for Panels 
     ControllerGamePlay controllerGamePlay;
     ControllerMainMenu controllerMainMenu;
@@ -59,31 +63,31 @@ public class GameScreen extends JFrame {
 
     //Constructor 
     public GameScreen() {
+        createAndShowGUI();
         // Tempory.
-        SelectMultiPlayer selectMultiPlayer2 = new SelectMultiPlayer();
+        /*SelectMultiPlayer selectMultiPlayer2 = new SelectMultiPlayer();
         JFrame ui2=new JFrame("ui2");
         ui2.setSize(new Dimension(900, 619)); 
         ui2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ui2.add(selectMultiPlayer2);
-        ui2.setVisible(true);
+        ui2.setVisible(true);*/
         
-        SelectMultiPlayer selectMultiPlayer1 = new SelectMultiPlayer();
+        /*SelectMultiPlayer selectMultiPlayer1 = new SelectMultiPlayer(this);
         JFrame ui1 =new JFrame("ui1");
         ui1.setSize(new Dimension(900, 619)); 
         ui1.setLocation(300, 300);
         ui1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ui1.add(selectMultiPlayer1);
-        ui1.setVisible(true);
-        
+        ui1.setVisible(true);*/
     }
 
     //JFrame setting up
     private void createAndShowGUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        preparePanels();
-//        showMainMenu();
-        this.setSize(new Dimension(900, 619));
-        //this.setUndecorated(true);
+        preparePanels();
+        showMainMenu();
+        this.setSize(new Dimension(900, 619)); 
+//        this.setUndecorated(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.validate();
@@ -96,7 +100,7 @@ public class GameScreen extends JFrame {
         panelSettings = new PanelSettings();
         panelRoundReadyUp = new PanelRoundReadyUp();
         panelWinners = new PanelWinners();
-        
+        panelSelectMultiPlayer = new SelectMultiPlayer(this);
         //Adding Panels to Card Layout
         container = new JPanel();
         
@@ -106,40 +110,32 @@ public class GameScreen extends JFrame {
         container.add(panelSettings,dataForUI.STR_SETTINGS);
         container.add(panelRoundReadyUp,dataForUI.STR_ROUNDREADYUP);
         container.add(panelWinners,dataForUI.STR_WINNER);
+        container.add(panelSelectMultiPlayer,dataForUI.SelectMultiplayer);
         this.getContentPane().add(container,BorderLayout.CENTER);
         
         //TestGUI_Inputs testing = new TestGUI_Inputs();
-        initateGame();
-       controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
-       controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
-       controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
-       controllerSettings = new ControllerSettings(panelSettings, this);
-       controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
+//        initateGame();
+        controllerGamePlay = new ControllerGamePlay(panelPlaying,this);
+        controllerRoundReadyUp = new ControllerRoundReadyUp(panelRoundReadyUp,this, controllerGamePlay);
+        controllerMainMenu = new ControllerMainMenu(panelMainMenu, this, controllerRoundReadyUp);
+        controllerSettings = new ControllerSettings(panelSettings, this);
+        controllerWinners = new ControllerWinners(panelWinners, this, controllerGamePlay);
     }
 
     private void showMainMenu() {
+        System.out.println("showmainmenu");
         changeScreen(dataForUI.STR_MAINMENU, null);
     }
-
+/*
     private void initateGame() {
         Game game = new Game();
         game.addPlayer("Pasindu");
         game.addPlayer("Dushan");
-        game.addPlayer("Ishanka");
-        game.addPlayer("Dilshan");
-        game.addPlayer("Piumal");
-        game.addPlayer("Dinuka");
-        game.addPlayer("snake");
-        game.addPlayer("fff");
-        game.addPlayer("ghgfh");
-        game.addPlayer("ffgff");
-        game.addPlayer("ffghghhf");
-        game.addPlayer("ffghghf");
 
         DataForUI.game = game;
         DataForUI.getPlayerList();
     }
-
+*/
     /**
      * The following Method will handle all change screen calls, basic switching
      * for the panels in the CardLayout
@@ -156,7 +152,6 @@ public class GameScreen extends JFrame {
                 case DataForUI.SelectMultiplayer:
                     cl.show(container, screenName);
                     break;
-
                 case DataForUI.STR_MAINMENU:
                     cl.show(container, screenName);
                     break;
@@ -168,14 +163,9 @@ public class GameScreen extends JFrame {
 
                 case DataForUI.STR_ROUNDREADYUP:
                     cl.show(container, screenName);
-                    controllerRoundReadyUp.runTimer();
-                    controllerRoundReadyUp.drawPlayers();
-                    if (DataForUI.RoundNum >= 2) {
-                        controllerRoundReadyUp.setTitlePlayers(false);
-                    } else {
-                        controllerRoundReadyUp.setTitlePlayers(true);
+                    if (dataForUI.RoundNum == 1) {
+                        startRoundUpTimerSystem();
                     }
-                    panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));
                     break;
 
                 case DataForUI.STR_WINNER:
@@ -193,7 +183,19 @@ public class GameScreen extends JFrame {
             cl.show(container, screenName);
         }
         this.validate();
-
+    }
+    
+    // Run this only when all the scores are returned.
+    // Except the first time.
+    public void startRoundUpTimerSystem(){
+                    controllerRoundReadyUp.runTimer();
+                    controllerRoundReadyUp.drawPlayers();
+                    if (DataForUI.RoundNum >= 2) {
+                        controllerRoundReadyUp.setTitlePlayers(false);
+                    } else {
+                        controllerRoundReadyUp.setTitlePlayers(true);
+                    }
+                    panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));
     }
 
     /**
@@ -211,4 +213,121 @@ public class GameScreen extends JFrame {
         this.setLocation(x - mX, y - mY);
 
     }
+    
+    // Multiplayer details.
+    public Multiplayer multiplayer = new Multiplayer();
+    public Catcher clientCatcher = new Catcher();
+    public Thrower clientThrower = new Thrower();
+    public String channelName = "TestingChannel";
+    public String username = "TestingUsername";
+    public String serverQueueName;
+    public String clientQueueName;
+    public Thread backgroundClientQueueCheck;
+    public ArrayList<String> otherPlayerNames = new ArrayList<String>();
+    
+    Game game = new Game();
+    public void setupMultiplayerForGamePlay(){
+        serverQueueName = multiplayer.getServerQueue(channelName);
+        clientQueueName = multiplayer.getClientQueue(channelName, username);
+        
+        for (String name : otherPlayerNames) {
+            game.addPlayer(name);
+        }
+        otherPlayerNames.remove(username);
+//        game.addPlayer("Json");
+//        game.addPlayer("Mark");
+        dataForUI.game = game;
+        dataForUI.getPlayerList();
+        controllerGamePlay.drawOpponenets();
+        clientThrower.addThrowListener(clientCatcher);
+        startQueueSystem();
+    }
+    
+    /**
+     * Listens to messages thrown by checkQueueThread.
+     */
+    public class Catcher implements ThrowListener {
+        @Override
+        public void Catch(String message) {
+            System.err.println("Caught:GameServer" + message);
+            decodeClientMessage(message);
+        }
+    }
+    
+    /**
+     * Decode the message received by the client
+     */
+    public synchronized void decodeClientMessage(String message) {
+        System.err.println("decodeClientMessage:GameServer m " + message);
+        // setClientStatus("Message in client - " + message);
+        String[] segments = message.split(" ");
+        if (segments.length < 2) {
+            return;
+        }
+        String code = segments[0];
+        String content = segments[1];
+        switch (code) {
+            case "200":
+                // User joined the correctly.
+                break;
+            case "304":
+                
+        // Exameple 304 intialLetters pasindu 0 a e
+        //          304 intialLetters <player name> <round number> <letter 1> <letter 2>
+                if (segments.length < 6) {
+                    System.err.println("The letters received incorrect format");
+                    return;
+                }
+                String name = segments[2];
+                Integer round = Integer.parseInt(segments[3]);
+                String firstLetter = segments[4];
+                String secondLetter = segments[5];
+                int userIndex = dataForUI.game.getIndexByPlayerName(name);
+                String[] initLetters = {firstLetter, secondLetter};
+                if (dataForUI.RoundNum != round) {
+                    System.err.println("Round number does not match. ");
+                }
+
+                System.err.println("Intial Letters " + initLetters + " from " + name);
+                dataForUI.game.getPlayerRoundForRound(name, round).setIntialLetters(initLetters);
+                int k =0;
+                break;
+            case "204":
+                handleRoundScore(segments);
+                break;
+        }
+    }
+    int noOfRoundScores = 0;
+    // Example - 107 roundScore <player name> <round number> <score>
+    //           107 roundScore pasindu 1 score
+    public void handleRoundScore(String[] segments){
+        String name = segments[2];
+        Integer round = Integer.parseInt(segments[3]);
+        Integer score = Integer.parseInt(segments[4]);
+        Integer totalScore = Integer.parseInt(segments[5]);
+        
+        dataForUI.game.getPlayerRoundForRound(name, round).setScore(score);
+        dataForUI.game.getPlayerfromName(name).setTotalScore(totalScore);
+        controllerRoundReadyUp.drawPlayers();
+        // Controller up is waiting untils all the users scores are recived.
+        ++noOfRoundScores;
+        //  + 1 so that it counts that person it self.
+        if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
+            startRoundUpTimerSystem();
+            noOfRoundScores = 0;
+        }
+    }
+    
+    public void pushtoServerQueue(String message){
+        multiplayer.publishToQueue(serverQueueName, message);
+    }
+    
+    public void startQueueSystem(){
+        System.err.println("StartQ:GameServer");
+        String clientQueueName = multiplayer.getClientQueue(channelName, username);
+        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
+        backgroundClientQueueCheck.start();
+    }
+    
+    
 }

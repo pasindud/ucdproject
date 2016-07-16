@@ -21,6 +21,16 @@ public class Game {
         playerList.add(player);
     }
     
+    public int getIndexByPlayerName(String name){
+        for (int i = 0; i < playerList.size(); i++) {
+            String currentName = playerList.get(i).getName();
+            if (name.equals(currentName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public int getCurrentRound(){
         return currentRound;
     }
@@ -86,7 +96,7 @@ public class Game {
                 }
             }
         });
-        playerList.get(tmpPlayerList.get(0).getListIndex()).kickPlayer();
+        // playerList.get(tmpPlayerList.get(0).getListIndex()).kickPlayer();
     }
     
     public void runWordSearch(int round, int playerNumber){
@@ -115,4 +125,13 @@ public class Game {
         return playerList;
     }
     
+    public Player getPlayerfromName(String name){
+        int userIndex = getIndexByPlayerName(name);
+        return getPlayerList().get(userIndex);
+    }
+    
+    public PlayerRound getPlayerRoundForRound(String name, int round){
+        int userIndex = getIndexByPlayerName(name);
+        return getPlayerList().get(userIndex).getPlayerRound(round);
+    }    
 }

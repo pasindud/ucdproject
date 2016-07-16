@@ -38,7 +38,7 @@ public class DataForUI
     public static int RoundNum;
     
     //Set Round ready up time
-    public static int RoundReadyUpTime = 10;
+    public static int RoundReadyUpTime = 15;
     
     //Set Round time
     public static int RoundTime =10;
@@ -51,6 +51,8 @@ public class DataForUI
     public static final String SelectMultiplayer = "SelectMultiPlayer";
     public static final String STR_WINNER = "WinnerList";
       
+    public static String firstLetter;
+    public static String secondLetter;
     
     public DataForUI() 
     {
@@ -82,6 +84,7 @@ public class DataForUI
     }
 
     public static PlayerData[] getPdArray() {
+        getPlayerList();
         return PdArray;
     }
 
@@ -95,13 +98,23 @@ public class DataForUI
         parsePlayerList();
     }
     
+    
+    // 
     private static void parsePlayerList()
     {
         int count=0;
         PdArray = new PlayerData[playerList.size()];
         for(Player p : playerList)
         {
-            PlayerData pd = new PlayerData(p.getListIndex(),p.getName(),p.getTotalScore(), "A", "B"); //change
+            String[] initialLetters = p.getPlayerRound(RoundNum).getIntialLetters();
+            System.err.println("ParseLettesr - " + initialLetters[0] + " - " + initialLetters[1]);
+            PlayerData pd = new PlayerData(
+                    p.getListIndex(),
+                    p.getName(),
+                    p.getTotalScore(), 
+                    initialLetters[0], 
+                    initialLetters[1]);
+            //change
             PdArray[count] = pd;
             count++;
         }

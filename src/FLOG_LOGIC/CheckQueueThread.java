@@ -36,6 +36,7 @@ public class CheckQueueThread extends Thread {
     public void run() {
         // Checks the queue every 5 seconds
         // This should be killed with the parent thread.
+        // TODO break on interup.
         while(true){
             try {
                 sleep(POLLING_INTERVEL);
@@ -45,10 +46,9 @@ public class CheckQueueThread extends Thread {
                 break;
             }
             List<String> messages = multiplayer.readQueue(queueName);
-
             for (String message : messages) {
                 thrower.Throw(message);
-                System.out.println("CheckQueue - Throw - " + message);
+                System.err.println("[User:" + queueName + "] M - " + message);
             }
         }
     }

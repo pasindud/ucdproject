@@ -108,6 +108,7 @@ public class MultiPlayerTestGUI extends JFrame {
     }
     
     ArrayList<String> otherUserNames = new ArrayList<String>();
+    
     public MultiPlayerTestGUI(String channel, String player, List<String> playerlist) {
         this.serverQueueName = multiplayer.getServerQueue(channelName);
         initComponents();
