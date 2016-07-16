@@ -26,6 +26,7 @@ public class ControllerRoundReadyUp {
     public void runTimer()
     {
         controllerGamePlay.preRoundStart();
+    
         // Exameple 304 intialLetters pasindu 0 a e
         //          304 intialLetters <player name> <round number> <letter 1> <letter 2>
         String username = gameScreen.username;
@@ -41,22 +42,29 @@ public class ControllerRoundReadyUp {
         gameScreen.multiplayer.broadcast(channelName, gameScreen.otherPlayerNames, message);
         gameScreen.multiplayer.publishToQueue(gameScreen.serverQueueName, message);
         
+        DataForUI.getPlayerList();
+        controllerGamePlay.drawOpponenets();
+        
         timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, DataForUI.RoundReadyUpTime));
         timerThread.start();
+        
     }
     
     //Switching to gameplay screen and begin the round
     public void startRound()
     {
-        TestGUI_Inputs testing = new TestGUI_Inputs();
-        if(DataForUI.RoundNum==2)
+        //TestGUI_Inputs testing = new TestGUI_Inputs();
+        /*if(DataForUI.RoundNum>1)
         {
             //testing.listOfPlayers2();
             //controllerGamePlay
             controllerGamePlay.drawOpponenets();
-        }
+        }*/
+        
+        DataForUI.getPlayerList();
+        controllerGamePlay.drawOpponenets();
          
-        gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, null);
+        gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, DataForUI.STR_ROUNDREADYUP);
         controllerGamePlay.beginRound();
     }
     public void drawPlayers()

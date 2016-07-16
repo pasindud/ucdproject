@@ -190,7 +190,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         txtClientMessages = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
 
-        txtChannelName.setText("ChannelName");
+        txtChannelName.setText("ChannelDC");
         jScrollPane1.setViewportView(txtChannelName);
 
         startServerButton.setText("Start Server");
@@ -218,6 +218,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         jTextPane2.setToolTipText("");
         jScrollPane2.setViewportView(jTextPane2);
 
+        txtPlayerName.setText("dushan");
         jScrollPane3.setViewportView(txtPlayerName);
 
         txtClientMessages.setColumns(20);
