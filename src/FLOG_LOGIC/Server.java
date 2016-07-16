@@ -86,9 +86,12 @@ public class Server {
                 playerNames.add(name);
                 game.addPlayer(name);
                 break;
-            // User start .   
-            case "102":
-                
+            // User start the gui- ack game start .   
+            case "103":
+                System.out.println(content);
+                break;
+            case "104":
+                System.out.println(content);
                 break;
             case "105":
                 // Format - 104 letters <player name> a,s,d,g,e,q,q,r,t
