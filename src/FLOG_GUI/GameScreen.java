@@ -12,6 +12,9 @@ import javax.swing.SwingUtilities;
 import FLOG_LOGIC.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -264,7 +267,7 @@ public class GameScreen extends JFrame {
         if (segments.length < 2) {
             return;
         }
-        String code = segments[0];
+        String code = segments[0].trim();
         String content = segments[1];
         switch (code) {
             case "200":
@@ -293,6 +296,7 @@ public class GameScreen extends JFrame {
                 int k =0;
                 break;
             case "204":
+                System.err.println("33333");
                 handleRoundScore(segments);
                 break;
         }
@@ -305,16 +309,20 @@ public class GameScreen extends JFrame {
         Integer round = Integer.parseInt(segments[3]);
         Integer score = Integer.parseInt(segments[4]);
         Integer totalScore = Integer.parseInt(segments[5]);
-        
+        System.err.println("1111111");
         dataForUI.game.getPlayerRoundForRound(name, round).setScore(score);
         dataForUI.game.getPlayerfromName(name).setTotalScore(totalScore);
         controllerRoundReadyUp.drawPlayers();
         // Controller up is waiting untils all the users scores are recived.
         ++noOfRoundScores;
+        System.err.println("2222222");
         //  + 1 so that it counts that person it self.
         if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
             startRoundUpTimerSystem();
             noOfRoundScores = 0;
+            System.err.println("55555");
+        } else {
+            System.err.println("44444");
         }
     }
     
@@ -323,10 +331,20 @@ public class GameScreen extends JFrame {
     }
     
     public void startQueueSystem(){
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
         System.err.println("StartQ:GameServer");
-        String clientQueueName = multiplayer.getClientQueue(channelName, username);
-        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
-        backgroundClientQueueCheck.start();
+        Runnable task = () -> {
+         List<String> messages = multiplayer.readQueue(clientQueueName);
+            for (String message : messages) {
+                decodeClientMessage(message);
+                System.err.println("[GameServer][User:" + clientQueueName + "] M - " + message);
+            }
+        };
+        long delay = 0;
+        long intervel = 2;
+        executor.scheduleWithFixedDelay(task, delay, intervel, TimeUnit.SECONDS);
+        /*backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
+        backgroundClientQueueCheck.start();*/
     }
     
     

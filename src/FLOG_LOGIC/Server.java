@@ -7,6 +7,10 @@ package FLOG_LOGIC;
 
 import FLOG_GUI.SelectMultiPlayer;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -29,15 +33,26 @@ public class Server {
         serverThrower.addThrowListener(serverCatcher);
         this.serverQueueName = multiplayer.getServerQueue(channelName);
     }
-    
+    ScheduledExecutorService executor = Executors.newScheduledThreadPool(100);
     public void start(){
         if (isServerStart) {
             System.err.println("Server is already started");
             return;
         }
         game = new Game();
-        Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, serverThrower);
-        backgroundServerQueueCheck.start();
+        Runnable task = () -> {
+         List<String> messages = multiplayer.readQueue(serverQueueName);
+            for (String message : messages) {
+                decodeServerMessage(message);
+                System.err.println("[GameServer][User:" + serverQueueName + "] M - " + message);
+            }
+        };
+        long delay = 0;
+        long intervel = 2;
+        executor.scheduleWithFixedDelay(task, delay, intervel, TimeUnit.SECONDS);
+    
+        /* Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, serverThrower);
+        backgroundServerQueueCheck.start();*/
         isServerStart = true;
     }
     
@@ -66,7 +81,7 @@ public class Server {
      * Decode the message received by the server.
      */
     private synchronized void decodeServerMessage(String message){
-        System.out.println("Decoding message to server message - " + message);
+        System.out.println("Decoding message to server message - [" + message + "]");
         String[] segments = message.split(" ");
         if (segments.length < 2) {
             return;
@@ -114,6 +129,9 @@ public class Server {
                     return;
                 }
                 handleEndRound(segments);
+                break;
+            default:
+                System.err.println("Found nothing");
                 break;
         }
     }

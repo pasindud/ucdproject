@@ -114,21 +114,24 @@ public class ControllerGamePlay
      */
     public void startNextRound()
     {
-                    
-            String[] initialLetters = this.panelGamePlay.getInitialLetters();
-            String[] otherLetters = this.panelGamePlay.getOtherLetters();
-            // Send 106 message to the server telling about the what happened.
-            String message = Utils.makeRoundEndServerMessage(
-                    this.gameScreen.username,
-                    this.gameScreen.dataForUI.RoundNum,
-                    this.panelGamePlay.isAutoWordGenUsed,
-                    this.answere,
-                    "0",
-                    initialLetters,
-                    otherLetters
-            );
-            this.gameScreen.pushtoServerQueue(message);
-            
+//        GameScreen gameScreen1 = gameScreen
+        new Thread(){
+            public void run() {
+                String[] initialLetters = panelGamePlay.getInitialLetters();
+                String[] otherLetters = panelGamePlay.getOtherLetters();
+                // Send 106 message to the server telling about the what happened.
+                String message = Utils.makeRoundEndServerMessage(
+                        gameScreen.username,
+                        gameScreen.dataForUI.RoundNum,
+                        panelGamePlay.isAutoWordGenUsed,
+                        answere,
+                        "0",
+                        initialLetters,
+                        otherLetters
+                );
+                gameScreen.pushtoServerQueue(message);
+            }
+        }.start();
         if(DataForUI.RoundNum<5)
         {
             DataForUI.RoundNum= DataForUI.RoundNum +1;

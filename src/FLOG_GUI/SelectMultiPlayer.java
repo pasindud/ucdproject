@@ -59,7 +59,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         clientThrower.addThrowListener(clientCatcher);
     }
     
-    private Server server = null;
+    private volatile Server server = null;
     
     /**
      * Decode the message received by the client
@@ -84,12 +84,13 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                 }
                 
                 // Channing the UI to the game playing deck.
-                /*this.playerName = txtPlayerName.getText().trim();
+                this.playerName = txtPlayerName.getText().trim();
                 // TODO add player names.
                 if (backgroundClientQueueCheck != null) {
                     backgroundClientQueueCheck.interrupt();
+                    System.err.println("Stopping the background client");
                 }
-                MultiPlayerTestGUI gui = new MultiPlayerTestGUI(
+                /*MultiPlayerTestGUI gui = new MultiPlayerTestGUI(
                         this.channelName, 
                         this.playerName, 
                         Utils.getPlayerNamesFromString(segments[2]));
@@ -123,12 +124,18 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private void startServerButtonMouseClicked(MouseEvent evt) {
         startServerButton.setEnabled(false);
         channelName = txtChannelName.getText();
-        multiplayer.createServer(channelName);
         setServerStatus("Starting Server");
         // Server listen's to it's queue.
-        server = new Server(channelName);
-        server.start();
-        setServerStatus("Sever started");
+        Thread thread = new Thread() {
+            public void run() {
+                multiplayer.createServer(channelName);
+                server = new Server(channelName);
+                server.start();
+                setServerStatus("Sever started");
+            }
+        };
+        thread.setDaemon(true);
+        thread.start();
     }
 
     /**
@@ -139,23 +146,32 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         if (IS_USER_JOINED) {
             return;
         }
+
         IS_USER_JOINED = true;
         setClientStatus("Joining server");
         channelName = txtChannelName.getText();
         playerName = txtPlayerName.getText();
-        multiplayer.joinNewPlayer(playerName, channelName);
 
-        // Listen to the client's queue.
-        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
-        backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
-        backgroundClientQueueCheck.start();
+        new Thread() {
+            public void run() {
+                multiplayer.joinNewPlayer(playerName, channelName);
+            }
+        }.start();
+        new Thread(){
+            public void run(){
+                // Listen to the client's queue.
+                String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
+                backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
+                backgroundClientQueueCheck.start();
+            }
+        }.start();
     }
 
     /**
      * Set the status from the queue reading.
      */
     public synchronized void setServerStatus(String status) {
-        System.out.println("Set status " + status);
+        System.out.println("Set status [SelectMulti] " + status);
         String text = jTextPane2.getText();
         jTextPane2.setText(text += "\n" + status);
     }
@@ -163,7 +179,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     
     /** Set of the server status. */
     public synchronized void setClientStatus(String status){
-        System.out.println("Set status client - " + status);
+        System.out.println("Set status client - [SelectMulti] " + status);
         String text = txtClientMessages.getText();
         txtClientMessages.setText(text += "\n" + status);
     }
@@ -190,7 +206,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         txtClientMessages = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
 
-        txtChannelName.setText("ChannelName44");
+        txtChannelName.setText("ChannelName4412");
         jScrollPane1.setViewportView(txtChannelName);
 
         startServerButton.setText("Start Server");

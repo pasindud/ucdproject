@@ -163,7 +163,7 @@ public class Multiplayer {
         String jsonResponse = queue.toString();   
         System.out.println("Log createQueue - " + queue.toString());
         } catch(Exception e){
-            App42Response app42response = queueService.purgePullQueue(name);   
+            App42Response app42response = queueService.purgePullQueue(name);
             // No internet
             // Queue has already been created.
         }
@@ -245,19 +245,24 @@ public class Multiplayer {
      * End the game.
      * 
      */
-    
-    public boolean publishToQueue(String queueName, String message){
-        long  expiryTime = 10000;  
-        QueueService queueService = App42API.buildQueueService();   
-        Queue queue = queueService.sendMessage(queueName, message, expiryTime);
-        
-        if (DEBUG) {
-            System.out.println(queue.toString());
-        }
+   
+    public boolean publishToQueue(String queueName, String message) {
+        new Thread() {
+            public void run() {
+
+                long expiryTime = 10000;
+                QueueService queueService = App42API.buildQueueService();
+                Queue queue = queueService.sendMessage(queueName, message, expiryTime);
+                //        if (DEBUG) {
+                System.out.println("Publish Q - " + queueName + " M - " + message);
+                //        }
+            }
+        }.start();
         return true;
     }
     
     public List<String> readQueue(String queueName){
+        System.out.println("READ " + queueName);
         if (DEBUG) {
             System.out.println("Reading queue - " + queueName);
         }
@@ -270,6 +275,7 @@ public class Multiplayer {
         for(Queue.Message message : messageList)    
         {   
             messages.add(message.getPayLoad());
+            System.err.println("Recevied Q - [" + queueName + "] M - " + message.getPayLoad());
             if (DEBUG) {
                 System.out.println("correlationId is " + message.getCorrelationId());    
                 System.out.println("messageId is " + message.getMessageId());    
@@ -286,8 +292,12 @@ public class Multiplayer {
     public void broadcast(String channelName,
             ArrayList<String> playerNames, String message){
         for (String player : playerNames) {
-            String playerQueueName = getClientQueue(channelName, player);
-            publishToQueue(playerQueueName, message);
+            new Thread(){
+                public void run(){
+                    String playerQueueName = getClientQueue(channelName, player);
+                    publishToQueue(playerQueueName, message);
+                }
+            }.start();
         }
     }
 }
