@@ -16,8 +16,7 @@ public class ControllerRoundReadyUp {
         this.gameScreen = gameScreen;
         this.controllerGamePlay = controllerGamePlay;
     }
-    
-    
+
     /**
       * Start Round ReadyUP Timer
       * If you want to Change Round time, then change the value of
@@ -40,7 +39,15 @@ public class ControllerRoundReadyUp {
                 
         gameScreen.multiplayer.broadcast(channelName, gameScreen.otherPlayerNames, message);
         gameScreen.multiplayer.publishToQueue(gameScreen.serverQueueName, message);
-        
+        startTimer();
+        /*if (gameScreen.dataForUI.RoundNum == 1) {
+            startTimer();
+        } else {
+          // Wait for the score calculations.
+        }*/
+    }
+    
+    private void startTimer(){
         timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, DataForUI.RoundReadyUpTime));
         timerThread.start();
     }

@@ -90,4 +90,38 @@ public class Utils {
             String strPlayerNames){
         return new ArrayList(Arrays.asList(strPlayerNames.split(",")));
     }
+    
+    public static String makeRoundEndServerMessage(String playerName, 
+            int roundNum, 
+            boolean isAutoGenUsed, String word, String timeRemanString,
+            String[] initialLetters, String[] otherLetters){
+        
+        String message = "106 ";
+        message += "endRound ";
+        message += playerName + " ";
+        message += roundNum + " ";
+        
+        String strInitialLetters = String.join(",", initialLetters);
+        String strOtherLetters = String.join(",", otherLetters);
+        
+        message += strInitialLetters + " ";
+        message += strOtherLetters + " ";
+        message += timeRemanString + " ";
+        message += isAutoGenUsed + " ";
+        message += word;
+                
+        /*            
+        Code
+        name
+        Username.
+        Round.
+        Initial Letters/
+        Other letters.
+        Completed time.
+        AutoGenUsed
+        Word
+        */
+        return message;
+                
+    }
 }

@@ -11,6 +11,7 @@ import com.shephertz.app42.paas.sdk.java.user.UserService;
 
 import com.shephertz.app42.paas.sdk.java.App42API;  
 import com.shephertz.app42.paas.sdk.java.App42Log;
+import com.shephertz.app42.paas.sdk.java.App42Response;
 import com.shephertz.app42.paas.sdk.java.message.Queue;
 import com.shephertz.app42.paas.sdk.java.message.QueueService;
 import com.shephertz.app42.paas.sdk.java.storage.Query;  
@@ -155,13 +156,14 @@ public class Multiplayer {
      * Create a queue for the given name.
      */
     private boolean createQueue(String name){
-        try{
         String queueDescription = "a";
-        QueueService queueService = App42API.buildQueueService();   
+        QueueService queueService = App42API.buildQueueService();  
+        try{ 
         Queue queue = queueService.createPullQueue(name, queueDescription); 
         String jsonResponse = queue.toString();   
         System.out.println("Log createQueue - " + queue.toString());
         } catch(Exception e){
+            App42Response app42response = queueService.purgePullQueue(name);   
             // No internet
             // Queue has already been created.
         }

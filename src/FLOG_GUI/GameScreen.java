@@ -163,14 +163,9 @@ public class GameScreen extends JFrame {
 
                 case DataForUI.STR_ROUNDREADYUP:
                     cl.show(container, screenName);
-                    controllerRoundReadyUp.runTimer();
-                    controllerRoundReadyUp.drawPlayers();
-                    if (DataForUI.RoundNum >= 2) {
-                        controllerRoundReadyUp.setTitlePlayers(false);
-                    } else {
-                        controllerRoundReadyUp.setTitlePlayers(true);
+                    if (dataForUI.RoundNum == 1) {
+                        startRoundUpTimerSystem();
                     }
-                    panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));
                     break;
 
                 case DataForUI.STR_WINNER:
@@ -188,6 +183,19 @@ public class GameScreen extends JFrame {
             cl.show(container, screenName);
         }
         this.validate();
+    }
+    
+    // Run this only when all the scores are returned.
+    // Except the first time.
+    public void startRoundUpTimerSystem(){
+                    controllerRoundReadyUp.runTimer();
+                    controllerRoundReadyUp.drawPlayers();
+                    if (DataForUI.RoundNum >= 2) {
+                        controllerRoundReadyUp.setTitlePlayers(false);
+                    } else {
+                        controllerRoundReadyUp.setTitlePlayers(true);
+                    }
+                    panelRoundReadyUp.setRound(String.valueOf(dataForUI.RoundNum));
     }
 
     /**
@@ -284,7 +292,34 @@ public class GameScreen extends JFrame {
                 dataForUI.game.getPlayerRoundForRound(name, round).setIntialLetters(initLetters);
                 int k =0;
                 break;
+            case "204":
+                handleRoundScore(segments);
+                break;
         }
+    }
+    int noOfRoundScores = 0;
+    // Example - 107 roundScore <player name> <round number> <score>
+    //           107 roundScore pasindu 1 score
+    public void handleRoundScore(String[] segments){
+        String name = segments[2];
+        Integer round = Integer.parseInt(segments[3]);
+        Integer score = Integer.parseInt(segments[4]);
+        Integer totalScore = Integer.parseInt(segments[5]);
+        
+        dataForUI.game.getPlayerRoundForRound(name, round).setScore(score);
+        dataForUI.game.getPlayerfromName(name).setTotalScore(totalScore);
+        controllerRoundReadyUp.drawPlayers();
+        // Controller up is waiting untils all the users scores are recived.
+        ++noOfRoundScores;
+        //  + 1 so that it counts that person it self.
+        if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
+            startRoundUpTimerSystem();
+            noOfRoundScores = 0;
+        }
+    }
+    
+    public void pushtoServerQueue(String message){
+        multiplayer.publishToQueue(serverQueueName, message);
     }
     
     public void startQueueSystem(){

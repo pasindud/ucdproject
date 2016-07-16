@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public class Player {
     private String name;
-    private PlayerRound[] playerRounds = new PlayerRound[5];
+    private PlayerRound[] playerRounds = new PlayerRound[6];
     private int totalScore;
     private boolean isKicked = false;
     private int listIndex;
@@ -71,6 +71,15 @@ public class Player {
         return totalScore;
     }
 
+    public int getNowTotalScore(){
+        int total = 0;
+        for (int i = 0; i < playerRounds.length; i++) {
+            if (playerRounds[i] != null) {
+                total += playerRounds[i].getScore();
+            }
+        }
+        return total;
+    }
     
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;

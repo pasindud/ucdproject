@@ -17,13 +17,13 @@ public class Server {
     private Multiplayer multiplayer;
     private String serverQueueName = "";
     private ArrayList<String> playerNames = new ArrayList<String>();
+    // Consumer producer client
     Catcher serverCatcher = new Catcher();
     Thrower serverThrower = new Thrower();
     private boolean isServerStart = false;
     private Game game = null;
-    // Consumer producer client
+    
     public Server(String channelName){
-        
         this.channelName = channelName;
         multiplayer = new Multiplayer();
         serverThrower.addThrowListener(serverCatcher);
@@ -48,6 +48,7 @@ public class Server {
         strPlagerNames = strPlagerNames.replaceFirst("^,", "");
         String message = "201 startgame " + strPlagerNames;
         multiplayer.broadcast(channelName, playerNames, message);
+        game.startNewRound();
     }
     
     /**
@@ -56,7 +57,7 @@ public class Server {
     private class Catcher implements ThrowListener {
         @Override
         public void Catch(String message) {
-            System.out.println("Server caught " + message);
+            System.out.println("Server:caught " + message);
              decodeServerMessage(message);
         }
     }
@@ -72,6 +73,8 @@ public class Server {
         }
         String code = segments[0];
         String content = segments[1];
+        String name = "";
+        Integer round;
         switch(code) {
             // New user joined format - 100 <player name>
             case "100": 
@@ -82,7 +85,7 @@ public class Server {
                 // Message to acknowledge that the server received the message 
                 String clientMessage = "200 ackJoinServer";
                 multiplayer.publishToQueue(playerQueue, clientMessage);
-                String name = content.trim();
+                name = content.trim();
                 playerNames.add(name);
                 game.addPlayer(name);
                 break;
@@ -96,7 +99,61 @@ public class Server {
                 letters = letters.replaceFirst("^,", "");
                 String[] lettersArray = letters.split(",");
                 break;
+            case "304": // Initial Letters for next round.
+                name = segments[2];
+                round = Integer.parseInt(segments[3]);
+                String firstLetter = segments[4];
+                String secondLetter = segments[5];
+                int userIndex = game.getIndexByPlayerName(name);
+                String[] initialLetters = {firstLetter, secondLetter};
+                game.getPlayerRoundForRound(name, round).setIntialLetters(initialLetters);
+                break;
+            case "106": // Use has finished the message.
+                if (segments.length < 8) {
+                    System.err.println("Game round end message format invalid Message " + message);
+                    return;
+                }
+                handleEndRound(segments);
+                break;
+        }
+    }
+    int numberOfUsersFinishedRound = 0;
+    public void handleEndRound(String[] segments) {
+        String name = segments[2];
+        int round = Integer.parseInt(segments[3]);
+        String[] initialLetters = segments[4].split(",");
+        String[] otherLetters = segments[5].split(",");
+        String completedTime = segments[6];
+        boolean isAutoGenUsed = Boolean.valueOf(segments[7]);
+        String word = "";
+        if (segments.length == 9) {
+            word = segments[8];
         }
         
+        PlayerRound currentRound = game.getPlayerRoundForRound(name, round);
+        
+        currentRound.setWord(new WordElement(word));
+        currentRound.setIsWordSearchUsed(isAutoGenUsed);
+        currentRound.setOtherLetters(otherLetters);
+        currentRound.setIntialLetters(initialLetters);
+        currentRound.calculateScore();
+        
+        ++numberOfUsersFinishedRound;
+        int totalScore = game.getPlayerfromName(name).getNowTotalScore();
+        int score = currentRound.getScore();
+        
+        
+        // Example - 107 roundScore <player name> <round number>  <score> <totalScore>
+        //           107 roundScore pasindu 1 10 100
+        String message = "204 roundScore" + " " + name + " " + round + " " + score + " " +  totalScore;
+        
+        multiplayer.broadcast(channelName, playerNames, message);
+        
+        if (playerNames.size() == numberOfUsersFinishedRound) {
+            numberOfUsersFinishedRound = 0;
+            // All users sent the round details.
+        } else {
+        
+        }
     }
 }

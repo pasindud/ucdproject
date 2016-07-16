@@ -96,7 +96,7 @@ public class Game {
                 }
             }
         });
-        playerList.get(tmpPlayerList.get(0).getListIndex()).kickPlayer();
+        // playerList.get(tmpPlayerList.get(0).getListIndex()).kickPlayer();
     }
     
     public void runWordSearch(int round, int playerNumber){
@@ -123,6 +123,11 @@ public class Game {
     public ArrayList<Player> getPlayerList()
     {
         return playerList;
+    }
+    
+    public Player getPlayerfromName(String name){
+        int userIndex = getIndexByPlayerName(name);
+        return getPlayerList().get(userIndex);
     }
     
     public PlayerRound getPlayerRoundForRound(String name, int round){

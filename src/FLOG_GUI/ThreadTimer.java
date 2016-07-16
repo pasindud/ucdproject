@@ -1,6 +1,7 @@
 
 package FLOG_GUI;
 
+import FLOG_LOGIC.Utils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,6 +79,9 @@ public class ThreadTimer implements Runnable
     
         if(DataForUI.RoundNum<DataForUI.RoundLimit)
         {
+            /*String playerName, int roundNum, 
+            boolean isAutoGenUsed, String word, String timeRemanString,
+            String[] initialLetters, String[] otherLetters*/
             controllerGamePlay.startNextRound();
         }
         else

@@ -190,7 +190,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         txtClientMessages = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
 
-        txtChannelName.setText("ChannelName");
+        txtChannelName.setText("ChannelName44");
         jScrollPane1.setViewportView(txtChannelName);
 
         startServerButton.setText("Start Server");
@@ -218,6 +218,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         jTextPane2.setToolTipText("");
         jScrollPane2.setViewportView(jTextPane2);
 
+        txtPlayerName.setText("asd");
         jScrollPane3.setViewportView(txtPlayerName);
 
         txtClientMessages.setColumns(20);
@@ -279,6 +280,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseClicked
+        btnStartGame.setEnabled(false);
         channelName = txtChannelName.getText();
         playerName = txtPlayerName.getText();
         server.startGame();

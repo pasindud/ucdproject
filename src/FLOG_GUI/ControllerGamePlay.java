@@ -2,6 +2,7 @@
 package FLOG_GUI;
 
 
+import FLOG_LOGIC.Utils;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -25,6 +26,8 @@ public class ControllerGamePlay
     int mouseY=0;
     char[] letterArr = new char[12];
     DataForUI data;
+    public String answere;
+    public boolean isAutoGenerate = false;
     TestGUI_Inputs testGUI_Inputs;
     //Constructor 
     public ControllerGamePlay(PanelGamePlay panelGamePlay, GameScreen gameScreen) 
@@ -60,15 +63,10 @@ public class ControllerGamePlay
     
     private void submitClick(String ans)
     {
-             stopTimer = true;
-          
+        answere = ans;
+        stopTimer = true;
+        this.startNextRound();
     }
-    
-     private void generateClick() 
-     {
-         
-     }
-        
     
      private void vowelsClick()
      {
@@ -82,6 +80,7 @@ public class ControllerGamePlay
      }
      
      public void preRoundStart(){
+        answere = "";
         panelGamePlay.resetValuesForRound();
      }
      
@@ -115,6 +114,21 @@ public class ControllerGamePlay
      */
     public void startNextRound()
     {
+                    
+            String[] initialLetters = this.panelGamePlay.getInitialLetters();
+            String[] otherLetters = this.panelGamePlay.getOtherLetters();
+            // Send 106 message to the server telling about the what happened.
+            String message = Utils.makeRoundEndServerMessage(
+                    this.gameScreen.username,
+                    this.gameScreen.dataForUI.RoundNum,
+                    this.panelGamePlay.isAutoWordGenUsed,
+                    this.answere,
+                    "0",
+                    initialLetters,
+                    otherLetters
+            );
+            this.gameScreen.pushtoServerQueue(message);
+            
         if(DataForUI.RoundNum<5)
         {
             DataForUI.RoundNum= DataForUI.RoundNum +1;
@@ -254,12 +268,10 @@ public class ControllerGamePlay
         } );
         
         panelGamePlay.getCompBottom(_generate).addMouseListener(new MouseListener() {
-
             @Override
             public void mouseClicked(MouseEvent e) {
                 ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_autosearch_h.png"));
                 panelGamePlay.setIcon_Gen(imgIcon);
-                generateClick();
             }
 
             @Override
