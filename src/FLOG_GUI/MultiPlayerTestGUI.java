@@ -75,9 +75,32 @@ public class MultiPlayerTestGUI extends JFrame {
             case "200":
                 // User joined the correctly.
                 break;
+            case "300":
+                //get other players letters
+                String[] lettersegments=content.split("^");
+                if(lettersegments.length<3){
+                    return;
+                }
+                String player=lettersegments[0];
+                String letter1=lettersegments[1];
+                String letter2=lettersegments[2];
+                this.replaceLettersInTable(player,letter1,letter2);
+                break;
         }
     }
-    
+    /*
+    *   replace letters of players in table
+    */
+    private void replaceLettersInTable(String player,String letter1,String letter2){
+        for(int i=0;i<jTable1.getRowCount();i++){
+            if(jTable1.getModel().getValueAt(i, 0).toString().equalsIgnoreCase(player)){
+                DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+                model.setValueAt(letter1, i, 1);
+                model.setValueAt(letter2, i, 2);
+            }
+        }
+        
+    }
     public void startQueueSystem(){
         String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
         backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
@@ -104,6 +127,9 @@ public class MultiPlayerTestGUI extends JFrame {
             model.addRow(new Object[]{ otherPlayerName, "", "", "0"});
 
         }
+        
+        multiplayer.ackstartNewGame(playerName, channelName);
+        multiplayer.sendLettersToServer(playerName, channelName, otherUserNames, lbll1.getText(),  lbll2.getText());
     }
     
     
@@ -319,6 +345,7 @@ public class MultiPlayerTestGUI extends JFrame {
             // New user joined format - 100 <player name>
             case "100":
                 break;
+            
         }
 
     }
