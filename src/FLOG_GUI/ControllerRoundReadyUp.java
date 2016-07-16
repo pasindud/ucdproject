@@ -42,8 +42,8 @@ public class ControllerRoundReadyUp {
         gameScreen.multiplayer.broadcast(channelName, gameScreen.otherPlayerNames, message);
         gameScreen.multiplayer.publishToQueue(gameScreen.serverQueueName, message);
         
-        DataForUI.getPlayerList();
-        controllerGamePlay.drawOpponenets();
+       // DataForUI.getPlayerList();
+        //controllerGamePlay.drawOpponenets();
         
         timerThread = new Thread(new ThreadTimer(panelRoundReadyUp,this, DataForUI.RoundReadyUpTime));
         timerThread.start();
@@ -61,8 +61,8 @@ public class ControllerRoundReadyUp {
             controllerGamePlay.drawOpponenets();
         }*/
         
-        DataForUI.getPlayerList();
-        controllerGamePlay.drawOpponenets();
+        //DataForUI.getPlayerList();
+        //controllerGamePlay.drawOpponenets();
          
         gameScreen.changeScreen(DataForUI.STR_GAMEPLAY, DataForUI.STR_ROUNDREADYUP);
         controllerGamePlay.beginRound();

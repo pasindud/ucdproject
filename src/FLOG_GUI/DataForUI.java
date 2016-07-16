@@ -84,7 +84,7 @@ public class DataForUI
     }
 
     public static PlayerData[] getPdArray() {
-        getPlayerList();
+        //getPlayerList();
         return PdArray;
     }
 

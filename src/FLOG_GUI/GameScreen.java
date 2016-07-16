@@ -165,9 +165,9 @@ public class GameScreen extends JFrame {
                     cl.show(container, screenName);
                     controllerRoundReadyUp.runTimer();
                     controllerRoundReadyUp.drawPlayers();
-                     DataForUI.getPlayerList();
-                    controllerGamePlay.drawOpponenets();
-                    if (DataForUI.RoundNum >= 2) {
+                     //DataForUI.getPlayerList();
+                    //controllerGamePlay.drawOpponenets();
+                    if (DataForUI.RoundNum >= 1) { //[dushan]
                         controllerRoundReadyUp.setTitlePlayers(false);
                     } else {
                         controllerRoundReadyUp.setTitlePlayers(true);
@@ -183,6 +183,8 @@ public class GameScreen extends JFrame {
                     break;
                     
                 case DataForUI.STR_GAMEPLAY:
+                    DataForUI.getPlayerList();
+                    controllerGamePlay.drawOpponenets();
                      cl.show(container, screenName);
                      break;
                 default:
