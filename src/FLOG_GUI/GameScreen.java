@@ -137,8 +137,8 @@ public class GameScreen extends JFrame {
 
     private void showMainMenu() {
         //System.out.println("showmainmenu");
-        changeScreen(dataForUI.STR_MAINMENU, null);
-//        changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
+//        changeScreen(dataForUI.STR_MAINMENU, null);
+        changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
     }
 /*
     private void initateGame() {
