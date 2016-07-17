@@ -63,7 +63,11 @@ public class ControllerGamePlay
     
     private void submitClick(String ans)
     {
-        answere = ans;
+        if (ans == "Answer") {
+            answere = "";
+        } else{
+            answere = ans;
+        }
         stopTimer = true;
         this.startNextRound();
     }

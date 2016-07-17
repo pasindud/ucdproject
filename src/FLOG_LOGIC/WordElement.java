@@ -10,13 +10,15 @@ import java.util.List;
  */
 public class WordElement extends FlogElement {
     /** Letter of the words. */    
-    private String letters[];
+    private String letters[] = new String[0];
     /** The word. */
     private String word;
 
     public WordElement(String word){
        this.word = word;
-       this.letters = word.split("");
+        if (!word.isEmpty()) {
+            this.letters = word.split("");
+        }
     }
     
     public String getWord(){

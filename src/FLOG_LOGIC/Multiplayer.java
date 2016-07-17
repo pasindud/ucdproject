@@ -5,6 +5,7 @@
  */
 package FLOG_LOGIC;
 
+import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.paas.sdk.java.user.User;  
 import com.shephertz.app42.paas.sdk.java.user.User.Profile;  
 import com.shephertz.app42.paas.sdk.java.user.UserService; 
@@ -14,6 +15,9 @@ import com.shephertz.app42.paas.sdk.java.App42Log;
 import com.shephertz.app42.paas.sdk.java.App42Response;
 import com.shephertz.app42.paas.sdk.java.message.Queue;
 import com.shephertz.app42.paas.sdk.java.message.QueueService;
+import com.shephertz.app42.paas.sdk.java.push.DeviceType;
+import com.shephertz.app42.paas.sdk.java.push.PushNotification;
+import com.shephertz.app42.paas.sdk.java.push.PushNotificationService;
 import com.shephertz.app42.paas.sdk.java.storage.Query;  
 import com.shephertz.app42.paas.sdk.java.storage.QueryBuilder;  
 import com.shephertz.app42.paas.sdk.java.storage.Storage;  
@@ -167,6 +171,18 @@ public class Multiplayer {
             // No internet
             // Queue has already been created.
         }
+        
+        /*try {
+        pushnotification(name, name);
+            PushNotificationService pushNotificationService = App42API.buildPushNotificationService();   
+            PushNotification pushNotification = pushNotificationService.createChannelForApp(name,queueDescription);  
+
+            pushNotificationService = App42API.buildPushNotificationService();   
+            pushNotification = pushNotificationService.subscribeToChannel(name,queueDescription);    
+        } catch (Exception e){
+            e.printStackTrace();
+        }*/
+        
         return true;
     }
 
@@ -183,7 +199,7 @@ public class Multiplayer {
      * Builds the client queue name.
      */
     public String getClientQueue(String channelName, String playerName){
-        return channelName + "_" + playerName;
+        return channelName + "OOOOOO" + playerName;
     }
     
     /**
@@ -191,8 +207,18 @@ public class Multiplayer {
      * TODO fix issue of non server user pull messages from the server queue.
      */
     public String getServerQueue(String channelName){
-        return channelName + "_server";
+        return channelName + "OOOOOOserver";
     }
+    
+    
+    public String getClientAppAPIUserName(String channelName, String playerName){
+        return channelName + playerName;
+    }
+    
+    public String getServerAppAPIUserName(String channelName){
+        return channelName + "server";
+    }
+    
     
     /**
      * This is joining a new non server user.
@@ -232,6 +258,11 @@ public class Multiplayer {
         }
     }
     
+    WarpClient myGame;
+    
+    public void setMyGame(WarpClient myGame){
+        this.myGame = myGame;
+    }
     /**
      * This is passing letters to server
      */
@@ -285,22 +316,32 @@ public class Multiplayer {
      */
    
     public boolean publishToQueue(String queueName, String message) {
-        new Thread() {
+        if (myGame != null) {
+            myGame.sendPrivateChat(queueName, message);   
+            return true;
+        }
+        System.err.println("Was NOT SENT");
+        System.err.println("Message " + message + " to  " + queueName);
+        /*new Thread() {
             public void run() {
 
                 long expiryTime = 10000;
                 QueueService queueService = App42API.buildQueueService();
                 Queue queue = queueService.sendMessage(queueName, message, expiryTime);
-                //        if (DEBUG) {
-                System.out.println("Publish Q - " + queueName + " M - " + message);
-                //        }
+                if (DEBUG) {
+                    System.out.println("Publish Q - " + queueName + " M - " + message);
+                }
             }
         }.start();
-        return true;
+        return true;*/
+        return false;
     }
     
     public List<String> readQueue(String queueName){
-        System.out.println("READ " + queueName);
+        return new ArrayList<String>();
+    }
+    public List<String> readQueueDep(String queueName){
+//        System.out.println("READ " + queueName);
         if (DEBUG) {
             System.out.println("Reading queue - " + queueName);
         }
@@ -337,5 +378,17 @@ public class Multiplayer {
                 }
             }.start();
         }
+    }
+    
+    public void pushnotification(String userName, String deviceToken){
+        /*try {
+            PushNotificationService pushNotificationService = App42API.buildPushNotificationService();
+            PushNotification pushNotification = pushNotificationService.storeDeviceToken(userName,deviceToken,DeviceType.NOKIAX);     
+            System.out.println("userName is " + pushNotification.getUserName());  
+            System.out.println("type is " +  pushNotification.getType());     
+            System.out.println("DeviceToken is " +  pushNotification.getDeviceToken());  
+        } catch(Exception e){
+            e.printStackTrace();
+        }*/
     }
 }

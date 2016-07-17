@@ -38,7 +38,7 @@ public class DataForUI
     public static int RoundNum;
     
     //Set Round ready up time
-    public static int RoundReadyUpTime = 15;
+    public static int RoundReadyUpTime = 5;
     
     //Set Round time
     public static int RoundTime =10;

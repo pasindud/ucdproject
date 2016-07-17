@@ -55,7 +55,7 @@ public class ControllerRoundReadyUp {
     //Switching to gameplay screen and begin the round
     public void startRound()
     {
-        TestGUI_Inputs testing = new TestGUI_Inputs();
+//        TestGUI_Inputs testing = new TestGUI_Inputs();
         if(DataForUI.RoundNum==2)
         {
             //testing.listOfPlayers2();

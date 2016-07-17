@@ -6,11 +6,23 @@
 package FLOG_LOGIC;
 
 import FLOG_GUI.SelectMultiPlayer;
+import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
+import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
+import com.shephertz.app42.gaming.multiplayer.client.events.ChatEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.ConnectEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.LiveRoomInfoEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.RoomEvent;
+import com.shephertz.app42.gaming.multiplayer.client.listener.ChatRequestListener;
+import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestListener;
+import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,18 +40,29 @@ public class Server {
     private Game game = null;
     
     public Server(String channelName){
+        WarpClient.initialize(Utils.WRAP_API_KEY, Utils.WRAP_SECRET_KEY);   
         this.channelName = channelName;
         multiplayer = new Multiplayer();
         serverThrower.addThrowListener(serverCatcher);
         this.serverQueueName = multiplayer.getServerQueue(channelName);
     }
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(100);
-    public void start(){
-        if (isServerStart) {
-            System.err.println("Server is already started");
-            return;
-        }
-        game = new Game();
+    
+    public void startQueueSystemHealthCheck(){
+        new Thread(){
+            public void run(){
+                while(this.isInterrupted()){
+                    if (executor.isShutdown() || executor.isTerminated()) {
+                        startThread();
+                        System.err.println("Starting thread again");
+                    }
+                }
+            }
+            
+        }.start();
+    }
+    
+    public void startThread(){
         Runnable task = () -> {
          List<String> messages = multiplayer.readQueue(serverQueueName);
             for (String message : messages) {
@@ -48,9 +71,60 @@ public class Server {
             }
         };
         long delay = 0;
-        long intervel = 2;
+        long intervel = 3;
         executor.scheduleWithFixedDelay(task, delay, intervel, TimeUnit.SECONDS);
+    }
     
+    WarpClient myGame;
+    
+    public void setupWrap() {
+        try {
+            HashMap<String, Object> data = new HashMap<String, Object>();
+            WarpClient.initialize(Utils.WRAP_API_KEY, Utils.WRAP_SECRET_KEY, "50.112.253.86");
+            WarpClient.enableTrace(true);
+            
+            myGame = (WarpClient) WarpClient.getInstance();
+            String serverQueueName = multiplayer.getServerQueue(channelName);
+            myGame.addConnectionRequestListener(new MyConnectionListener(serverQueueName) {
+                @Override
+                public void onConnectDone(ConnectEvent event) {
+                    if (event.getResult() == WarpResponseResultCode.SUCCESS) {
+                        System.out.println("[Server] have connected");
+                    } else {
+                        System.err.println("Server error connecting " + event.getResult());
+                    }
+                }
+            });
+              myGame.addNotificationListener(new MyNotifyListener(){
+                public void MyNotifyListener(String clientQueueName){
+                
+                }
+                @Override
+                public void onPrivateChatReceived(String from, String message) {
+                    System.out.println("Msg from - " + from + " - M - " + message);
+                    decodeServerMessage(message);
+                    /*if (from.split("OOOOOO")[1].equals("server")) {
+                        decodeClientMessage(message);
+                    }*/
+                };
+            });
+            myGame.addChatRequestListener(new MyChatListener());
+            myGame.connectWithUserName(serverQueueName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void start(){
+        if (isServerStart) {
+            System.err.println("Server is already started");
+            return;
+        }
+        game = new Game();
+        startThread();
+        startQueueSystemHealthCheck();
+        setupWrap();
+        multiplayer.setMyGame(myGame);
         /* Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, serverThrower);
         backgroundServerQueueCheck.start();*/
         isServerStart = true;
@@ -99,7 +173,10 @@ public class Server {
                 
                 // Message to acknowledge that the server received the message 
                 String clientMessage = "200 ackJoinServer";
-                multiplayer.publishToQueue(playerQueue, clientMessage);
+                System.out.println("private message to - " + playerQueue + " from ");
+                myGame.sendPrivateChat(playerQueue, clientMessage);
+               
+                // multiplayer.publishToQueue(playerQueue, clientMessage);
                 name = content.trim();
                 playerNames.add(name);
                 game.addPlayer(name);
@@ -110,6 +187,10 @@ public class Server {
                 break;
             case "104":
                 System.out.println(content);
+                break;
+            case "108":
+                // Start game
+                startGame();
                 break;
             case "105":
                 // Format - 104 letters <player name> a,s,d,g,e,q,q,r,t
@@ -130,6 +211,8 @@ public class Server {
                 if (segments.length < 8) {
                     System.err.println("Game round end message format invalid Message " + message);
                     return;
+                } else {
+                    System.out.println("Game round end message correct");
                 }
                 handleEndRound(segments);
                 break;
@@ -138,8 +221,11 @@ public class Server {
                 break;
         }
     }
+    
     int numberOfUsersFinishedRound = 0;
     public void handleEndRound(String[] segments) {
+        
+        System.out.println("121212121212");
         String name = segments[2];
         int round = Integer.parseInt(segments[3]);
         String[] initialLetters = segments[4].split(",");
@@ -150,15 +236,18 @@ public class Server {
         if (segments.length == 9) {
             word = segments[8];
         }
-        
+        System.out.println("10101010101");
         PlayerRound currentRound = game.getPlayerRoundForRound(name, round);
-        
+        if (currentRound == null) {
+            System.err.println("Current round is null - i " + round + " name " + name);
+        }
         currentRound.setWord(new WordElement(word));
         currentRound.setIsWordSearchUsed(isAutoGenUsed);
         currentRound.setOtherLetters(otherLetters);
         currentRound.setIntialLetters(initialLetters);
         currentRound.calculateScore();
         
+        System.out.println("111111111111");
         ++numberOfUsersFinishedRound;
         int totalScore = game.getPlayerfromName(name).getNowTotalScore();
         int score = currentRound.getScore();

@@ -10,12 +10,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import FLOG_LOGIC.*;
+import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.table.DefaultTableModel;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  *
@@ -140,8 +148,8 @@ public class GameScreen extends JFrame {
 
     private void showMainMenu() {
         //System.out.println("showmainmenu");
-        //changeScreen(dataForUI.STR_MAINMENU, null);
-        changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
+        changeScreen(dataForUI.STR_MAINMENU, null);
+//        changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
     }
 /*
     private void initateGame() {
@@ -218,6 +226,10 @@ public class GameScreen extends JFrame {
     // Run this only when all the scores are returned.
     // Except the first time.
     public void startRoundUpTimerSystem(){
+        if (dataForUI.RoundNum == 5) {
+            controllerGamePlay.endGame();
+            return;
+        }
                     controllerRoundReadyUp.runTimer();
                     controllerRoundReadyUp.drawPlayers();
                     if (DataForUI.RoundNum >= 2) {
@@ -254,12 +266,72 @@ public class GameScreen extends JFrame {
     public String clientQueueName;
     public Thread backgroundClientQueueCheck;
     public ArrayList<String> otherPlayerNames = new ArrayList<String>();
-    
+    public WarpClient myGame;
     Game game = new Game();
-    public void setupMultiplayerForGamePlay(){
+    
+    public void setupWrap() {
+        new Thread() {
+            public void run() {
+                WarpClient.initialize(Utils.WRAP_API_KEY, Utils.WRAP_SECRET_KEY);
+                try {
+                    myGame = WarpClient.getInstance();
+                    try {
+                        myGame = WarpClient.getInstance();
+                        myGame.addConnectionRequestListener(new MyConnectionListener(clientQueueName));
+                        myGame.addChatRequestListener(new MyChatListener());
+                        myGame.addNotificationListener(new MyNotifyListener() {
+                            @Override
+                            public void onPrivateChatReceived(String from, String message) {
+                                System.out.println("onPrivateChatReceived from - " + from + " - M - " + message);
+                                if (from.contains("OOOOOO")) {
+                                    decodeClientMessage(message);
+                                }
+                            }
+                        });
+                        myGame.connectWithUserName(clientQueueName);
+                        String message = "100 " + username;
+//                        myGame.sendPrivateChat(serverQueueName, message);
+                        multiplayer.setMyGame(myGame);
+                        multiplayer.joinNewPlayer(username, channelName);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SelectMultiPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.start();
+    }
+    
+    public void startSelectMultiPlayer(){
+        if (panelSelectMultiPlayer.IS_THE_SERVER) {
+            myGame.sendPrivateChat(serverQueueName, "108 " + clientQueueName + " json"); 
+        }
+    }
+    
+    public void selectMultiPlayerClientDecode(){
+    
+    }
+    
+    public void selectMultiplayerStartServerClick(){
         serverQueueName = multiplayer.getServerQueue(channelName);
         clientQueueName = multiplayer.getClientQueue(channelName, username);
-        
+    }
+    
+    public void selectMultiplayerJoinServerClick(){
+        serverQueueName = multiplayer.getServerQueue(channelName);
+        clientQueueName = multiplayer.getClientQueue(channelName, username);
+        setupWrap();
+    }
+    
+    public void selectMulitplayerStartGameClick(){
+        //if (panelSelectMultiPlayer.IS_THE_SERVER) {
+        System.out.println("Sending message to start game.");
+            myGame.sendPrivateChat(serverQueueName, "108 " + username + " startGame");
+        //}
+    }
+    
+    public void setupMultiplayerForGamePlay(){
         for (String name : otherPlayerNames) {
             game.addPlayer(name);
         }
@@ -269,8 +341,15 @@ public class GameScreen extends JFrame {
         dataForUI.game = game;
         dataForUI.getPlayerList();
         controllerGamePlay.drawOpponenets();
-        clientThrower.addThrowListener(clientCatcher);
-        startQueueSystem();
+//        clientThrower.addThrowListener(clientCatcher);
+//        startQueueSystem();
+        if (tempIntialLetterHoling.size() != 0) {
+            for (String name : otherPlayerNames) {
+                String message = tempIntialLetterHoling.get(name);
+                decodeClientMessage(message);
+                tempIntialLetterHoling.remove(name);
+            }
+        }
     }
     
     /**
@@ -280,10 +359,11 @@ public class GameScreen extends JFrame {
         @Override
         public void Catch(String message) {
             System.err.println("Caught:GameServer" + message);
-            decodeClientMessage(message);
+//            decodeClientMessage(message);
         }
     }
-    
+    private boolean gameStart = false;
+    HashMap<String, String> tempIntialLetterHoling = new HashMap<String, String>();
     /**
      * Decode the message received by the client
      */
@@ -297,8 +377,19 @@ public class GameScreen extends JFrame {
         String code = segments[0].trim();
         String content = segments[1];
         switch (code) {
+            case "201":
+                if (segments.length != 3) {
+                    System.err.println("Start game does not have a name list");
+                    return;
+                }
+                otherPlayerNames = new ArrayList<String>();
+                otherPlayerNames = Utils.getPlayerNamesFromString(segments[2]);
+                setupMultiplayerForGamePlay();
+                changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.SelectMultiplayer);
+                gameStart = true;
+                break;
             case "200":
-                // User joined the correctly.
+                panelSelectMultiPlayer.setClientStatus(message);
                 break;
             case "304":
                 
@@ -312,6 +403,12 @@ public class GameScreen extends JFrame {
                 Integer round = Integer.parseInt(segments[3]);
                 String firstLetter = segments[4];
                 String secondLetter = segments[5];
+                if (dataForUI.game == null) {
+                    System.out.println("game null");
+                    tempIntialLetterHoling.put(name, message);
+                }
+                
+                System.out.println(" name - " + name + "");
                 int userIndex = dataForUI.game.getIndexByPlayerName(name);
                 String[] initLetters = {firstLetter, secondLetter};
                 if (dataForUI.RoundNum != round) {
@@ -353,12 +450,36 @@ public class GameScreen extends JFrame {
         }
     }
     
+    volatile ScheduledExecutorService executorService = Executors.newScheduledThreadPool(100);
+    volatile ScheduledFuture<?> files ;
     public void pushtoServerQueue(String message){
         multiplayer.publishToQueue(serverQueueName, message);
     }
-    
+    public void startQueueSystemHealthCheck(){
+        new Thread(){
+            public void run(){
+            
+                while(this.isInterrupted()){
+                    if (files.isDone() || files.isCancelled()) {
+                        startQueueSystem();
+                    }
+                }
+            }
+            
+        }.start();
+    }
     public void startQueueSystem(){
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
+        /*files = executorService.scheduleAtFixedRate(new Runnable() {      
+            public void run() {
+                List<String> messages = multiplayer.readQueue(clientQueueName);
+                for (String message : messages) {
+                    decodeClientMessage(message);
+                    System.err.println("[GameServer][User:" + clientQueueName + "] M - " + message);
+                }
+            }
+        }, 0, 5, TimeUnit.SECONDS);
+        startQueueSystemHealthCheck();*/
+        /*ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
         System.err.println("StartQ:GameServer");
         Runnable task = () -> {
          List<String> messages = multiplayer.readQueue(clientQueueName);
@@ -369,7 +490,7 @@ public class GameScreen extends JFrame {
         };
         long delay = 0;
         long intervel = 2;
-        executor.scheduleWithFixedDelay(task, delay, intervel, TimeUnit.SECONDS);
+        executor.scheduleWithFixedDelay(task, delay, intervel, TimeUnit.SECONDS);*/
         /*backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
         backgroundClientQueueCheck.start();*/
     }

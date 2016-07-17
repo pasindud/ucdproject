@@ -10,16 +10,33 @@ import FLOG_LOGIC.Multiplayer;
 
 import FLOG_LOGIC.Thrower;
 import FLOG_LOGIC.ThrowListener;
+import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
+import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
+import com.shephertz.app42.gaming.multiplayer.client.events.ChatEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.ConnectEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.LiveRoomInfoEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.LobbyData;
+import com.shephertz.app42.gaming.multiplayer.client.events.MoveEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.RoomData;
+import com.shephertz.app42.gaming.multiplayer.client.events.RoomEvent;
+import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
+import com.shephertz.app42.gaming.multiplayer.client.listener.ChatRequestListener;
+import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestListener;
+import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
+import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListener;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 
 import java.awt.event.MouseEvent;
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
@@ -37,7 +54,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private String playerName = null;
     int posX=0,posY=0;
     private boolean IS_USER_JOINED = false;
-    
+    public boolean IS_THE_SERVER = false;
     GameScreen gameScreen;
     // Consumer producer client
     Catcher clientCatcher = new Catcher();
@@ -45,26 +62,24 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     
     Multiplayer multiplayer = new Multiplayer();
     Thread backgroundClientQueueCheck;
-    
-    /*public SelectMultiPlayer(){
-        this.gameScreen = new GameScreen();
-    }*/
-    
+    private WarpClient myGame ;
     /**
      * Creates new form SelectMultiPlayer
      */
     public SelectMultiPlayer(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         initComponents();
-        clientThrower.addThrowListener(clientCatcher);
+//        clientThrower.addThrowListener(clientCatcher);
+//        this.gameScreen.setupWrap();
     }
     
+  
     private volatile Server server = null;
     
     /**
      * Decode the message received by the client
      */
-    public synchronized void decodeClientMessage(String message) {
+    public synchronized void decodeClientMessageTrash(String message) {
         setClientStatus("Message in client - " + message);
         String[] segments = message.split(" ");
         if (segments.length < 2) {
@@ -114,7 +129,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         @Override
         public void Catch(String message) {
             System.out.println("Caught " + message);
-            decodeClientMessage(message);
+            //decodeClientMessage(message);
         }
     }
     
@@ -122,49 +137,92 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
      * Start the server queues for the give {@code channelName}
      */
     private void startServerButtonMouseClicked(MouseEvent evt) {
+        IS_THE_SERVER = true;
+        txtPlayerName.setEnabled(false);
         startServerButton.setEnabled(false);
-        channelName = txtChannelName.getText();
-        setServerStatus("Starting Server");
+        gameScreen.channelName = txtChannelName.getText();
+        final String channelName = this.channelName;
+        setServerStatus("Server will be started soon Server");
         // Server listen's to it's queue.
-        Thread thread = new Thread() {
+        Thread thread = new Thread(channelName) {
+            @Override
             public void run() {
-                multiplayer.createServer(channelName);
-                server = new Server(channelName);
-                server.start();
+//                multiplayer.createServer(channelName);
                 setServerStatus("Sever started");
+//                FLOG_LOGIC.startServerApp(channelName);
+//
+     try {
+            File file = new File(FLOG_LOGIC.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            File f = new File(System.getProperty("java.class.path"));
+File dir = f.getAbsoluteFile().getParentFile();
+String path2 = dir.toString();
+
+            String path = file.getAbsolutePath();
+//            Runtime.getRuntime().exec("java -cp " + path + " FLOG_LOGIC.FLOG_LOGIC " + channelName);
+//            System.out.println("running commadn path -  " + path2 );
+        } catch(Exception e){
+        
+        }
+     
             }
         };
         thread.setDaemon(true);
         thread.start();
     }
-
+    String serverQueueName;
     /**
      * Join the given server {@code channelName}
      */
     private void joinServerButtonMouseClicked(MouseEvent evt) {
+        txtPlayerName.setEnabled(false);
         joinServerButton.setEnabled(false);
         if (IS_USER_JOINED) {
             return;
         }
-
         IS_USER_JOINED = true;
         setClientStatus("Joining server");
-        channelName = txtChannelName.getText();
-        playerName = txtPlayerName.getText();
-
+        gameScreen.channelName = txtChannelName.getText();
+        gameScreen.username = txtPlayerName.getText();
+        gameScreen.selectMultiplayerJoinServerClick();
+        
+        /*
+        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
+        serverQueueName = multiplayer.getServerQueue(channelName);
+        try {
+            myGame = WarpClient.getInstance();
+            myGame.addConnectionRequestListener(new MyConnectionListener(clientQueueName));
+            myGame.addChatRequestListener(new MyChatListener());
+            myGame.addNotificationListener(new MyNotifyListener(){
+                public void MyNotifyListener(String clientQueueName){
+                
+                }
+                @Override
+                public void onPrivateChatReceived(String from, String message) {
+                    System.out.println("Msg from - " + from + " - M - " + message);
+                    if (from.contains("OOOOOO")) {
+                        decodeClientMessage(message);
+                    }
+                };
+            });
+            myGame.connectWithUserName(clientQueueName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        */
+        /*
         new Thread() {
             public void run() {
                 multiplayer.joinNewPlayer(playerName, channelName);
             }
         }.start();
-        new Thread(){
-            public void run(){
+        new Thread() {
+            public void run() {
                 // Listen to the client's queue.
                 String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
                 backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
                 backgroundClientQueueCheck.start();
             }
-        }.start();
+        }.start();*/
     }
 
     /**
@@ -175,16 +233,17 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         String text = jTextPane2.getText();
         jTextPane2.setText(text += "\n" + status);
     }
-    
-    
-    /** Set of the server status. */
-    public synchronized void setClientStatus(String status){
+
+    /**
+     * Set of the server status.
+     */
+    public synchronized void setClientStatus(String status) {
         System.out.println("Set status client - [SelectMulti] " + status);
         String text = txtClientMessages.getText();
         txtClientMessages.setText(text += "\n" + status);
     }
-    
-      /**
+
+        /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -299,7 +358,12 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         btnStartGame.setEnabled(false);
         channelName = txtChannelName.getText();
         playerName = txtPlayerName.getText();
-        server.startGame();
+//        if (IS_THE_SERVER) {
+        gameScreen.selectMulitplayerStartGameClick();
+            
+//            multiplayer.publishToQueue(serverQueueName, playerName);
+//            server.startGame();
+//        }
     }//GEN-LAST:event_btnStartGameMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -349,7 +413,8 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private javax.swing.JTextArea txtClientMessages;
     private javax.swing.JTextPane txtPlayerName;
     // End of variables declaration//GEN-END:variables
-}
+
+    }
 
 
 

@@ -124,4 +124,11 @@ public class Utils {
         return message;
                 
     }
+    /* shephertz.com SECRET_KEY key. */
+    public static final String WRAP_SECRET_KEY = "6b6e863ce1566e74df345189e31431f8970facb48d7c39df783c5d7597ce6786";
+    /*public SelectMultiPlayer(){
+    this.gameScreen = new GameScreen();
+    }*/
+    /* shephertz.com API key. */
+    public static final String WRAP_API_KEY = "6ad3d2683a40fb1ee0daaa7945f39fa70c715b7906ad819e206181060408b4f0";
 }
