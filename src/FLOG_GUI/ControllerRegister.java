@@ -5,11 +5,14 @@
  */
 package FLOG_GUI;
 
+import FLOG_LOGIC.Multiplayer;
 import com.sun.java.swing.plaf.motif.MotifButtonListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -25,6 +28,16 @@ public class ControllerRegister {
     PanelRegister panelRegister;
     GameScreen gameScreen;
 
+    FLOG_LOGIC.Multiplayer multiplayer=new Multiplayer();
+    
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }
+    
     public ControllerRegister(PanelRegister panelRegister, GameScreen gameScreen) {
         this.panelRegister = panelRegister;
         this.gameScreen = gameScreen;
@@ -38,22 +51,32 @@ public class ControllerRegister {
     
     private void signUpClick(String uname, String pass, String conPass, String email)
     {
-        if(!isUsernameExists(uname))
+                if(!isUsernameExists(uname))
         {
-            if(validatePass(pass, conPass))
-            {
+            if(validateEmail(email)){
+                if(validatePass(pass, conPass))
+                {
                 //code for registering user on server
-                JOptionPane.showMessageDialog(gameScreen, "You have Successfully Registered!","Registered",JOptionPane.INFORMATION_MESSAGE);
-                gameScreen.changeScreen(DataForUI.STR_LOGIN, DataForUI.STR_REGISTER);
+                    if(multiplayer.registerUser(uname, email, pass)){
+                    JOptionPane.showMessageDialog(gameScreen, "You have Successfully Registered!","Registered",JOptionPane.INFORMATION_MESSAGE);
+                    gameScreen.changeScreen(DataForUI.STR_LOGIN, DataForUI.STR_REGISTER);
+                    }
+                    else{
+                    JOptionPane.showMessageDialog(gameScreen, "Something went wrong!","Try Again", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else
+                {
+                JOptionPane.showMessageDialog(gameScreen, "Passwords does Not match!","Try Again", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            else
-            {
-               JOptionPane.showMessageDialog(gameScreen, "Passwords does Not match!","Try Again", JOptionPane.ERROR_MESSAGE);
+            else{
+               JOptionPane.showMessageDialog(gameScreen, "Invalid email!","Try Again", JOptionPane.ERROR_MESSAGE);
             }
         }
         else
         {
-            JOptionPane.showMessageDialog(gameScreen, "User '"+uname+"' Already exists","Try Again", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(gameScreen, "User '"+uname+"' Already exists!","Try Again", JOptionPane.ERROR_MESSAGE);
         
         }
     
@@ -176,8 +199,12 @@ public class ControllerRegister {
                 String str_pass = new String(pass.getPassword());
                 String str_conPass = new String(conPass.getPassword());
                 
-                
-                signUpClick(uname.getText(), str_pass,str_pass,email.getText());
+                if(!(email.toString().equals("")||str_pass.equals("")||str_conPass.equals("")||uname.equals(""))){
+                    signUpClick(uname.getText(), str_pass,str_pass,email.getText());
+                }
+                else{
+                    JOptionPane.showMessageDialog(gameScreen, "Details incomplete!","Try Again", JOptionPane.ERROR_MESSAGE);
+                }
                 
             }
 

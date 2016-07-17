@@ -1,9 +1,11 @@
 
 package FLOG_GUI;
 
+import FLOG_LOGIC.Multiplayer;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -17,7 +19,7 @@ public class ControllerLogin {
     int mouseY=0;
     PanelLogin panelLogin;
     GameScreen gameScreen;
-
+    FLOG_LOGIC.Multiplayer multiplayer=new Multiplayer();
     public ControllerLogin(PanelLogin panelLogin, GameScreen gameScreen) {
         this.panelLogin = panelLogin;
         this.gameScreen = gameScreen;
@@ -27,7 +29,12 @@ public class ControllerLogin {
     private void loginClick(String username, String password)
     {
         //credentials should be validated
-        gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.STR_LOGIN);
+        if(multiplayer.login(username, password)){
+            gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.STR_LOGIN);
+        }
+        else{
+             JOptionPane.showMessageDialog(gameScreen, "User name or password entered is incorrect","Login error",JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     private void registerClick()
@@ -103,7 +110,13 @@ public class ControllerLogin {
             public void mouseClicked(MouseEvent e) {
                 JTextField uname = (JTextField)panelLogin.getCompCon(_username);
                 JPasswordField pass = (JPasswordField)panelLogin.getCompCon(_pass);
-                loginClick(uname.getText(), pass.getPassword().toString());
+                String password=new String(pass.getPassword());
+                if(uname.getText().equals("")||password.equals("")){
+                    JOptionPane.showMessageDialog(gameScreen, "User name or password is missing","Login error",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                loginClick(uname.getText(), password);
+                }
             }
 
             @Override
