@@ -5,6 +5,9 @@
  */
 package FLOG_LOGIC;
 
+import SHARED_UTILS.MyChatListener;
+import SHARED_UTILS.MyConnectionListener;
+import SHARED_UTILS.MyNotifyListener;
 import FLOG_GUI.SelectMultiPlayer;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;

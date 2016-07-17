@@ -1,5 +1,8 @@
 package FLOG_GUI;
 
+import SHARED_UTILS.MyChatListener;
+import SHARED_UTILS.MyConnectionListener;
+import SHARED_UTILS.MyNotifyListener;
 import FLOG_LOGIC.Game;
 import static FLOG_GUI.DataForUI.SelectMultiplayer;
 import FLOG_LOGIC.Game;
