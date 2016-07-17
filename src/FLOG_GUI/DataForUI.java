@@ -45,6 +45,9 @@ public class DataForUI {
   //Current Username
   public static String currentUsername ="";
   
+  //Current channel name
+  public static String currentChannel = "";
+  
   //Constants used to switch the cardlayout
   public static final String STR_GAMEPLAY = "GamePlay";
   public static final String STR_SETTINGS = "Settings";

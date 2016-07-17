@@ -397,6 +397,14 @@ public class GameScreen extends JFrame {
         System.err.println("33333");
         handleRoundScore(segments);
         break;
+          
+      case "110":
+          String chatMessage=segments[1].trim().replaceAll("_", " ");
+          String[] chatSegments=chatMessage.split(" :: ");
+          System.out.println("chatmesage: "+chatMessage);
+          chatFrame.updateMessages(chatSegments[0], chatMessage);
+          
+          break;
     }
   }
 
