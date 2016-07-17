@@ -103,7 +103,7 @@ public class GameScreen extends JFrame {
     panelPlaying = new PanelGamePlay();
     panelSettings = new PanelSettings();
     panelRoundReadyUp = new PanelRoundReadyUp();
-    panelWinners = new PanelWinners();
+    panelWinners = new PanelWinners(this);
     panelSelectMultiPlayer = new SelectMultiPlayer(this);
     panelLogin = new PanelLogin();
     panelRegister = new PanelRegister();
