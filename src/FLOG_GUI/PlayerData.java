@@ -11,8 +11,8 @@ public class PlayerData {
   int score;
   String letterOne;
   String letterTwo;
-  String letterArry[] = new String[5];
-  String WordArry[] = new String[5];
+  String letterArry[] = new String[6];
+  String WordArry[] = new String[6];
 
   public PlayerData(int position, String name, int score, String letterOne, String letterTwo) {
     this.position = position;
