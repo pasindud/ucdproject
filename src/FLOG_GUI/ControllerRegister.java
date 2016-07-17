@@ -9,6 +9,7 @@ import com.sun.java.swing.plaf.motif.MotifButtonListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -35,7 +36,7 @@ public class ControllerRegister {
         gameScreen.changeScreen(DataForUI.STR_LOGIN, DataForUI.STR_REGISTER);
     }
     
-    private void signUpClick(String uname, String pass, String conPass)
+    private void signUpClick(String uname, String pass, String conPass, String email)
     {
         if(!isUsernameExists(uname))
         {
@@ -90,6 +91,7 @@ public class ControllerRegister {
         final int _username=1;
         final int _pass = 2;
         final int _conpass = 3;
+        final int _email=6;
         final int _exit=0;
         final int _TopBorder=0;
         
@@ -164,29 +166,43 @@ public class ControllerRegister {
             @Override
             public void mouseClicked(MouseEvent e) {
                 
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_register_h.png"));
+                panelRegister.setIcon_Register(imgIcon);
+                
                 JTextField uname = (JTextField)panelRegister.getCompCon(_username);
+                JTextField email = (JTextField)panelRegister.getCompCon(_email);
                 JPasswordField pass = (JPasswordField)panelRegister.getCompCon(_pass);
                 JPasswordField conPass = (JPasswordField)panelRegister.getCompCon(_conpass);
                 String str_pass = new String(pass.getPassword());
                 String str_conPass = new String(conPass.getPassword());
                 
-                signUpClick(uname.getText(), str_pass,str_pass);
+                
+                signUpClick(uname.getText(), str_pass,str_pass,email.getText());
+                
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_register_c.png"));
+                panelRegister.setIcon_Register(imgIcon);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_register_h.png"));
+                panelRegister.setIcon_Register(imgIcon);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_register_h.png"));
+                panelRegister.setIcon_Register(imgIcon);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_register_n.png"));
+                panelRegister.setIcon_Register(imgIcon);
             }
         });
         
@@ -194,24 +210,36 @@ public class ControllerRegister {
             @Override
             public void mouseClicked(MouseEvent e) {
                 cancelClick();
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_cancel_h.png"));
+                panelRegister.setIcon_Cancel(imgIcon);
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_cancel_n.png"));
+                panelRegister.setIcon_Cancel(imgIcon);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_cancel_h.png"));
+                panelRegister.setIcon_Cancel(imgIcon);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_cancel_h.png"));
+                panelRegister.setIcon_Cancel(imgIcon);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_cancel_n.png"));
+                panelRegister.setIcon_Cancel(imgIcon);
             }
         });
+        
+       
     }
     
     

@@ -103,7 +103,7 @@ public class GameScreen extends JFrame {
         preparePanels();
         showMainMenu();
         this.setSize(new Dimension(900, 619)); 
-//        this.setUndecorated(true);
+        this.setUndecorated(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.validate();

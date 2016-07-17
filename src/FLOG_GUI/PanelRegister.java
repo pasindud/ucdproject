@@ -19,7 +19,7 @@ public class PanelRegister extends javax.swing.JPanel {
     private Image bg;
     public PanelRegister() {
         initComponents();
-        bg = new ImageIcon(getClass().getResource("/images/bg_mainmenu.png")).getImage();
+        bg = new ImageIcon(getClass().getResource("/images/bg_register.png")).getImage();
     }
 
     public Component getCompTop(int x)
@@ -44,6 +44,16 @@ public class PanelRegister extends javax.swing.JPanel {
         return this.getComponent(x);
     }
      
+     public void setIcon_Register(ImageIcon imgIcon)
+     {
+         this.btnSignUp.setIcon(imgIcon);
+     }
+     
+      public void setIcon_Cancel(ImageIcon imgIcon)
+     {
+         this.btnCancel.setIcon(imgIcon);
+     }
+     
      @Override
     protected void paintComponent(Graphics g) {
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
@@ -64,6 +74,7 @@ public class PanelRegister extends javax.swing.JPanel {
         txtConPass = new javax.swing.JPasswordField();
         btnSignUp = new javax.swing.JLabel();
         btnCancel = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
 
         setMaximumSize(new java.awt.Dimension(900, 619));
         setMinimumSize(new java.awt.Dimension(900, 619));
@@ -80,22 +91,30 @@ public class PanelRegister extends javax.swing.JPanel {
 
         add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
 
+        txtUsername.setText("username");
+        txtUsername.setBorder(null);
         txtUsername.setName("uname-reg"); // NOI18N
-        add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 110, -1));
+        add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(381, 224, 140, 25));
 
+        txtPass.setBorder(null);
         txtPass.setName("pass -reg"); // NOI18N
-        add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 240, 110, -1));
+        add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(381, 299, 140, 25));
 
+        txtConPass.setBorder(null);
         txtConPass.setName("confirmPass-reg"); // NOI18N
-        add(txtConPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 110, -1));
+        add(txtConPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(381, 380, 140, 25));
 
-        btnSignUp.setText("signUp");
+        btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_register_n.png"))); // NOI18N
         btnSignUp.setName("signup-reg"); // NOI18N
-        add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, -1, -1));
+        add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 500, -1, -1));
 
-        btnCancel.setText("cancel");
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_cancel_n.png"))); // NOI18N
         btnCancel.setName("cancel-reg"); // NOI18N
-        add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, -1, -1));
+        add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 500, -1, -1));
+
+        txtEmail.setText("email");
+        txtEmail.setBorder(null);
+        add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 456, 207, 28));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -105,6 +124,7 @@ public class PanelRegister extends javax.swing.JPanel {
     private javax.swing.JLabel btnSignUp;
     private javax.swing.JPanel pnlTopBorder;
     private javax.swing.JPasswordField txtConPass;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

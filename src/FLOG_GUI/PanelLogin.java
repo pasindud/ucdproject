@@ -21,7 +21,7 @@ public class PanelLogin extends javax.swing.JPanel {
     private Image bg;
     public PanelLogin() {
         initComponents();
-        bg = new ImageIcon(getClass().getResource("/images/bg_mainmenu.png")).getImage();
+        bg = new ImageIcon(getClass().getResource("/images/bg_login.png")).getImage();
     }
 
     
@@ -75,17 +75,19 @@ public class PanelLogin extends javax.swing.JPanel {
 
         btnLogin.setText("login");
         btnLogin.setName("login"); // NOI18N
-        add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 430, -1, -1));
+        add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, -1, -1));
 
         btnRegister.setText("Register");
         btnRegister.setName("reg"); // NOI18N
-        add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 430, -1, -1));
+        add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, -1, -1));
 
+        txtUsername.setBorder(null);
         txtUsername.setName("username"); // NOI18N
-        add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 90, -1));
+        add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(437, 265, 145, 24));
 
+        txtPassword.setBorder(null);
         txtPassword.setName("pass"); // NOI18N
-        add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, 90, -1));
+        add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(437, 312, 145, 24));
 
         pnlTopBorder.setName("topBorder"); // NOI18N
         pnlTopBorder.setOpaque(false);
