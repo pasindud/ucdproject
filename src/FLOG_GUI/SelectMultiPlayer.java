@@ -77,7 +77,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     bg = new ImageIcon(getClass().getResource("/images/bg_multiplayer.png")).getImage();
     jScrollPane2.setVisible(false);
     jScrollPane4.setVisible(false);
-    txtChannelName.setVisible(false);
+    //txtChannelName.setVisible(false);
   }
 
   @Override
@@ -90,14 +90,17 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
    */
   private void startServerClicked() {
     btnStartServer.setEnabled(false);
-    channelName = txtChannelName.getText();
+    //channelName = txtChannelName.getText();
+    channelName = cmbChannels.getEditor().getItem().toString();
+      System.out.println(channelName);
     //        multiplayer.createServer(channelName);
     setServerStatus("Starting Server");
 
     IS_THE_SERVER = true;
     txtPlayerName.setEnabled(false);
     btnStartGame.setEnabled(false);
-    gameScreen.channelName = txtChannelName.getText();
+    //gameScreen.channelName = txtChannelName.getText();
+    gameScreen.channelName = cmbChannels.getEditor().getItem().toString();
     final String channelName = this.channelName;
     setServerStatus("Server will be started soon Server");
     // Server listen's to it's queue.
@@ -146,7 +149,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     }
     IS_USER_JOINED = true;
     setClientStatus("Joining server");
-    gameScreen.channelName = txtChannelName.getText();
+    gameScreen.channelName = cmbChannels.getEditor().getItem().toString();
     gameScreen.username = txtPlayerName.getText();
     gameScreen.selectMultiplayerJoinServerClick();
   }
@@ -192,8 +195,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         btnJoin = new javax.swing.JLabel();
         btnStartGame = new javax.swing.JLabel();
         txtPlayerName = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        txtChannelName = new javax.swing.JTextField();
+        cmbChannels = new javax.swing.JComboBox<>();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -304,14 +306,11 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         });
         add(txtPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(412, 329, 190, 35));
 
-        jComboBox1.setEditable(true);
-        jComboBox1.setBorder(null);
-        jComboBox1.setOpaque(false);
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 274, 208, 34));
-
-        txtChannelName.setText("ChannelNameDC");
-        txtChannelName.setBorder(null);
-        add(txtChannelName, new org.netbeans.lib.awtextra.AbsoluteConstraints(412, 329, 190, 35));
+        cmbChannels.setEditable(true);
+        cmbChannels.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dc", "ab" }));
+        cmbChannels.setBorder(null);
+        cmbChannels.setOpaque(false);
+        add(cmbChannels, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 274, 208, 34));
     }// </editor-fold>//GEN-END:initComponents
 
   private void pnlTopBorderMouseDragged(
@@ -361,7 +360,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     playerName = txtPlayerName.getText();
     server.startGame();*/
     btnStartGame.setEnabled(false);
-    channelName = txtChannelName.getText();
+    channelName = cmbChannels.getEditor().getItem().toString();
     playerName = txtPlayerName.getText();
     // Only the server user can press this.
     gameScreen.selectMulitplayerStartGameClick();
@@ -463,12 +462,11 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private javax.swing.JLabel btnJoin;
     private javax.swing.JLabel btnStartGame;
     private javax.swing.JLabel btnStartServer;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbChannels;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JPanel pnlTopBorder;
-    private javax.swing.JTextField txtChannelName;
     private javax.swing.JTextArea txtClientMessages;
     private javax.swing.JTextField txtPlayerName;
     // End of variables declaration//GEN-END:variables
