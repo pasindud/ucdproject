@@ -15,21 +15,22 @@ import java.util.HashMap;
  * @author Pasindu
  */
 public class MyConnectionListener implements ConnectionRequestListener {
-    private String username = "";
-    public MyConnectionListener(String username) {
-        this.username = username;
-    }
-    
-    @Override
-    public void onConnectDone(ConnectEvent event) {
-        if (event.getResult() == WarpResponseResultCode.SUCCESS) {
-            System.out.println("User connected  " + username + " have connected ");
-        }
-    }
+  private String username = "";
 
-    @Override
-    public void onDisconnectDone(ConnectEvent event) {}
+  public MyConnectionListener(String username) {
+    this.username = username;
+  }
 
-    @Override
-    public void onInitUDPDone(byte paramByte) {}
+  @Override
+  public void onConnectDone(ConnectEvent event) {
+    if (event.getResult() == WarpResponseResultCode.SUCCESS) {
+      System.out.println("User connected  " + username + " have connected ");
+    }
+  }
+
+  @Override
+  public void onDisconnectDone(ConnectEvent event) {}
+
+  @Override
+  public void onInitUDPDone(byte paramByte) {}
 }

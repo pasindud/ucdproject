@@ -15,16 +15,12 @@ import java.util.ArrayList;
  */
 public class MyChatListener implements ChatRequestListener {
 
-    @Override
-    public void onSendChatDone(byte b) {
-    }
+  @Override
+  public void onSendChatDone(byte b) {}
 
-    @Override
-    public void onSendPrivateChatDone(byte b) {
-    }
+  @Override
+  public void onSendPrivateChatDone(byte b) {}
 
-    @Override
-    public void onGetChatHistoryDone(byte b, ArrayList<ChatEvent> al) {
-    }
-
+  @Override
+  public void onGetChatHistoryDone(byte b, ArrayList<ChatEvent> al) {}
 }
