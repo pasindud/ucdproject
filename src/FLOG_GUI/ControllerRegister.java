@@ -34,15 +34,15 @@ public class ControllerRegister {
     Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     
     public static final Pattern VALID_USER_REGEX = 
-    Pattern.compile("[^a-zA-Z0-9_]", Pattern.CASE_INSENSITIVE);
+    Pattern.compile("^[a-zA-Z0-9_]*$", Pattern.CASE_INSENSITIVE);
     
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
         return matcher.find();
     }
     
-    public static boolean SpecialCharacterExist(String user){
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(user);
+    public static boolean validateUserName(String user){
+        Matcher matcher = VALID_USER_REGEX .matcher(user);
         return matcher.find();
     }
     public ControllerRegister(PanelRegister panelRegister, GameScreen gameScreen) {
@@ -60,7 +60,7 @@ public class ControllerRegister {
     {
         if(!isUsernameExists(uname))
         {
-            if(!SpecialCharacterExist(uname)){
+            if(validateUserName(uname)){
             if(validateEmail(email)){
                 if(validatePass(pass, conPass))
                 {
