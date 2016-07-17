@@ -7,9 +7,6 @@ package FLOG_GUI;
 import static FLOG_GUI.GameScreen.panelPlaying;
 import FLOG_LOGIC.*;
 import FLOG_LOGIC.Multiplayer;
-
-import FLOG_LOGIC.Thrower;
-import FLOG_LOGIC.ThrowListener;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
 import com.shephertz.app42.gaming.multiplayer.client.events.ChatEvent;
@@ -141,45 +138,6 @@ String path2 = dir.toString();
         gameScreen.channelName = txtChannelName.getText();
         gameScreen.username = txtPlayerName.getText();
         gameScreen.selectMultiplayerJoinServerClick();
-        
-        /*
-        String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
-        serverQueueName = multiplayer.getServerQueue(channelName);
-        try {
-            myGame = WarpClient.getInstance();
-            myGame.addConnectionRequestListener(new MyConnectionListener(clientQueueName));
-            myGame.addChatRequestListener(new MyChatListener());
-            myGame.addNotificationListener(new MyNotifyListener(){
-                public void MyNotifyListener(String clientQueueName){
-                
-                }
-                @Override
-                public void onPrivateChatReceived(String from, String message) {
-                    System.out.println("Msg from - " + from + " - M - " + message);
-                    if (from.contains("OOOOOO")) {
-                        decodeClientMessage(message);
-                    }
-                };
-            });
-            myGame.connectWithUserName(clientQueueName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        /*
-        new Thread() {
-            public void run() {
-                multiplayer.joinNewPlayer(playerName, channelName);
-            }
-        }.start();
-        new Thread() {
-            public void run() {
-                // Listen to the client's queue.
-                String clientQueueName = multiplayer.getClientQueue(channelName, playerName);
-                backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
-                backgroundClientQueueCheck.start();
-            }
-        }.start();*/
     }
 
     /**

@@ -396,8 +396,8 @@ public class GameScreen extends JFrame {
     }
     int noOfRoundScores = 0;
     
-    // Example - 107 roundScore <player name> <round number> <score>
-    //           107 roundScore pasindu 1 score
+    // Example - 107 roundScore <player name> <round number>  <score> <totalScore>
+    //           107 roundScore pasindu 1 10 100
     public void handleRoundScore(String[] segments){
         String name = segments[2];
         Integer round = Integer.parseInt(segments[3]);
@@ -418,5 +418,9 @@ public class GameScreen extends JFrame {
         } else {
             System.err.println("44444");
         }
+    }
+    
+    public void pushtoServerQueue(String message){
+        multiplayer.publishToQueue(serverQueueName, message);
     }
 }
