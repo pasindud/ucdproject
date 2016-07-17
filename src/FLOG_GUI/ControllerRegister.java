@@ -33,11 +33,18 @@ public class ControllerRegister {
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
     Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     
+    public static final Pattern VALID_USER_REGEX = 
+    Pattern.compile("[^a-zA-Z0-9_]", Pattern.CASE_INSENSITIVE);
+    
     public static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
         return matcher.find();
     }
     
+    public static boolean SpecialCharacterExist(String user){
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(user);
+        return matcher.find();
+    }
     public ControllerRegister(PanelRegister panelRegister, GameScreen gameScreen) {
         this.panelRegister = panelRegister;
         this.gameScreen = gameScreen;
@@ -51,8 +58,9 @@ public class ControllerRegister {
     
     private void signUpClick(String uname, String pass, String conPass, String email)
     {
-                if(!isUsernameExists(uname))
+        if(!isUsernameExists(uname))
         {
+            if(!SpecialCharacterExist(uname)){
             if(validateEmail(email)){
                 if(validatePass(pass, conPass))
                 {
@@ -72,6 +80,10 @@ public class ControllerRegister {
             }
             else{
                JOptionPane.showMessageDialog(gameScreen, "Invalid email!","Try Again", JOptionPane.ERROR_MESSAGE);
+            }
+            }
+            else{
+                JOptionPane.showMessageDialog(gameScreen, "Invalid User name!","Try Again", JOptionPane.ERROR_MESSAGE);
             }
         }
         else
@@ -203,7 +215,7 @@ public class ControllerRegister {
                 String str_conPass = new String(conPass.getPassword());
                 
                 if(!(email.toString().equals("")||str_pass.equals("")||str_conPass.equals("")||uname.equals(""))){
-                    signUpClick(uname.getText(), str_pass,str_pass,email.getText());
+                    signUpClick(uname.getText().trim(), str_pass,str_pass,email.getText());
                 }
                 else{
                     JOptionPane.showMessageDialog(gameScreen, "Details incomplete!","Try Again", JOptionPane.ERROR_MESSAGE);
