@@ -30,6 +30,7 @@ public class ControllerLogin {
   private void loginClick(String username, String password) {
     //credentials should be validated
     if (multiplayer.login(username, password)) {
+      DataForUI.currentUsername = username;
       gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.STR_LOGIN);
     } else {
       JOptionPane.showMessageDialog(

@@ -42,6 +42,9 @@ public class DataForUI {
   //Set Round time
   public static int RoundTime = 10;
 
+  //Current Username
+  public static String currentUsername ="";
+  
   //Constants used to switch the cardlayout
   public static final String STR_GAMEPLAY = "GamePlay";
   public static final String STR_SETTINGS = "Settings";

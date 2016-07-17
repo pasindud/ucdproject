@@ -164,6 +164,7 @@ public class GameScreen extends JFrame {
       switch (screenName) {
         case DataForUI.SelectMultiplayer:
           cl.show(container, screenName);
+          panelSelectMultiPlayer.setPlayerName();
           break;
         case DataForUI.STR_MAINMENU:
           cl.show(container, screenName);
