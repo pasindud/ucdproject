@@ -103,7 +103,10 @@ public class ControllerRegister {
     
     private boolean isUsernameExists(String user)
     {
-        //code of checking uname list from server
+        if(multiplayer.getUser(user))
+        {
+            return true;
+        }
         return false;
     }
     
