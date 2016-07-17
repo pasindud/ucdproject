@@ -171,18 +171,6 @@ public class Multiplayer {
             // No internet
             // Queue has already been created.
         }
-        
-        /*try {
-        pushnotification(name, name);
-            PushNotificationService pushNotificationService = App42API.buildPushNotificationService();   
-            PushNotification pushNotification = pushNotificationService.createChannelForApp(name,queueDescription);  
-
-            pushNotificationService = App42API.buildPushNotificationService();   
-            pushNotification = pushNotificationService.subscribeToChannel(name,queueDescription);    
-        } catch (Exception e){
-            e.printStackTrace();
-        }*/
-        
         return true;
     }
 

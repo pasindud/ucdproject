@@ -10,8 +10,9 @@ class PenaltyElement {
     private int numberOfOtherLettersUsed = 0;
     private ConstantElement maxNumberOfIntialLetters = new ConstantElement(2);
     private ConstantElement maxNumberOfOtherLetters = new ConstantElement(10);
+    // report says 10
     private ConstantElement penalyPointsForAIntialLetter 
-                                                    = new ConstantElement(100);
+                                                    = new ConstantElement(10);
     private ConstantElement penalyPointsForAOtherLetter 
                                                     = new ConstantElement(50);
     private int penaltyPoints = 0;
