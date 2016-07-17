@@ -70,10 +70,7 @@ public class ControllerMainMenu {
     final int _exit = 1;
     final int _TopBorder = 5;
 
-    panelMainMenu.btnMultiPlayer.addActionListener(
-        (java.awt.event.ActionEvent evt) -> {
-          multiplayerClick();
-        });
+    
 
     panelMainMenu
         .getCompCon(_TopBorder)
