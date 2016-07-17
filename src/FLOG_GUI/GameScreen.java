@@ -52,6 +52,7 @@ public class GameScreen extends JFrame {
   private SelectMultiPlayer panelSelectMultiPlayer;
   private PanelLogin panelLogin;
   private PanelRegister panelRegister;
+  private ChatFrame chatFrame;
 
   //Holds the CardLayout
   private JPanel container;
@@ -96,6 +97,8 @@ public class GameScreen extends JFrame {
     this.setLocationRelativeTo(null);
     this.validate();
     this.setVisible(true);
+    chatFrame = new ChatFrame(this);
+    
   }
 
   private void preparePanels() {
@@ -107,7 +110,7 @@ public class GameScreen extends JFrame {
     panelSelectMultiPlayer = new SelectMultiPlayer(this);
     panelLogin = new PanelLogin();
     panelRegister = new PanelRegister();
-
+    
     //Adding Panels to Card Layout
     container = new JPanel();
 
