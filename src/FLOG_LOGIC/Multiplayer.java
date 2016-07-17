@@ -151,6 +151,23 @@ public class Multiplayer {
             return false;
         }
     }
+
+    
+    /**
+     * Get existing users.
+     * @param username of the user been registered.
+     * @return Whether the user exist or not.
+     */
+    public boolean getUser(String username){
+        boolean done = false;
+        try {
+            UserService userService = App42API.buildUserService();
+            User user=userService.getUser(username);
+            return true;   
+        } catch(Exception e){
+            return false;
+        }
+    }
     
     /**
      * Create a queue for the given name.
