@@ -311,15 +311,15 @@ public class PanelGamePlay extends javax.swing.JPanel {
         pnlTopBorder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnDisconnect.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnDisconnect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_disconnect_n.png"))); // NOI18N
+        btnDisconnect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_exit_n.png"))); // NOI18N
         btnDisconnect.setName("close"); // NOI18N
-        pnlTopBorder.add(btnDisconnect, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 2, 36, 34));
+        pnlTopBorder.add(btnDisconnect, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 0, 40, 40));
 
-        btnSettings.setText("settings");
+        btnSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_settingst_n.png"))); // NOI18N
         btnSettings.setName("settings"); // NOI18N
-        pnlTopBorder.add(btnSettings, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
+        pnlTopBorder.add(btnSettings, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, -1, 38));
 
-        pnlTop.add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
+        pnlTop.add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 40));
 
         lblPlayerName.setText("jLabel1");
         pnlTop.add(lblPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
