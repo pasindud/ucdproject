@@ -220,13 +220,13 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         });
         pnlTopBorder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnExit.setText("exit");
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_exit_n.png"))); // NOI18N
         btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnExitMouseClicked(evt);
             }
         });
-        pnlTopBorder.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, -1, -1));
+        pnlTopBorder.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(859, 0, -1, 38));
 
         add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
 

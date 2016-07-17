@@ -99,12 +99,14 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="btnExit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="exit"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/btn_exit_n.png"/>
+            </Property>
             <Property name="name" type="java.lang.String" value="exit" noResource="true"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="872" y="13" width="-1" height="-1"/>
+              <AbsoluteConstraints x="859" y="0" width="-1" height="38"/>
             </Constraint>
           </Constraints>
         </Component>
