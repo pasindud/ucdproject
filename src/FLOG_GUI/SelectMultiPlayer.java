@@ -75,7 +75,9 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     this.gameScreen = gameScreen;
     initComponents();
     bg = new ImageIcon(getClass().getResource("/images/bg_multiplayer.png")).getImage();
-    
+    jScrollPane2.setVisible(false);
+    jScrollPane4.setVisible(false);
+    txtChannelName.setVisible(false);
   }
 
   @Override
@@ -190,6 +192,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         btnJoin = new javax.swing.JLabel();
         btnStartGame = new javax.swing.JLabel();
         txtPlayerName = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         txtChannelName = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -198,14 +201,14 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         jTextPane2.setToolTipText("");
         jScrollPane2.setViewportView(jTextPane2);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 230, 145));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 230, 145));
 
         txtClientMessages.setColumns(20);
         txtClientMessages.setRows(5);
         txtClientMessages.setText("Client messages -");
         jScrollPane4.setViewportView(txtClientMessages);
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, -1, 145));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, 145));
 
         pnlTopBorder.setOpaque(false);
         pnlTopBorder.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -248,7 +251,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                 btnStartServerMouseReleased(evt);
             }
         });
-        add(btnStartServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 478, -1, -1));
+        add(btnStartServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 388, -1, -1));
 
         btnJoin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_joinserver_n.png"))); // NOI18N
         btnJoin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -268,7 +271,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                 btnJoinMouseReleased(evt);
             }
         });
-        add(btnJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 478, -1, -1));
+        add(btnJoin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 388, -1, -1));
 
         btnStartGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_startgamem_n.png"))); // NOI18N
         btnStartGame.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -288,7 +291,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                 btnStartGameMouseReleased(evt);
             }
         });
-        add(btnStartGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 478, -1, -1));
+        add(btnStartGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 388, -1, -1));
 
         txtPlayerName.setText("playerNameDc");
         txtPlayerName.setBorder(null);
@@ -299,11 +302,16 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
                 txtPlayerNameActionPerformed(evt);
             }
         });
-        add(txtPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 190, 35));
+        add(txtPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(412, 329, 190, 35));
+
+        jComboBox1.setEditable(true);
+        jComboBox1.setBorder(null);
+        jComboBox1.setOpaque(false);
+        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 274, 208, 34));
 
         txtChannelName.setText("ChannelNameDC");
         txtChannelName.setBorder(null);
-        add(txtChannelName, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 375, 190, 35));
+        add(txtChannelName, new org.netbeans.lib.awtextra.AbsoluteConstraints(412, 329, 190, 35));
     }// </editor-fold>//GEN-END:initComponents
 
   private void pnlTopBorderMouseDragged(
@@ -455,6 +463,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private javax.swing.JLabel btnJoin;
     private javax.swing.JLabel btnStartGame;
     private javax.swing.JLabel btnStartServer;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextPane jTextPane2;
