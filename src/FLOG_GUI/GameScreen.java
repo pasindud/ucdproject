@@ -409,6 +409,16 @@ public class GameScreen extends JFrame {
     Integer round = Integer.parseInt(segments[3]);
     Integer score = Integer.parseInt(segments[4]);
     Integer totalScore = Integer.parseInt(segments[5]);
+    //[dushan]
+    String letters = segments[6];
+    String word = "<D.N.F>"; //Did Not Finish/submit
+    if(segments.length==8)
+    {
+        word = segments[7];
+    }
+    dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setLetterArry(letters, round);
+    dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setWordArry(word, round);
+    //[/dushan]
     System.err.println("1111111");
     dataForUI.game.getPlayerRoundForRound(name, round).setScore(score);
     dataForUI.game.getPlayerfromName(name).setTotalScore(totalScore);

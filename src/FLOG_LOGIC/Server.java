@@ -206,10 +206,17 @@ public class Server {
     ++numberOfUsersFinishedRound;
     int totalScore = game.getPlayerfromName(name).getNowTotalScore();
     int score = currentRound.getScore();
-
-    // Example - 107 roundScore <player name> <round number>  <score> <totalScore>
+    
+    //[dushan]
+    String letters = segments[4] +" "+segments[5];
+    
+    
+    //[/dushan]
+    
+    
+    // Example - 107 roundScore <player name> <round number>  <score> <totalScore> <letters> <word>
     //           107 roundScore pasindu 1 10 100
-    String message = "204 roundScore" + " " + name + " " + round + " " + score + " " + totalScore;
+    String message = "204 roundScore" + " " + name + " " + round + " " + score + " " + totalScore + " " + letters + " " + word;
     System.out.println(message);
     multiplayer.broadcast(channelName, playerNames, message);
 

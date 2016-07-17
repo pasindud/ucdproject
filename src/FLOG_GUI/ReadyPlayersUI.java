@@ -71,13 +71,13 @@ public class ReadyPlayersUI extends JPanel {
     lblRank.setBounds(0, 0, 74, 30);
 
     JLabel lblLetters = new JLabel();
-    lblLetters.setText(DataForUI.PdArray[i].getName());
+    lblLetters.setText(DataForUI.PdArray[i].getLetterArry(DataForUI.RoundNum)); //*******
     lblLetters.setHorizontalAlignment(SwingConstants.CENTER);
     lblLetters.setHorizontalTextPosition(SwingConstants.CENTER);
     lblLetters.setBounds(204, 0, 151, 30);
 
     JLabel lblWord = new JLabel();
-    lblWord.setText(DataForUI.PdArray[i].getName());
+    lblWord.setText(DataForUI.PdArray[i].getWordArry(DataForUI.RoundNum));//*****
     lblWord.setHorizontalAlignment(SwingConstants.CENTER);
     lblWord.setHorizontalTextPosition(SwingConstants.CENTER);
     lblWord.setBounds(358, 0, 135, 30);

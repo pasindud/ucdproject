@@ -11,6 +11,8 @@ public class PlayerData {
   int score;
   String letterOne;
   String letterTwo;
+  String letterArry[] = new String[5];
+  String WordArry[] = new String[5];
 
   public PlayerData(int position, String name, int score, String letterOne, String letterTwo) {
     this.position = position;
@@ -59,4 +61,27 @@ public class PlayerData {
   public void setLetterTwo(String letterTwo) {
     this.letterTwo = letterTwo;
   }
+
+    public String getWordArry(int roundNum) 
+    {
+        return WordArry[roundNum];
+    }
+
+    public void setWordArry(String Word, int roundNum) {
+        this.WordArry[roundNum] = Word;
+    }
+
+    public String getLetterArry(int roundNum) 
+    {
+        return letterArry[roundNum];
+    }
+
+    public void setLetterArry(String letters, int roundNum) {
+        this.letterArry[roundNum] = letters;
+    }
+    
+    
+  
+    
+  
 }
