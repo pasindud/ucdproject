@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
  *
  * @author Pasindu
@@ -20,17 +21,18 @@ public class WordSearch {
     private static final long MAX_TIME_FOR_WORD_SEARCH = 5000;
     /** Array of letters. */
     private String[] letters;
+    /** Pattern used for matching. */
     private String pattern = "";
-    
-    WordSearch(String[] letters){
+
+    WordSearch(String[] letters) {
         this.letters = letters;
     }
-     
-    WordSearch(String letters){
+
+    WordSearch(String letters) {
         this.letters = letters.split("");
     }
-    
-    protected void setPattern(){
+
+    protected void setPattern() {
         // Build the pattern only for one letter.
         StringBuilder patternLetter = new StringBuilder();
         patternLetter.append("([");
@@ -39,7 +41,7 @@ public class WordSearch {
         }
         patternLetter.append("])");
         patternLetter.append("{0,1}");
-        
+
         // Build the pattern for whole word.
         StringBuilder fullPattern = new StringBuilder();
         fullPattern.append("^");
@@ -49,26 +51,25 @@ public class WordSearch {
         fullPattern.append("$");
         this.pattern = fullPattern.toString();
     }
-    
+
     protected String search() {
         Pattern regex = Pattern.compile(pattern);
-        Matcher matcher = null;
+        Matcher matcher;
         String word = "";
         long startTime = System.currentTimeMillis();
         try {
 
             BufferedReader br = new BufferedReader(
                     new FileReader(WORD_FILE_NAME));
-            String line = null;
-
+            String line;
             while ((line = br.readLine()) != null) {
                 matcher = regex.matcher(line);
-                if(matcher.find()) {
+                if (matcher.find()) {
                     word = line;
                 }
-                
-                if ((System.currentTimeMillis() - startTime) > 
-                        MAX_TIME_FOR_WORD_SEARCH ) {
+
+                if ((System.currentTimeMillis() - startTime)
+                        > MAX_TIME_FOR_WORD_SEARCH) {
                     break;
                 }
             }

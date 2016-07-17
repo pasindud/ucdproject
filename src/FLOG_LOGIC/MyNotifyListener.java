@@ -14,7 +14,7 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
 import java.util.HashMap;
 
 /**
- *
+ * Handles notifications.
  * @author Pasindu
  */
 public class MyNotifyListener implements NotifyListener {
@@ -25,75 +25,53 @@ public class MyNotifyListener implements NotifyListener {
         this.username = username;
     }    
     @Override
-    public void onRoomCreated(RoomData rd) {
-        System.out.println("RoomCreated");
-    }
+    public void onRoomCreated(RoomData rd) {}
 
     @Override
-    public void onRoomDestroyed(RoomData rd) {
-    }
+    public void onRoomDestroyed(RoomData rd) {}
 
     @Override
-    public void onUserLeftRoom(RoomData rd, String string) {
-    }
+    public void onUserLeftRoom(RoomData rd, String string) {}
 
     @Override
-    public void onUserJoinedRoom(RoomData rd, String string) {
-    }
+    public void onUserJoinedRoom(RoomData rd, String string) {}
 
     @Override
-    public void onUserLeftLobby(LobbyData ld, String string) {
-    }
+    public void onUserLeftLobby(LobbyData ld, String string) {}
 
     @Override
-    public void onUserJoinedLobby(LobbyData ld, String string) {
-    }
+    public void onUserJoinedLobby(LobbyData ld, String string) {}
 
     @Override
-    public void onChatReceived(ChatEvent ce) {
-        System.out.println("onChatReceived Message " + ce.getMessage() + " sender + " + ce.getSender());
-    }
+    public void onChatReceived(ChatEvent ce) {}
 
     @Override
-    public void onPrivateChatReceived(String string, String string1) {
-        System.err.println("onPrivateChatReceived - ");
-        System.out.println("String 1 " + string);
-        System.err.println("String2  - " + string1);
-    }
+    public void onPrivateChatReceived(String string, String string1) {}
 
     @Override
-    public void onPrivateUpdateReceived(String string, byte[] bytes, boolean bln) {
-    }
+    public void onPrivateUpdateReceived(String string, byte[] bytes, boolean bln) {}
 
     @Override
-    public void onUpdatePeersReceived(UpdateEvent ue) {
-    }
+    public void onUpdatePeersReceived(UpdateEvent ue) {}
 
     @Override
-    public void onUserChangeRoomProperty(RoomData rd, String string, HashMap<String, Object> hm, HashMap<String, String> hm1) {
-    }
+    public void onUserChangeRoomProperty(RoomData rd, String string, HashMap<String, Object> hm, HashMap<String, String> hm1) {}
 
     @Override
-    public void onMoveCompleted(MoveEvent me) {
-    }
+    public void onMoveCompleted(MoveEvent me) {}
 
     @Override
-    public void onGameStarted(String string, String string1, String string2) {
-    }
+    public void onGameStarted(String string, String string1, String string2) {}
 
     @Override
-    public void onGameStopped(String string, String string1) {
-    }
+    public void onGameStopped(String string, String string1) {}
 
     @Override
-    public void onUserPaused(String string, boolean bln, String string1) {
-    }
+    public void onUserPaused(String string, boolean bln, String string1) {}
 
     @Override
-    public void onUserResumed(String string, boolean bln, String string1) {
-    }
+    public void onUserResumed(String string, boolean bln, String string1) {}
 
     @Override
-    public void onNextTurnRequest(String string) {
-    }
+    public void onNextTurnRequest(String string) {}
 }

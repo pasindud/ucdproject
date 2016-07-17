@@ -213,17 +213,10 @@ public class Multiplayer {
      */
     public void joinNewPlayer(String playerName, String channelName){
         try {
-        // First create a player queue.
-        // Typical player queue name is - playername_channel
-        String queueName = getClientQueue(channelName, playerName);
-        createQueue(queueName);
-        
-        // Send the message to the channel queue.
-        
-        // Message format to put in the server queue - 100 <player name>
-        String message = "100 " + playerName;
-        publishToQueue(getServerQueue(channelName), message);
-        
+            String queueName = getClientQueue(channelName, playerName);
+            // Message format to put in the server queue - 100 <player name>
+            String message = "100 " + playerName;
+            publishToQueue(getServerQueue(channelName), message);
         } catch(Exception e){
             // No internet 
             // Queue already created.
@@ -308,26 +301,14 @@ public class Multiplayer {
             myGame.sendPrivateChat(queueName, message);   
             return true;
         }
-        System.err.println("Was NOT SENT");
-        System.err.println("Message " + message + " to  " + queueName);
-        /*new Thread() {
-            public void run() {
-
-                long expiryTime = 10000;
-                QueueService queueService = App42API.buildQueueService();
-                Queue queue = queueService.sendMessage(queueName, message, expiryTime);
-                if (DEBUG) {
-                    System.out.println("Publish Q - " + queueName + " M - " + message);
-                }
-            }
-        }.start();
-        return true;*/
+        System.err.println("Message was not sent. ");
         return false;
     }
     
     public List<String> readQueue(String queueName){
         return new ArrayList<String>();
     }
+    
     public List<String> readQueueDep(String queueName){
 //        System.out.println("READ " + queueName);
         if (DEBUG) {

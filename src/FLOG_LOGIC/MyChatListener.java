@@ -10,7 +10,7 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.ChatRequestListene
 import java.util.ArrayList;
 
 /**
- *
+ * Gives message status.
  * @author Pasindu
  */
 public class MyChatListener implements ChatRequestListener {

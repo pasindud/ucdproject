@@ -26,6 +26,22 @@ public class Utils {
     /** Number of consonants. */
     public final static int NO_OF_CONSONANTS = CONSONANTS_LIST.size() - 1;
     
+    public final static String QUEUE_NAME_SEPERATOR = "OOOOOO";
+    
+    public static enum COMMAND_CODES {
+        CLIENT_GAME_START_CODE("108");
+        private final String text;
+        /** Get code for the enum. */
+        private COMMAND_CODES(final String text) {
+            this.text = text;
+        }
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+    
+    
     /**
      * Generates list of random letters within given sizes.
      * @param noOfVowels is the number of vowels the list should have.

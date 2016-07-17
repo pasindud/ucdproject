@@ -33,7 +33,7 @@ public class FLOG_LOGIC {
     /**
      * This main method was for sep assignment2.
      */
-    public static void Main2(String[] args) {
+    /*public static void Main2(String[] args) {
         System.out.println("Running the a flog game round");
 
         // Setup users.
@@ -69,7 +69,7 @@ public class FLOG_LOGIC {
         game.processRoundScores(0);
         System.out.println("Is player 1 kicked - " + game.getPlayer(1).getIsKicked());
 
-    }
+    }*/
 
     /* 
         // Setup the words for testing in round 0.  

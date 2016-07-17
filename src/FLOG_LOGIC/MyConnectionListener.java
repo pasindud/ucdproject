@@ -11,7 +11,7 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestL
 import java.util.HashMap;
 
 /**
- *
+ * Handles connections.
  * @author Pasindu
  */
 public class MyConnectionListener implements ConnectionRequestListener {
@@ -28,12 +28,8 @@ public class MyConnectionListener implements ConnectionRequestListener {
     }
 
     @Override
-    public void onDisconnectDone(ConnectEvent event) {
-        System.out.println("On Disconnected invoked");
-    }
+    public void onDisconnectDone(ConnectEvent event) {}
 
     @Override
-    public void onInitUDPDone(byte paramByte) {
-        // TODO Auto-generated method stub          
-    }
+    public void onInitUDPDone(byte paramByte) {}
 }

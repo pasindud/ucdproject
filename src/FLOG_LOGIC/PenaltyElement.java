@@ -10,19 +10,18 @@ class PenaltyElement {
     private int numberOfOtherLettersUsed = 0;
     private ConstantElement maxNumberOfIntialLetters = new ConstantElement(2);
     private ConstantElement maxNumberOfOtherLetters = new ConstantElement(10);
-    // report says 10
+    /** Penalty points for not using other letters. */
     private ConstantElement penalyPointsForAIntialLetter 
                                                     = new ConstantElement(10);
+    /** Penalty points for not using other letters. */
     private ConstantElement penalyPointsForAOtherLetter 
                                                     = new ConstantElement(50);
+    /** Penalty points for the player. */
     private int penaltyPoints = 0;
     
+    /** Gets the penalty points for player's round. */
     public int getPenaltyPoints(){
         return penaltyPoints;
-    }
-    
-    public int getNumberOfIntialLettersUsed() {
-        return numberOfIntialLettersUsed;
     }
 
     public void setNumberOfIntialLettersUsed(int numberOfIntialLettersUsed) {
@@ -30,10 +29,6 @@ class PenaltyElement {
             numberOfIntialLettersUsed <=  maxNumberOfIntialLetters.getValue()) {
             this.numberOfIntialLettersUsed = numberOfIntialLettersUsed;
         }
-    }
-
-    public int getNumberOfOtherLettersUsed() {
-        return numberOfOtherLettersUsed;
     }
 
     public void setNumberOfOtherLettersUsed(int numberOfOtherLettersUsed) {

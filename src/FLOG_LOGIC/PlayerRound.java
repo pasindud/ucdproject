@@ -13,11 +13,11 @@ import org.apache.commons.lang3.ArrayUtils;
  * Contains all the information about of the round for the given player.
  */
 public class PlayerRound {
-    /** Intial set of letters. */
+    /** Initial set of letters. */
     private String intialLetters[] = new String[2];
     /** Other set of letters. */
     private String otherLetters[] = new String[10];
-    /** Whether auto wordsearch was used. */
+    /** Whether auto word search was used. */
     private boolean isWordSearchUsed = false;
     /** Score refers to the total score. */
     private int score = 0;
@@ -28,7 +28,7 @@ public class PlayerRound {
     /** Used to calculate the penalty points. */
     // TODO(pasindu) This is temporyly public for testing purposes.
     public PenaltyElement penaltyPoints = new PenaltyElement();
-
+    /** Points given for length. */
     private ConstantElement additionLenghtPoints = new ConstantElement(2);
     
     public int getTotalLetterValues(){
@@ -92,6 +92,7 @@ public class PlayerRound {
     }
     
     public void calculateScore(){
+        calculateWordLetterScores();
         String[] allLetters = (String[])ArrayUtils.addAll(
                                                intialLetters, otherLetters);
         penaltyPoints = new PenaltyElement();

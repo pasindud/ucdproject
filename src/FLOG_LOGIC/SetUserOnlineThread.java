@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  * @author Pasindu
  */
 public class SetUserOnlineThread extends Thread {
-
     /**
      * Every 5 mins the users last online time is reset to current time.
      */

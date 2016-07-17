@@ -29,53 +29,22 @@ import java.util.logging.Logger;
  * @author Pasindu
  */
 public class Server {
+    /** Name of the channel. */
     private static String channelName = "";
+    /** Object used to send commands to other users. */
     private Multiplayer multiplayer;
     private String serverQueueName = "";
     private ArrayList<String> playerNames = new ArrayList<String>();
-    // Consumer producer client
-    Catcher serverCatcher = new Catcher();
-    Thrower serverThrower = new Thrower();
     private boolean isServerStart = false;
     private Game game = null;
+    WarpClient myGame;
     
     public Server(String channelName){
         WarpClient.initialize(Utils.WRAP_API_KEY, Utils.WRAP_SECRET_KEY);   
         this.channelName = channelName;
         multiplayer = new Multiplayer();
-        serverThrower.addThrowListener(serverCatcher);
         this.serverQueueName = multiplayer.getServerQueue(channelName);
     }
-    ScheduledExecutorService executor = Executors.newScheduledThreadPool(100);
-    
-    public void startQueueSystemHealthCheck(){
-        new Thread(){
-            public void run(){
-                while(this.isInterrupted()){
-                    if (executor.isShutdown() || executor.isTerminated()) {
-                        startThread();
-                        System.err.println("Starting thread again");
-                    }
-                }
-            }
-            
-        }.start();
-    }
-    
-    public void startThread(){
-        Runnable task = () -> {
-         List<String> messages = multiplayer.readQueue(serverQueueName);
-            for (String message : messages) {
-                decodeServerMessage(message);
-                System.err.println("[GameServer][User:" + serverQueueName + "] M - " + message);
-            }
-        };
-        long delay = 0;
-        long intervel = 3;
-        executor.scheduleWithFixedDelay(task, delay, intervel, TimeUnit.SECONDS);
-    }
-    
-    WarpClient myGame;
     
     public void setupWrap() {
         try {
@@ -95,18 +64,16 @@ public class Server {
                     }
                 }
             });
-              myGame.addNotificationListener(new MyNotifyListener(){
-                public void MyNotifyListener(String clientQueueName){
-                
+            myGame.addNotificationListener(new MyNotifyListener() {
+                public void MyNotifyListener(String clientQueueName) {
+
                 }
                 @Override
                 public void onPrivateChatReceived(String from, String message) {
                     System.out.println("Msg from - " + from + " - M - " + message);
                     decodeServerMessage(message);
-                    /*if (from.split("OOOOOO")[1].equals("server")) {
-                        decodeClientMessage(message);
-                    }*/
-                };
+                }
+            ;
             });
             myGame.addChatRequestListener(new MyChatListener());
             myGame.connectWithUserName(serverQueueName);
@@ -121,12 +88,8 @@ public class Server {
             return;
         }
         game = new Game();
-        startThread();
-        startQueueSystemHealthCheck();
         setupWrap();
         multiplayer.setMyGame(myGame);
-        /* Thread backgroundServerQueueCheck =  new CheckQueueThread(serverQueueName, serverThrower);
-        backgroundServerQueueCheck.start();*/
         isServerStart = true;
     }
     
@@ -137,18 +100,6 @@ public class Server {
         strPlagerNames = strPlagerNames.replaceFirst("^,", "");
         String message = "201 startgame " + strPlagerNames;
         multiplayer.broadcast(channelName, playerNames, message);
-        game.startNewRound();
-    }
-    
-    /**
-     * Listens to messages thrown by checkQueueThread.
-     */
-    private class Catcher implements ThrowListener {
-        @Override
-        public void Catch(String message) {
-            System.out.println("Server:caught " + message);
-             decodeServerMessage(message);
-        }
     }
     
     /**
@@ -222,9 +173,9 @@ public class Server {
         }
     }
     
-    int numberOfUsersFinishedRound = 0;
-    public void handleEndRound(String[] segments) {
-        
+    /** Number of users already finished the round.*/
+    private int numberOfUsersFinishedRound = 0;
+    private void handleEndRound(String[] segments) {
         System.out.println("121212121212");
         String name = segments[2];
         int round = Integer.parseInt(segments[3]);
