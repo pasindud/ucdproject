@@ -6,13 +6,12 @@ package FLOG_LOGIC;
  * Contains constant elements.
  */
 class ConstantElement extends FlogElement {
-    /** Set the constant value. */
-    ConstantElement(double value){
-        super.value = value;
-    }
+  /** Set the constant value. */
+  ConstantElement(double value) {
+    super.value = value;
+  }
 
-    public double getValue(){
-	return this.value;
-    }
-    
+  public double getValue() {
+    return this.value;
+  }
 }

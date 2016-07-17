@@ -5,8 +5,8 @@ package FLOG_LOGIC;
  */
 class FlogElement {
 
-    /**
-     * contains the value of the element.
-     */
-    protected double value;
+  /**
+   * contains the value of the element.
+   */
+  protected double value;
 }
