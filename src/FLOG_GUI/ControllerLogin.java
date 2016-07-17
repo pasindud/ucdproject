@@ -110,11 +110,12 @@ public class ControllerLogin {
             public void mouseClicked(MouseEvent e) {
                 JTextField uname = (JTextField)panelLogin.getCompCon(_username);
                 JPasswordField pass = (JPasswordField)panelLogin.getCompCon(_pass);
-                if(uname.getText().equals("")||pass.getPassword().toString().equals("")){
+                String password=new String(pass.getPassword());
+                if(uname.getText().equals("")||password.equals("")){
                     JOptionPane.showMessageDialog(gameScreen, "User name or password is missing","Login error",JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                loginClick(uname.getText(), pass.getPassword().toString());
+                loginClick(uname.getText(), password);
                 }
             }
 
