@@ -5,6 +5,8 @@
  */
 package FLOG_GUI;
 
+import FLOG_LOGIC.FLOG_LOGIC;
+import FLOG_LOGIC.Multiplayer;
 import java.awt.Dimension;
 
 /**
@@ -13,6 +15,7 @@ import java.awt.Dimension;
  */
 public class ChatFrame extends javax.swing.JFrame {
 
+    Multiplayer multiplayer=new Multiplayer();
     /**
      * Creates new form ChatFrame
      */
@@ -43,10 +46,14 @@ public class ChatFrame extends javax.swing.JFrame {
     
     public void sendClick()
     {
-        String msg = txtMessage.getText();
+        
+        String msg = DataForUI.currentUsername+" :: "+txtMessage.getText();
         //Broadcast the message here
         if(!msg.equals(""))
         {
+            msg="110 "+msg.trim().replaceAll(" ","_");
+            gameScreen.multiplayer.broadcast(DataForUI.currentChannel, gameScreen.otherPlayerNames, msg);
+            System.out.println("message :" +msg +" "+ gameScreen.otherPlayerNames.size());
             updateMessages(DataForUI.currentUsername,msg);
         }
         
@@ -71,7 +78,6 @@ public class ChatFrame extends javax.swing.JFrame {
         btnExit = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
