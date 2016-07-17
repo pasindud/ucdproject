@@ -91,7 +91,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private void startServerClicked() {
         btnStartServer.setEnabled(false);
         channelName = txtChannelName.getText();
-        multiplayer.createServer(channelName);
+//        multiplayer.createServer(channelName);
         setServerStatus("Starting Server");
 
         IS_THE_SERVER = true;

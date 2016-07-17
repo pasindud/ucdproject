@@ -81,21 +81,6 @@ public class GameScreen extends JFrame {
     //Constructor 
     public GameScreen() {
         createAndShowGUI();
-        // Tempory.
-        /*SelectMultiPlayer selectMultiPlayer2 = new SelectMultiPlayer();
-        JFrame ui2=new JFrame("ui2");
-        ui2.setSize(new Dimension(900, 619)); 
-        ui2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ui2.add(selectMultiPlayer2);
-        ui2.setVisible(true);*/
-        
-        /*SelectMultiPlayer selectMultiPlayer1 = new SelectMultiPlayer(this);
-        JFrame ui1 =new JFrame("ui1");
-        ui1.setSize(new Dimension(900, 619)); 
-        ui1.setLocation(300, 300);
-        ui1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ui1.add(selectMultiPlayer1);
-        ui1.setVisible(true);*/
     }
 
     //JFrame setting up
@@ -259,8 +244,6 @@ public class GameScreen extends JFrame {
     
     // Multiplayer details.
     public Multiplayer multiplayer = new Multiplayer();
-    public Catcher clientCatcher = new Catcher();
-    public Thrower clientThrower = new Thrower();
     public String channelName = "TestingChannel";
     public String username = "TestingUsername";
     public String serverQueueName;
@@ -289,14 +272,13 @@ public class GameScreen extends JFrame {
                             @Override
                             public void onPrivateChatReceived(String from, String message) {
                                 System.out.println("onPrivateChatReceived from - " + from + " - M - " + message);
-                                if (from.contains("OOOOOO")) {
+                                if (from.contains(Utils.QUEUE_NAME_SEPERATOR)) {
                                     decodeClientMessage(message);
                                 }
                             }
                         });
                         myGame.connectWithUserName(clientQueueName);
                         String message = "100 " + username;
-//                        myGame.sendPrivateChat(serverQueueName, message);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -305,16 +287,6 @@ public class GameScreen extends JFrame {
                 }
             }
         }.start();
-    }
-    
-    public void startSelectMultiPlayer(){
-        if (panelSelectMultiPlayer.IS_THE_SERVER) {
-            myGame.sendPrivateChat(serverQueueName, "108 " + clientQueueName + " json"); 
-        }
-    }
-    
-    public void selectMultiPlayerClientDecode(){
-    
     }
     
     public void selectMultiplayerStartServerClick(){
@@ -328,25 +300,24 @@ public class GameScreen extends JFrame {
         setupWrap();
     }
     
-    public void selectMulitplayerStartGameClick(){
+    public void selectMulitplayerStartGameClick() {
         //if (panelSelectMultiPlayer.IS_THE_SERVER) {
         System.out.println("Sending message to start game.");
-            myGame.sendPrivateChat(serverQueueName, "108 " + username + " startGame");
+        myGame.sendPrivateChat(serverQueueName,
+                Utils.COMMAND_CODES.CLIENT_GAME_START_CODE + " " + username + " startGame");
         //}
     }
-    
-    public void setupMultiplayerForGamePlay(){
+  
+    private void setupMultiplayerForGamePlay() {
         for (String name : otherPlayerNames) {
             game.addPlayer(name);
         }
         otherPlayerNames.remove(username);
-//        game.addPlayer("Json");
-//        game.addPlayer("Mark");
         dataForUI.game = game;
         dataForUI.getPlayerList();
         controllerGamePlay.drawOpponenets();
-//        clientThrower.addThrowListener(clientCatcher);
-//        startQueueSystem();
+        // Handles messages of letters that was received before
+        // game start, which happens due to sync problems.
         if (tempIntialLetterHoling.size() != 0) {
             for (String name : otherPlayerNames) {
                 String message = tempIntialLetterHoling.get(name);
@@ -355,23 +326,14 @@ public class GameScreen extends JFrame {
             }
         }
     }
-    
-    /**
-     * Listens to messages thrown by checkQueueThread.
-     */
-    public class Catcher implements ThrowListener {
-        @Override
-        public void Catch(String message) {
-            System.err.println("Caught:GameServer" + message);
-//            decodeClientMessage(message);
-        }
-    }
+
     private boolean gameStart = false;
     HashMap<String, String> tempIntialLetterHoling = new HashMap<String, String>();
+    
     /**
      * Decode the message received by the client
      */
-    public synchronized void decodeClientMessage(String message) {
+    private synchronized void decodeClientMessage(String message) {
         System.err.println("decodeClientMessage:GameServer m " + message);
         // setClientStatus("Message in client - " + message);
         String[] segments = message.split(" ");
@@ -430,6 +392,7 @@ public class GameScreen extends JFrame {
         }
     }
     int noOfRoundScores = 0;
+    
     // Example - 107 roundScore <player name> <round number> <score>
     //           107 roundScore pasindu 1 score
     public void handleRoundScore(String[] segments){
@@ -453,51 +416,4 @@ public class GameScreen extends JFrame {
             System.err.println("44444");
         }
     }
-    
-    volatile ScheduledExecutorService executorService = Executors.newScheduledThreadPool(100);
-    volatile ScheduledFuture<?> files ;
-    public void pushtoServerQueue(String message){
-        multiplayer.publishToQueue(serverQueueName, message);
-    }
-    public void startQueueSystemHealthCheck(){
-        new Thread(){
-            public void run(){
-            
-                while(this.isInterrupted()){
-                    if (files.isDone() || files.isCancelled()) {
-                        startQueueSystem();
-                    }
-                }
-            }
-            
-        }.start();
-    }
-    public void startQueueSystem(){
-        /*files = executorService.scheduleAtFixedRate(new Runnable() {      
-            public void run() {
-                List<String> messages = multiplayer.readQueue(clientQueueName);
-                for (String message : messages) {
-                    decodeClientMessage(message);
-                    System.err.println("[GameServer][User:" + clientQueueName + "] M - " + message);
-                }
-            }
-        }, 0, 5, TimeUnit.SECONDS);
-        startQueueSystemHealthCheck();*/
-        /*ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
-        System.err.println("StartQ:GameServer");
-        Runnable task = () -> {
-         List<String> messages = multiplayer.readQueue(clientQueueName);
-            for (String message : messages) {
-                decodeClientMessage(message);
-                System.err.println("[GameServer][User:" + clientQueueName + "] M - " + message);
-            }
-        };
-        long delay = 0;
-        long intervel = 2;
-        executor.scheduleWithFixedDelay(task, delay, intervel, TimeUnit.SECONDS);*/
-        /*backgroundClientQueueCheck = new CheckQueueThread(clientQueueName, clientThrower);
-        backgroundClientQueueCheck.start();*/
-    }
-    
-    
 }
