@@ -99,8 +99,9 @@ public class DataForUI
         playerList = game.getPlayerList();
         parsePlayerList();
     }
-    
-    
+    public static HashMap<String, Integer> scoresMap = new HashMap<String, Integer>();
+    public int myTotalScore;
+    public int myRank;
     // 
     private static void parsePlayerList()
     {
@@ -108,12 +109,15 @@ public class DataForUI
         PdArray = new PlayerData[playerList.size()];
         for(Player p : playerList)
         {
+            int total = p.getTotalScore();
+            String name =  p.getName();
+            scoresMap.put(name, total);
             String[] initialLetters = p.getPlayerRound(RoundNum).getIntialLetters();
             System.err.println("ParseLettesr - " + initialLetters[0] + " - " + initialLetters[1]);
             PlayerData pd = new PlayerData(
                     p.getListIndex(),
-                    p.getName(),
-                    p.getTotalScore(), 
+                    name,
+                    total, 
                     initialLetters[0], 
                     initialLetters[1]);
             //change

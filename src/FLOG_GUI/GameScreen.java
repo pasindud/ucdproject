@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import FLOG_LOGIC.*;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
+import com.shephertz.app42.gaming.multiplayer.client.events.ConnectEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -277,7 +278,12 @@ public class GameScreen extends JFrame {
                     myGame = WarpClient.getInstance();
                     try {
                         myGame = WarpClient.getInstance();
-                        myGame.addConnectionRequestListener(new MyConnectionListener(clientQueueName));
+                        myGame.addConnectionRequestListener(new MyConnectionListener(clientQueueName){
+                            public void onConnectDone(ConnectEvent event) {
+                                    multiplayer.setMyGame(myGame);
+                                    multiplayer.joinNewPlayer(username, channelName);
+                            }
+                        });
                         myGame.addChatRequestListener(new MyChatListener());
                         myGame.addNotificationListener(new MyNotifyListener() {
                             @Override
@@ -291,8 +297,6 @@ public class GameScreen extends JFrame {
                         myGame.connectWithUserName(clientQueueName);
                         String message = "100 " + username;
 //                        myGame.sendPrivateChat(serverQueueName, message);
-                        multiplayer.setMyGame(myGame);
-                        multiplayer.joinNewPlayer(username, channelName);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

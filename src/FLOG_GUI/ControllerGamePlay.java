@@ -29,6 +29,9 @@ public class ControllerGamePlay
     public String answere;
     public boolean isAutoGenerate = false;
     TestGUI_Inputs testGUI_Inputs;
+    
+    int myTotalScore;
+    int rank;
     //Constructor 
     public ControllerGamePlay(PanelGamePlay panelGamePlay, GameScreen gameScreen) 
     {
@@ -38,10 +41,12 @@ public class ControllerGamePlay
         this.gameScreen = gameScreen;
 //        data = new DataForUI();
         initializeGamePlayListeners();
-        setPlayerInfo("Snake Eyes",999,5435,4);
+        setPlayerInfo(gameScreen.username,999,0, DataForUI.RoundNum);
         if (data == null) {
             return;
         }
+        int total = data.scoresMap.get(gameScreen.username);
+        setPlayerInfo(gameScreen.username,999,total, DataForUI.RoundNum);
         panelGamePlay.drawOpponents(data.getPdArray());
     }
     
@@ -57,6 +62,8 @@ public class ControllerGamePlay
     
     public void drawOpponenets()
     {
+        int total = data.scoresMap.get(gameScreen.username);
+        setPlayerInfo(gameScreen.username,999,total, DataForUI.RoundNum);
         panelGamePlay.drawOpponents(data.getPdArray());
     }
     
@@ -246,6 +253,7 @@ public class ControllerGamePlay
                 ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_submit_h.png"));
                 panelGamePlay.setIcon_Submit(imgIcon);
                 submitClick(txt.getText().toString());
+                txt.setText("");
             }
 
             @Override

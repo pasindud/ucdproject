@@ -82,7 +82,7 @@ public class Server {
             HashMap<String, Object> data = new HashMap<String, Object>();
             WarpClient.initialize(Utils.WRAP_API_KEY, Utils.WRAP_SECRET_KEY, "50.112.253.86");
             WarpClient.enableTrace(true);
-            
+            WarpClient.setRecoveryAllowance(10);
             myGame = (WarpClient) WarpClient.getInstance();
             String serverQueueName = multiplayer.getServerQueue(channelName);
             myGame.addConnectionRequestListener(new MyConnectionListener(serverQueueName) {
@@ -256,7 +256,7 @@ public class Server {
         // Example - 107 roundScore <player name> <round number>  <score> <totalScore>
         //           107 roundScore pasindu 1 10 100
         String message = "204 roundScore" + " " + name + " " + round + " " + score + " " +  totalScore;
-        
+        System.out.println(message);
         multiplayer.broadcast(channelName, playerNames, message);
         
         if (playerNames.size() == numberOfUsersFinishedRound) {
