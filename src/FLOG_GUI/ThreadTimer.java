@@ -75,6 +75,7 @@ public class ThreadTimer implements Runnable {
       boolean isAutoGenUsed, String word, String timeRemanString,
       String[] initialLetters, String[] otherLetters*/
       controllerGamePlay.startNextRound();
+      
     } else {
       controllerGamePlay.endGame();
     }
@@ -95,6 +96,7 @@ public class ThreadTimer implements Runnable {
       } else {
         panelRoundReadyUp.setTimer("" + i);
       }
+      
     }
     controllerRoundReadyUp.startRound();
   }

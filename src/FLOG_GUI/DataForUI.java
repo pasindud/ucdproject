@@ -41,7 +41,7 @@ public class DataForUI {
   public static int RoundReadyUpTime = 5;
 
   //Set Round time
-  public static int RoundTime = 10;
+  public static int RoundTime = 20;
 
   //Current Username
   public static String currentUsername ="dc";
@@ -141,15 +141,27 @@ public class DataForUI {
         
         for(int i=0; i<length;i++)
         {
-            for(int j=1;j<(length-i);j++)
+            for(int j=0;j<(length-i);j++)
             {
-                if(playerDataArray[j-1].getScore()>playerDataArray[j].getScore())
-                {
-                    tempPlayerData = playerDataArray[j-1];
+                if ((j + 1) < length) {
+                    if (playerDataArray[j + 1].getScore() > playerDataArray[j].getScore()) {
+                        /*tempPlayerData = playerDataArray[j-1];
                     playerDataArray[j-1] = playerDataArray[j];
                     playerDataArray[j]=tempPlayerData;
+                         */
+
+                        tempPlayerData = playerDataArray[j + 1];
+                        playerDataArray[j + 1] = playerDataArray[j];
+                        playerDataArray[j] = tempPlayerData;
+
+                    }
                 }
             }
+        }
+        
+        for(int i=0;i<length;i++)
+        {
+            playerDataArray[i].setPosition(i+1);
         }
         
         return playerDataArray;

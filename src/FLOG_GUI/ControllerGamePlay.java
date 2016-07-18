@@ -67,8 +67,9 @@ public class ControllerGamePlay {
     } else {
       answere = ans;
     }
-    stopTimer = true;
-    this.startNextRound();
+    stopTimer = true; //**
+    this.startNextRound(); //**
+   
   }
 
   private void vowelsClick() {}
@@ -100,6 +101,8 @@ public class ControllerGamePlay {
     panelGamePlay.setTimer("00");
   }
 
+  
+  
   /**
    * This method is automatically called when the timer stops,
    * this method will simply change the screen to Round ready up screen and

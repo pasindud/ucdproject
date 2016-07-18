@@ -138,8 +138,8 @@ public class GameScreen extends JFrame {
 
   private void showMainMenu() {
     //System.out.println("showmainmenu");
-            changeScreen(dataForUI.STR_MAINMENU, null);
-//    changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
+    //  changeScreen(dataForUI.STR_MAINMENU, null);
+    changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
   }
 
   /**
@@ -405,11 +405,11 @@ public class GameScreen extends JFrame {
     Integer score = Integer.parseInt(segments[4]);
     Integer totalScore = Integer.parseInt(segments[5]);
     //[dushan]
-    String letters = segments[6];
+    String letters = segments[6] +","+ segments[7];
     String word = "<D.N.F>"; //Did Not Finish/submit
-    if(segments.length==8)
+    if(segments.length==9)
     {
-        word = segments[7];
+        word = segments[8];
     }
     dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setLetterArry(letters, round);
     dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setWordArry(word, round);
