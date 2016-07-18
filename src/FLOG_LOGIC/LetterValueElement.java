@@ -79,6 +79,7 @@ class LetterValueElement {
   }
 
   private int getLettersValue(String letter) {
-    return letterValues.get(letter);
+    Integer value = letterValues.get(letter);
+    return (value == null) ? 0 : value;
   }
 }

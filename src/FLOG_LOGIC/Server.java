@@ -114,45 +114,30 @@ public class Server {
     if (segments.length < 2) {
       return;
     }
+    StringBuilder clientMessage = new StringBuilder();
     String code = segments[0];
     String content = segments[1];
     String name = "";
     Integer round;
-    switch (code) {
+//    Utils.COMMAND_CODES codes = Utils.COMMAND_CODES.valueOf(code);
+    switch (Utils.COMMAND_CODES.valueOf(code)) {
         // New user joined format - 100 <player name>
-      case "100":
+      case CLIENT_JOIN_GAME_CODE:
         String playerName = content;
-        // setServerStatus("User " + content + " joined ");
-        String playerQueue = multiplayer.getClientQueue(channelName, playerName);
-
+        content = content.trim();
+        String playerQueue = multiplayer.getClientQueue(channelName, content);
         // Message to acknowledge that the server received the message
-        String clientMessage = "200 ackJoinServer";
-        System.out.println("private message to - " + playerQueue + " from ");
-        myGame.sendPrivateChat(playerQueue, clientMessage);
-
-        // multiplayer.publishToQueue(playerQueue, clientMessage);
-        name = content.trim();
-        playerNames.add(name);
-        game.addPlayer(name);
+        clientMessage.append(Utils.COMMAND_CODES.SERVER_USER_JOINED_ACK  + " ")
+                .append("ackJoinServer");
+        myGame.sendPrivateChat(playerQueue, clientMessage.toString());
+        playerNames.add(content);
+        game.addPlayer(content);
         break;
-        // User start the gui- ack game start .
-      case "103":
-        System.out.println(content);
-        break;
-      case "104":
-        System.out.println(content);
-        break;
-      case "108":
+      case CLIENT_GAME_START_CODE:
         // Start game
         startGame();
         break;
-      case "105":
-        // Format - 104 letters <player name> a,s,d,g,e,q,q,r,t
-        String letters = segments[2];
-        letters = letters.replaceFirst("^,", "");
-        String[] lettersArray = letters.split(",");
-        break;
-      case "304": // Initial Letters for next round.
+      case BROADCAST_JOIN_GAME_CODE: // Initial Letters for next round.
         name = segments[2];
         round = Integer.parseInt(segments[3]);
         String firstLetter = segments[4];
@@ -161,7 +146,7 @@ public class Server {
         String[] initialLetters = {firstLetter, secondLetter};
         game.getPlayerRoundForRound(name, round).setIntialLetters(initialLetters);
         break;
-      case "106": // Use has finished the message.
+      case CLIENT_END_ROUND_CODE: // Use has finished the message.
         if (segments.length < 8) {
           System.err.println("Game round end message format invalid Message " + message);
           return;
@@ -209,7 +194,7 @@ public class Server {
 
     // Example - 107 roundScore <player name> <round number>  <score> <totalScore>
     //           107 roundScore pasindu 1 10 100
-    String message = "204 roundScore" + " " + name + " " + round + " " + score + " " + totalScore;
+    String message = "204 roundScore" +     " " + name + " " + round + " " + score + " " + totalScore;
     System.out.println(message);
     multiplayer.broadcast(channelName, playerNames, message);
 

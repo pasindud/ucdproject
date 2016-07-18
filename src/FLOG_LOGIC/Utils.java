@@ -42,23 +42,34 @@ public class Utils {
    */
   public final static String QUEUE_NAME_SEPERATOR = "OOOOOO";
 
+
   /**
    * Codes used in messages to identify the action.
    */
   public static enum COMMAND_CODES {
-    CLIENT_GAME_START_CODE("108");
-    private final String text;
+    CLIENT_GAME_START_CODE("108"),
+    CLIENT_JOIN_GAME_CODE("100"),
+    BROADCAST_JOIN_GAME_CODE("304"),
+    CLIENT_END_ROUND_CODE("106"),
+    SERVER_GAME_START("201"),
+    SERVER_USER_JOINED_ACK("200"),
+    SERVER_ROUND_USER_SCORE("204");
+    private final String code;
 
     /**
      * Get code for the enum.
      */
-    private COMMAND_CODES(final String text) {
-      this.text = text;
+    private COMMAND_CODES(String code) {
+      this.code = code;
+    }
+    
+    public String getText(){
+        return code;
     }
 
     @Override
     public String toString() {
-      return text;
+      return code;
     }
   }
 
@@ -131,21 +142,22 @@ public class Utils {
       String timeRemanString,
       String[] initialLetters,
       String[] otherLetters) {
-
-    String message = "106 ";
-    message += "endRound ";
-    message += playerName + " ";
-    message += roundNum + " ";
-
+    
+    StringBuilder clientMessage = new StringBuilder();
+    clientMessage.append(Utils.COMMAND_CODES.CLIENT_END_ROUND_CODE + " ")
+            .append("endRound").append(" ")
+            .append(playerName).append(" ")
+            .append(roundNum).append(" ");
+   
     String strInitialLetters = String.join(",", initialLetters);
     String strOtherLetters = String.join(",", otherLetters);
 
-    message += strInitialLetters + " ";
-    message += strOtherLetters + " ";
-    message += timeRemanString + " ";
-    message += isAutoGenUsed + " ";
-    message += word;
-    return message;
+    clientMessage.append(strInitialLetters).append(" ")
+            .append(strOtherLetters).append(" ")
+            .append(timeRemanString).append(" ")
+            .append(isAutoGenUsed).append(" ")
+            .append(word);
+    return clientMessage.toString();
   }
 
   /* shephertz.com SECRET_KEY key. */

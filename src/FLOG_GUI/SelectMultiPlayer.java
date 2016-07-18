@@ -297,8 +297,6 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
 
         txtPlayerName.setText("playerNameDc");
         txtPlayerName.setBorder(null);
-        txtPlayerName.setEnabled(false);
-        txtPlayerName.setOpaque(false);
         txtPlayerName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPlayerNameActionPerformed(evt);
@@ -308,8 +306,6 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
 
         cmbChannels.setEditable(true);
         cmbChannels.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dc", "ab" }));
-        cmbChannels.setBorder(null);
-        cmbChannels.setOpaque(false);
         add(cmbChannels, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 274, 208, 34));
     }// </editor-fold>//GEN-END:initComponents
 

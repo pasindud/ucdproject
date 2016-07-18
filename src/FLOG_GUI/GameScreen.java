@@ -97,8 +97,7 @@ public class GameScreen extends JFrame {
     this.setLocationRelativeTo(null);
     this.validate();
     this.setVisible(true);
-    chatFrame = new ChatFrame(this);
-    
+    chatFrame = new ChatFrame(this); 
   }
 
   private void preparePanels() {
@@ -139,19 +138,10 @@ public class GameScreen extends JFrame {
 
   private void showMainMenu() {
     //System.out.println("showmainmenu");
-    //        changeScreen(dataForUI.STR_MAINMENU, null);
-    changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
+            changeScreen(dataForUI.STR_MAINMENU, null);
+//    changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
   }
-  /*
-      private void initateGame() {
-          Game game = new Game();
-          game.addPlayer("Pasindu");
-          game.addPlayer("Dushan");
 
-          DataForUI.game = game;
-          DataForUI.getPlayerList();
-      }
-  */
   /**
    * The following Method will handle all change screen calls, basic switching
    * for the panels in the CardLayout
@@ -285,7 +275,8 @@ public class GameScreen extends JFrame {
                   }
                 });
             myGame.connectWithUserName(clientQueueName);
-            String message = "100 " + username;
+            String message =  
+                    Utils.COMMAND_CODES.CLIENT_JOIN_GAME_CODE + " " + username;
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -348,10 +339,11 @@ public class GameScreen extends JFrame {
     if (segments.length < 2) {
       return;
     }
+    
     String code = segments[0].trim();
     String content = segments[1];
-    switch (code) {
-      case "201":
+    switch (Utils.COMMAND_CODES.valueOf(code)) {
+      case SERVER_GAME_START:
         if (segments.length != 3) {
           System.err.println("Start game does not have a name list");
           return;
@@ -362,11 +354,10 @@ public class GameScreen extends JFrame {
         changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.SelectMultiplayer);
         gameStart = true;
         break;
-      case "200":
+      case SERVER_USER_JOINED_ACK:
         panelSelectMultiPlayer.setClientStatus(message);
         break;
-      case "304":
-
+      case BROADCAST_JOIN_GAME_CODE:
         // Exameple 304 intialLetters pasindu 0 a e
         //          304 intialLetters <player name> <round number> <letter 1> <letter 2>
         if (segments.length < 6) {
@@ -378,22 +369,18 @@ public class GameScreen extends JFrame {
         String firstLetter = segments[4];
         String secondLetter = segments[5];
         if (dataForUI.game == null) {
-          System.out.println("game null");
+          System.err.println("game null");
           tempIntialLetterHoling.put(name, message);
         }
-
-        System.out.println(" name - " + name + "");
         int userIndex = dataForUI.game.getIndexByPlayerName(name);
         String[] initLetters = {firstLetter, secondLetter};
         if (dataForUI.RoundNum != round) {
           System.err.println("Round number does not match. ");
         }
-
-        System.err.println("Intial Letters " + initLetters + " from " + name);
         dataForUI.game.getPlayerRoundForRound(name, round).setIntialLetters(initLetters);
         int k = 0;
         break;
-      case "204":
+      case SERVER_ROUND_USER_SCORE:
         System.err.println("33333");
         handleRoundScore(segments);
         break;
