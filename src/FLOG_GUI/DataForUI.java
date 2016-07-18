@@ -132,7 +132,7 @@ public class DataForUI {
         
     }
   
-    private static PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
+    public static PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
     {
                
         //Bubble Sort
