@@ -67,6 +67,8 @@ public class ControllerGamePlay {
     } else {
       answere = ans;
     }
+    String msg = "210 "+DataForUI.currentUsername;
+    gameScreen.multiplayer.broadcast(DataForUI.currentChannel, gameScreen.otherPlayerNames,msg);//***[dushan]
     stopTimer = true; //**
     this.startNextRound(); //**
    
