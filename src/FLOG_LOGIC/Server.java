@@ -165,7 +165,6 @@ public class Server {
   private int numberOfUsersFinishedRound = 0;
 
   private void handleEndRound(String[] segments) {
-    System.out.println("121212121212");
     String name = segments[2];
     int round = Integer.parseInt(segments[3]);
     String[] initialLetters = segments[4].split(",");
@@ -176,7 +175,7 @@ public class Server {
     if (segments.length == 9) {
       word = segments[8];
     }
-    System.out.println("10101010101");
+
     PlayerRound currentRound = game.getPlayerRoundForRound(name, round);
     if (currentRound == null) {
       System.err.println("Current round is null - i " + round + " name " + name);
@@ -186,18 +185,25 @@ public class Server {
     currentRound.setOtherLetters(otherLetters);
     currentRound.setIntialLetters(initialLetters);
     currentRound.calculateScore();
-
-    System.out.println("111111111111");
     ++numberOfUsersFinishedRound;
+
+    StringBuilder message = new StringBuilder();
     int totalScore = game.getPlayerfromName(name).getNowTotalScore();
     int score = currentRound.getScore();
+    String letters = segments[4] +" "+segments[5];
 
-    // Example - 107 roundScore <player name> <round number>  <score> <totalScore>
-    //           107 roundScore pasindu 1 10 100
-    String message = "204 roundScore" +     " " + name + " " + round + " " + score + " " + totalScore;
-    System.out.println(message);
-    multiplayer.broadcast(channelName, playerNames, message);
-
+    // Example - 204 roundScore <player name> <round number> 
+    //           <score> <totalScore> <initial letters> <other letters> <word>
+    //           204 roundScore pasindu 1 10 100
+    message.append(Utils.COMMAND_CODES.SERVER_ROUND_USER_SCORE).append(" ")
+            .append("roundScore").append(" ")
+            .append(name).append(" ")
+            .append(round).append(" ")
+            .append(score).append(" ")
+            .append(totalScore).append(" ")
+            .append(letters).append(" ")
+            .append(word);
+    multiplayer.broadcast(channelName, playerNames, message.toString());
     if (playerNames.size() == numberOfUsersFinishedRound) {
       numberOfUsersFinishedRound = 0;
       // All users sent the round details.

@@ -150,6 +150,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     IS_USER_JOINED = true;
     setClientStatus("Joining server");
     gameScreen.channelName = cmbChannels.getEditor().getItem().toString();
+    DataForUI.currentChannel=gameScreen.channelName;
     gameScreen.username = txtPlayerName.getText();
     gameScreen.selectMultiplayerJoinServerClick();
   }
