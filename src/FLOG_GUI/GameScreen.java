@@ -156,6 +156,7 @@ public class GameScreen extends JFrame {
     if (invokerName != null) {
       switch (screenName) {
         case DataForUI.SelectMultiplayer:
+          panelSelectMultiPlayer.enableButtons();
           cl.show(container, screenName);
           panelSelectMultiPlayer.setPlayerName();
           break;
