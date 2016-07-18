@@ -342,7 +342,7 @@ public class GameScreen extends JFrame {
     
     String code = segments[0].trim();
     String content = segments[1];
-    switch (Utils.COMMAND_CODES.valueOf(code)) {
+    switch (Utils.COMMAND_CODES.getValue(code)) {
       case SERVER_GAME_START:
         if (segments.length != 3) {
           System.err.println("Start game does not have a name list");
@@ -385,7 +385,7 @@ public class GameScreen extends JFrame {
         handleRoundScore(segments);
         break;
           
-      case "110":
+      case SERVER_CHAT:
           String chatMessage=segments[1].trim().replaceAll("_", " ");
           String[] chatSegments=chatMessage.split(" :: ");
           System.out.println("chatmesage: "+chatMessage);

@@ -120,7 +120,7 @@ public class Server {
     String name = "";
     Integer round;
 //    Utils.COMMAND_CODES codes = Utils.COMMAND_CODES.valueOf(code);
-    switch (Utils.COMMAND_CODES.valueOf(code)) {
+    switch (Utils.COMMAND_CODES.getValue(code)) {
         // New user joined format - 100 <player name>
       case CLIENT_JOIN_GAME_CODE:
         String playerName = content;
