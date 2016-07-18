@@ -168,19 +168,33 @@ public class ControllerRegister {
               @Override
               public void mouseClicked(MouseEvent e) {
                 exitClick();
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelRegister.setIcon_Exit(imgIcon);
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelRegister.setIcon_Exit(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelRegister.setIcon_Exit(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelRegister.setIcon_Exit(imgIcon);
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_n.png"));
+                  panelRegister.setIcon_Exit(imgIcon);
+              }
             });
 
     panelRegister
@@ -256,7 +270,7 @@ public class ControllerRegister {
               @Override
               public void mousePressed(MouseEvent e) {
                 ImageIcon imgIcon =
-                    new ImageIcon(getClass().getResource("/images/btn_cancel_n.png"));
+                    new ImageIcon(getClass().getResource("/images/btn_cancel_c.png"));
                 panelRegister.setIcon_Cancel(imgIcon);
               }
 

@@ -42,6 +42,21 @@ public class PanelLogin extends javax.swing.JPanel {
     }*/
     return this.getComponent(x);
   }
+  
+  public void setIcon_Login(ImageIcon imageIcon)
+  {
+      btnLogin.setIcon(imageIcon);
+  }
+  
+  public void setIcon_Register(ImageIcon imageIcon)
+  {
+      btnRegister.setIcon(imageIcon);
+  }
+  
+  public void setIcon_Exit(ImageIcon imageIcon)
+  {
+      btnExit.setIcon(imageIcon);
+  }
 
   @Override
   protected void paintComponent(Graphics g) {
