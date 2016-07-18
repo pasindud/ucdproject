@@ -179,7 +179,7 @@ public class GameScreen extends JFrame {
         case DataForUI.STR_WINNER:
           cl.show(container, screenName);
           controllerWinners.drawPlayers();
-          controllerWinners.setWinner(2);
+          controllerWinners.setWinner(dataForUI.myRank);
           //controllerWinners.setWinner(dataForUI.player.getListIndex());
           break;
 

@@ -63,6 +63,10 @@ public class DataForUI {
 
   public static String firstLetter;
   public static String secondLetter;
+  
+  public static HashMap<String, Integer> scoresMap = new HashMap<String, Integer>();
+  public int myTotalScore;
+  public static int myRank;
 
   public DataForUI() {
     //To be Used to call data only
@@ -107,9 +111,7 @@ public class DataForUI {
     parsePlayerList();
   }
 
-  public static HashMap<String, Integer> scoresMap = new HashMap<String, Integer>();
-  public int myTotalScore;
-  public int myRank;
+  
   //
   private static void parsePlayerList() {
     int count = 0;
@@ -131,7 +133,7 @@ public class DataForUI {
   public static void preparePlayerArrayForUI()
     {
         sortedPdArrayByScore = sortPlayerArrayByScore(PdArray);
-        
+        myRank = findPlayerRankByName(currentUsername);
     }
   
     public static PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
@@ -178,4 +180,27 @@ public class DataForUI {
         
         return playerDataArray;
     }
+    
+    private static int findPlayerRankByName(String name)
+    {
+       boolean flag = false;
+       int count =0;
+       int rank=count;
+        System.out.println(""+sortedPdArrayByScore.length);
+       while((!flag)&&(count<sortedPdArrayByScore.length))
+       {
+           if(sortedPdArrayByScore[count].name.equals(name))
+           {
+               flag =true;
+               rank = sortedPdArrayByScore[count].getPosition();
+               System.out.println("rank :"+rank);
+           }
+       
+       }
+       
+       return rank;
+    }
+    
+    
+    
 }
