@@ -386,8 +386,9 @@ public class GameScreen extends JFrame {
         break;
           
       case SERVER_CHAT:
-          String chatMessage=segments[1].trim().replaceAll("_", " ");
-          String[] chatSegments=chatMessage.split(" :: ");
+          //msg = 110 dilshanwn_::_Hi_every_one
+          String[] chatSegments=segments[1].split("_::_");
+          String chatMessage=chatSegments[1].trim().replaceAll("_", " ");
           System.out.println("chatmesage: "+chatMessage);
           chatFrame.updateMessages(chatSegments[0], chatMessage);
           

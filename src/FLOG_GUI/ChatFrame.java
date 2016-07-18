@@ -47,14 +47,17 @@ public class ChatFrame extends javax.swing.JFrame {
     public void sendClick()
     {
         
-        String msg = DataForUI.currentUsername+" :: "+txtMessage.getText();
+        String msg =txtMessage.getText();
         //Broadcast the message here
         if(!msg.equals(""))
         {
+            updateMessages(DataForUI.currentUsername,msg);
+            msg = DataForUI.currentUsername+" :: "+msg;
             msg="110 "+msg.trim().replaceAll(" ","_");
+            //msg = 110 dilshanwn_::_Hi_every_one
             gameScreen.multiplayer.broadcast(DataForUI.currentChannel, gameScreen.otherPlayerNames, msg);
             System.out.println("message :" +msg +" "+ gameScreen.otherPlayerNames.size());
-            updateMessages(DataForUI.currentUsername,msg);
+            
         }
         
         
