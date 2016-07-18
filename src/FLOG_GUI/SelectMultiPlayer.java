@@ -153,6 +153,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     DataForUI.currentChannel=gameScreen.channelName;
     gameScreen.username = txtPlayerName.getText();
     gameScreen.selectMultiplayerJoinServerClick();
+    DataForUI.isConnectedToServer=true;
   }
 
   /**
@@ -184,6 +185,12 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
       btnStartGame.setEnabled(true);
       btnStartServer.setEnabled(true);
   }
+  
+  private void chatClicked()
+  {
+      gameScreen.toggleChat();
+     
+  }
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -204,6 +211,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         btnStartGame = new javax.swing.JLabel();
         txtPlayerName = new javax.swing.JTextField();
         cmbChannels = new javax.swing.JComboBox<>();
+        btnChat = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -315,6 +323,14 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         cmbChannels.setEditable(true);
         cmbChannels.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dc", "ab" }));
         add(cmbChannels, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 274, 208, 34));
+
+        btnChat.setText("Open Chat");
+        btnChat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnChatMouseClicked(evt);
+            }
+        });
+        add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 290, -1, 40));
     }// </editor-fold>//GEN-END:initComponents
 
   private void pnlTopBorderMouseDragged(
@@ -352,6 +368,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     btnJoin.setIcon(imgIcon);
 
     joinServerClicked();
+    
   }//GEN-LAST:event_btnJoinMouseClicked
 
   private void btnStartGameMouseClicked(
@@ -459,9 +476,15 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     btnStartGame.setIcon(imgIcon);
   }//GEN-LAST:event_btnStartGameMousePressed
 
+    private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
+        // TODO add your handling code here:
+        chatClicked();
+    }//GEN-LAST:event_btnChatMouseClicked
+
   // Listen
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnChat;
     private javax.swing.JLabel btnExit;
     private javax.swing.JLabel btnJoin;
     private javax.swing.JLabel btnStartGame;

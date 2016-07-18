@@ -25,6 +25,8 @@ public class DataForUI {
   public static PlayerData[] sortedPdArrayByScore;
   public static String[] letters;
   public static Game game;
+  public static boolean isChatOpen = false;
+  public static boolean isConnectedToServer =false;
   public static ArrayList<Player> playerList;
 
   //Holds information of Player

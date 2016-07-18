@@ -52,7 +52,7 @@ public class GameScreen extends JFrame {
   private SelectMultiPlayer panelSelectMultiPlayer;
   private PanelLogin panelLogin;
   private PanelRegister panelRegister;
-  private ChatFrame chatFrame;
+  public ChatFrame chatFrame;
 
   //Holds the CardLayout
   private JPanel container;
@@ -161,6 +161,8 @@ public class GameScreen extends JFrame {
           panelSelectMultiPlayer.setPlayerName();
           break;
         case DataForUI.STR_MAINMENU:
+            DataForUI.isConnectedToServer=false;
+            chatFrame.setVisible(false);
           cl.show(container, screenName);
           break;
 
@@ -235,8 +237,30 @@ public class GameScreen extends JFrame {
    */
   public void moveScreen(int x, int y, int mX, int mY) {
     this.setLocation(x - mX, y - mY);
+    chatFrame.setWindow();
+    if(!DataForUI.isConnectedToServer||!DataForUI.isChatOpen)
+    {
+        chatFrame.setVisible(false);
+        System.out.println("open");
+    }
   }
 
+  public void toggleChat()
+  {
+      if(DataForUI.isConnectedToServer){
+      if(DataForUI.isChatOpen)
+      {
+          chatFrame.setVisible(false);
+          DataForUI.isChatOpen=false;
+      }
+      else
+      {
+          chatFrame.setVisible(true);
+          DataForUI.isChatOpen=true;
+      }
+      }
+  }
+  
   // Multiplayer details.
   public Multiplayer multiplayer = new Multiplayer();
   public String channelName = "TestingChannel";
