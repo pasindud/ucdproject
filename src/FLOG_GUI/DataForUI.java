@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -138,6 +140,8 @@ public class DataForUI {
         //Bubble Sort
         int length = playerDataArray.length;
         PlayerData tempPlayerData = null;
+        //String tempLetterArray[] = new String[6];
+        //String tempWordArray[] = new String[6];
         
         for(int i=0; i<length;i++)
         {
@@ -151,8 +155,16 @@ public class DataForUI {
                          */
 
                         tempPlayerData = playerDataArray[j + 1];
+                        //tempLetterArray = playerDataArray[j + 1].letterArry;
+                        //tempWordArray = playerDataArray[j+1].WordArry;
+                      
                         playerDataArray[j + 1] = playerDataArray[j];
+                        //playerDataArray[j + 1].letterArry =playerDataArray[j].letterArry;
+                        //playerDataArray[j+1].WordArry=playerDataArray[j].WordArry;
+                        
                         playerDataArray[j] = tempPlayerData;
+                        //playerDataArray[j].letterArry= tempLetterArray;
+                        //playerDataArray[j].WordArry=tempWordArray;
 
                     }
                 }
