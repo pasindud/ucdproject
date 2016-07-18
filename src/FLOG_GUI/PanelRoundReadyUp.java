@@ -52,6 +52,7 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
    */
   public void drawPlayers() {
     boolean isFirstRound = true;
+    DataForUI.preparePlayerArrayForUI();
     pnlPlayerInfoContainer.setLayout(null);
     updatePlayersUI();
     JScrollPane jsp;

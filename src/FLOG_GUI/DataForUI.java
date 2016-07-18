@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  */
 public class DataForUI {
   public static PlayerData[] PdArray;
+  public static PlayerData[] sortedPdArrayByScore;
   public static String[] letters;
   public static Game game;
   public static ArrayList<Player> playerList;
@@ -124,4 +125,33 @@ public class DataForUI {
       count++;
     }
   }
+  
+  public void preparePlayerArrayForUI()
+    {
+        sortedPdArrayByScore = sortPlayerArrayByScore(PdArray);
+        
+    }
+  
+    private PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
+    {
+               
+        //Bubble Sort
+        int length = playerDataArray.length;
+        PlayerData tempPlayerData = null;
+        
+        for(int i=0; i<length;i++)
+        {
+            for(int j=1;j<(length-i);j++)
+            {
+                if(playerDataArray[j-1].getScore()>playerDataArray[j].getScore())
+                {
+                    tempPlayerData = playerDataArray[j-1];
+                    playerDataArray[j-1] = playerDataArray[j];
+                    playerDataArray[j]=tempPlayerData;
+                }
+            }
+        }
+        
+        return playerDataArray;
+    }
 }

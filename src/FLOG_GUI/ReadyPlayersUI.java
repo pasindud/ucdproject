@@ -50,7 +50,7 @@ public class ReadyPlayersUI extends JPanel {
   private void firstRound(int i) {
 
     JLabel lblName = new JLabel();
-    lblName.setText(DataForUI.PdArray[i].getName());
+    lblName.setText(DataForUI.sortedPdArrayByScore[i].getName());
     lblName.setHorizontalAlignment(SwingConstants.CENTER);
     lblName.setHorizontalTextPosition(SwingConstants.CENTER);
     lblName.setBounds(0, 0, 616, 30);
@@ -59,31 +59,31 @@ public class ReadyPlayersUI extends JPanel {
 
   private void otherRounds(int i) {
     JLabel lblName = new JLabel();
-    lblName.setText(DataForUI.PdArray[i].getName());
+    lblName.setText(DataForUI.sortedPdArrayByScore[i].getName());
     lblName.setHorizontalAlignment(SwingConstants.CENTER);
     lblName.setHorizontalTextPosition(SwingConstants.CENTER);
     lblName.setBounds(74, 0, 126, 30);
 
     JLabel lblRank = new JLabel();
-    lblRank.setText(String.valueOf(DataForUI.PdArray[i].getPosition()));
+    lblRank.setText(String.valueOf(DataForUI.sortedPdArrayByScore[i].getPosition()));
     lblRank.setHorizontalAlignment(SwingConstants.CENTER);
     lblRank.setHorizontalTextPosition(SwingConstants.CENTER);
     lblRank.setBounds(0, 0, 74, 30);
 
     JLabel lblLetters = new JLabel();
-    lblLetters.setText(DataForUI.PdArray[i].getLetterArry(DataForUI.RoundNum)); //*******
+    lblLetters.setText(DataForUI.sortedPdArrayByScore[i].getLetterArry(DataForUI.RoundNum)); //*******
     lblLetters.setHorizontalAlignment(SwingConstants.CENTER);
     lblLetters.setHorizontalTextPosition(SwingConstants.CENTER);
     lblLetters.setBounds(204, 0, 151, 30);
 
     JLabel lblWord = new JLabel();
-    lblWord.setText(DataForUI.PdArray[i].getWordArry(DataForUI.RoundNum));//*****
+    lblWord.setText(DataForUI.sortedPdArrayByScore[i].getWordArry(DataForUI.RoundNum));//*****
     lblWord.setHorizontalAlignment(SwingConstants.CENTER);
     lblWord.setHorizontalTextPosition(SwingConstants.CENTER);
     lblWord.setBounds(358, 0, 135, 30);
 
     JLabel lblScore = new JLabel();
-    lblScore.setText(String.valueOf(DataForUI.PdArray[i].getScore()));
+    lblScore.setText(String.valueOf(DataForUI.sortedPdArrayByScore[i].getScore()));
     lblScore.setHorizontalAlignment(SwingConstants.CENTER);
     lblScore.setHorizontalTextPosition(SwingConstants.CENTER);
     lblScore.setBounds(497, 0, 100, 30);
