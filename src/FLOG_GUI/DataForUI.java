@@ -126,13 +126,13 @@ public class DataForUI {
     }
   }
   
-  public void preparePlayerArrayForUI()
+  public static void preparePlayerArrayForUI()
     {
         sortedPdArrayByScore = sortPlayerArrayByScore(PdArray);
         
     }
   
-    private PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
+    private static PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
     {
                
         //Bubble Sort

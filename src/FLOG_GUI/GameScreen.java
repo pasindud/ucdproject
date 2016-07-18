@@ -184,6 +184,7 @@ public class GameScreen extends JFrame {
 
         case DataForUI.STR_GAMEPLAY:
           DataForUI.getPlayerList();
+          DataForUI.preparePlayerArrayForUI();
           controllerGamePlay.drawOpponenets();
           cl.show(container, screenName);
           break;
@@ -314,6 +315,7 @@ public class GameScreen extends JFrame {
     otherPlayerNames.remove(username);
     dataForUI.game = game;
     dataForUI.getPlayerList();
+    DataForUI.preparePlayerArrayForUI();
     controllerGamePlay.drawOpponenets();
     // Handles messages of letters that was received before
     // game start, which happens due to sync problems.
