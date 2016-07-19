@@ -84,7 +84,7 @@ public class DataForUI {
     RoundNum = 1;
     try {
       LCD =
-          Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src/fonts/LCD.ttf")))
+          Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("LCD.ttf")))
               .deriveFont(Font.PLAIN, 100);
     } catch (FontFormatException ex) {
       System.out.println(ex.getMessage().toString());
