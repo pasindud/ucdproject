@@ -42,7 +42,7 @@ public class ChatFrame extends javax.swing.JFrame {
         this.setVisible(false);
     }
     
-    public synchronized void updateMessages(String username, String msg)
+    public void updateMessages(String username, String msg)
     {
      
         String newMsg = username +" :: "+msg;
@@ -50,7 +50,7 @@ public class ChatFrame extends javax.swing.JFrame {
         jTextPane1.setText(oldMsgs +="\n" +newMsg);
     }
     
-    public synchronized void playerJoinedUpdateMessages(String username)
+    public void playerJoinedUpdateMessages(String username)
     {
         String newMsg;
         String oldMsgs = jTextPane1.getText();
