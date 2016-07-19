@@ -364,7 +364,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         lblL1.setFont(new java.awt.Font("Trebuchet MS", 1, 56)); // NOI18N
         lblL1.setForeground(new java.awt.Color(255, 255, 255));
         lblL1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ftletter_normal.png"))); // NOI18N
+        lblL1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ftletter_initial.png"))); // NOI18N
         lblL1.setText("-");
         lblL1.setToolTipText("");
         lblL1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -373,11 +373,11 @@ public class PanelGamePlay extends javax.swing.JPanel {
         lblL1.setName("L1"); // NOI18N
         lblL1.setPreferredSize(new java.awt.Dimension(40, 43));
         lblL1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblL1MouseClicked(evt);
-            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 lblL1MouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblL1MouseClicked(evt);
             }
         });
         pnlBottom.add(lblL1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 7, 69, 84));
@@ -386,7 +386,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         lblL2.setFont(new java.awt.Font("Trebuchet MS", 1, 56)); // NOI18N
         lblL2.setForeground(new java.awt.Color(255, 255, 255));
         lblL2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblL2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ftletter_normal.png"))); // NOI18N
+        lblL2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ftletter_initial.png"))); // NOI18N
         lblL2.setText("-");
         lblL2.setToolTipText("");
         lblL2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
