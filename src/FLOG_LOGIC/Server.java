@@ -132,6 +132,10 @@ public class Server {
         myGame.sendPrivateChat(playerQueue, clientMessage.toString());
         playerNames.add(content);
         game.addPlayer(content);
+        // Sending a message to chat saying joined visible to all connected users
+        // format 111 <player name>
+        String msg="111 "+content;
+        multiplayer.broadcast(channelName, playerNames, msg);
         break;
       case CLIENT_GAME_START_CODE:
         // Start game

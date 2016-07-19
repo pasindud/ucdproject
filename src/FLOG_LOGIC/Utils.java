@@ -54,7 +54,8 @@ public class Utils {
         SERVER_USER_JOINED_ACK("200"),
         SERVER_ROUND_USER_SCORE("204"),
         SERVER_CHAT("110"),
-        CLIENT_SUBMITTED_WORD("210");//***[dushan]
+        CLIENT_SUBMITTED_WORD("210"),
+        PLAYER_JOINED_CHAT("111");//***[dushan]
         private final String code;
 
         /**
