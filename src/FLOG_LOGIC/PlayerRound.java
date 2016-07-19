@@ -129,7 +129,7 @@ public class PlayerRound {
     penaltyPoints.setNumberOfOtherLettersUsed(numberOfOtherLetters);
 
     score = 0;
-    penaltyPoints.calculatePenaltyPoints();
+    //penaltyPoints.calculatePenaltyPoints();
     score = totalLetterValues - penaltyPoints.getPenaltyPoints();
     score += Math.pow(word.getWordLength(), additionLenghtPoints.getValue());
     if(word.getWordLength()==12){
