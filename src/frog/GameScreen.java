@@ -400,22 +400,23 @@ public class GameScreen extends javax.swing.JFrame {
   } // </editor-fold>//GEN-END:initComponents
 
   private void btnL6ActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_btnL6ActionPerformed
+      java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnL6ActionPerformed
     // TODO add your handling code here:
-  } //GEN-LAST:event_btnL6ActionPerformed
+  }//GEN-LAST:event_btnL6ActionPerformed
 
   private void btnL5ActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_btnL5ActionPerformed
+      java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnL5ActionPerformed
     // TODO add your handling code here:
-  } //GEN-LAST:event_btnL5ActionPerformed
+  }//GEN-LAST:event_btnL5ActionPerformed
 
   private void btnAutoGenActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_btnAutoGenActionPerformed
+      java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoGenActionPerformed
     //Dummy value for testing
+      String[] letterArray={"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"};
     WordAutoGenerator ag =
-        new WordAutoGenerator("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l");
+        new WordAutoGenerator(letterArray);
     txtAns.setText(ag.getLongestWord());
-  } //GEN-LAST:event_btnAutoGenActionPerformed
+  }//GEN-LAST:event_btnAutoGenActionPerformed
 
   /**
    * @param args the command line arguments

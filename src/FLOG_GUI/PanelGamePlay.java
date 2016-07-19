@@ -716,9 +716,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateMouseClicked
     if (checkAllLetters()) {
       isAutoWordGenUsed = true;
-      FLOG_LOGIC.WordAutoGenerator wordgen =
-          new FLOG_LOGIC.WordAutoGenerator(
-              lblL1.getText(),
+      String[] WordArray={lblL1.getText(),
               lblL2.getText(),
               lblL3.getText(),
               lblL4.getText(),
@@ -729,7 +727,9 @@ public class PanelGamePlay extends javax.swing.JPanel {
               lblL9.getText(),
               lblL10.getText(),
               lblL11.getText(),
-              lblL12.getText());
+              lblL12.getText()};
+      FLOG_LOGIC.WordAutoGenerator wordgen =
+          new FLOG_LOGIC.WordAutoGenerator(WordArray);
       txtAnswer.setText(wordgen.getLongestWord());
     } else {
       JOptionPane.showMessageDialog(this, "Select All 12 letters first!");

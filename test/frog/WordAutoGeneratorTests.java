@@ -47,8 +47,9 @@ public class WordAutoGeneratorTests {
         int c10_count = StringUtils.countMatches(z, c10);
         int c11_count = StringUtils.countMatches(z, c11);
         int c12_count = StringUtils.countMatches(z, c12);
-
-        WordAutoGenerator ag = new WordAutoGenerator(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12);
+        
+        String[] wordArray={c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12};
+        WordAutoGenerator ag = new WordAutoGenerator(wordArray);
         String result = ag.getLongestWord();
 
         Assert.assertTrue(result.length() <= 12);
