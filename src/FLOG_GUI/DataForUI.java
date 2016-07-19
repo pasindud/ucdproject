@@ -197,7 +197,7 @@ public class DataForUI {
                rank = sortedPdArrayByScore[count].getPosition();
                System.out.println("rank :"+rank);
            }
-       
+           count++;
        }
        
        return rank;

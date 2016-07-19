@@ -323,8 +323,10 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         });
         add(btnStartGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 388, -1, -1));
 
+        txtPlayerName.setEditable(false);
         txtPlayerName.setText("playerNameDc");
         txtPlayerName.setBorder(null);
+        txtPlayerName.setOpaque(false);
         txtPlayerName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPlayerNameActionPerformed(evt);

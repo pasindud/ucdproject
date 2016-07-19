@@ -36,6 +36,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
   public boolean isAutoWordGenUsed = false;
   //Use to check if the letter was clicked
   private boolean bl1, bl2, bl3, bl4, bl5, bl6, bl7, bl8, bl9, bl10, bl11, bl12;
+  private GameScreen gameScreen;
 
   public String[] getOtherLetters() {
     String[] otherLetters = new String[10];
@@ -228,6 +229,12 @@ public class PanelGamePlay extends javax.swing.JPanel {
     this.lblTime.setFont(DataForUI.LCD);
     this.lblTime.setText(tmr);
   }
+  
+  private void chatClicked()
+  {
+      gameScreen.toggleChat();
+  }
+
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -241,6 +248,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
         jMenuItem1 = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        btnChat = new javax.swing.JLabel();
         pnlTop = new javax.swing.JPanel();
         pnlTopBorder = new javax.swing.JPanel();
         btnDisconnect = new javax.swing.JLabel();
@@ -288,6 +296,14 @@ public class PanelGamePlay extends javax.swing.JPanel {
         jPopupMenu2.add(jMenuItem2);
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_openchat_n.png"))); // NOI18N
+        btnChat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnChatMouseClicked(evt);
+            }
+        });
+        add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 40, 108));
 
         pnlTop.setBackground(new java.awt.Color(102, 255, 255));
         pnlTop.setMaximumSize(new java.awt.Dimension(900, 72));
@@ -1086,7 +1102,14 @@ public class PanelGamePlay extends javax.swing.JPanel {
     }
   }//GEN-LAST:event_lblL11MouseClicked
 
+    private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
+        // TODO add your handling code here:
+                chatClicked();
+
+    }//GEN-LAST:event_btnChatMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnChat;
     private javax.swing.JLabel btnConsonents;
     private javax.swing.JLabel btnDisconnect;
     private javax.swing.JLabel btnGenerate;
