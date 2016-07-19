@@ -246,6 +246,18 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnExitMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnExitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnExitMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnExitMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnExitMouseReleased(evt);
+            }
         });
         pnlTopBorder.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(859, 0, -1, 38));
 
@@ -324,13 +336,25 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         cmbChannels.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dc", "ab" }));
         add(cmbChannels, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 274, 208, 34));
 
-        btnChat.setText("Open Chat");
+        btnChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_openchat_n.png"))); // NOI18N
         btnChat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnChatMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnChatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnChatMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnChatMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnChatMouseReleased(evt);
+            }
         });
-        add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 290, -1, 40));
+        add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 40, 108));
     }// </editor-fold>//GEN-END:initComponents
 
   private void pnlTopBorderMouseDragged(
@@ -479,7 +503,49 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
         // TODO add your handling code here:
         chatClicked();
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
     }//GEN-LAST:event_btnChatMouseClicked
+
+    private void btnChatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseEntered
+       ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseEntered
+
+    private void btnChatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseExited
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_n.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseExited
+
+    private void btnChatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMousePressed
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_c.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMousePressed
+
+    private void btnChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseReleased
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseReleased
+
+    private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+        btnExit.setIcon(imgIcon);
+    }//GEN-LAST:event_btnExitMouseEntered
+
+    private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_n.png"));
+        btnExit.setIcon(imgIcon);
+    }//GEN-LAST:event_btnExitMouseExited
+
+    private void btnExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMousePressed
+      ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+        btnExit.setIcon(imgIcon);
+    }//GEN-LAST:event_btnExitMousePressed
+
+    private void btnExitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseReleased
+       ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+        btnExit.setIcon(imgIcon);
+    }//GEN-LAST:event_btnExitMouseReleased
 
   // Listen
 

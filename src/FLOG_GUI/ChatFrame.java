@@ -101,15 +101,29 @@ public class ChatFrame extends javax.swing.JFrame {
 
         pnlContainer.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 50, 223, 500));
 
-        btnSend.setText("send");
+        btnSend.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnSend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_send_n.png"))); // NOI18N
         btnSend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSendMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSendMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSendMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnSendMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnSendMouseReleased(evt);
+            }
         });
-        pnlContainer.add(btnSend, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 564, 30, 50));
+        pnlContainer.add(btnSend, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 564, 42, 50));
 
         txtMessage.setBorder(null);
+        txtMessage.setOpaque(false);
         txtMessage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMessageActionPerformed(evt);
@@ -152,7 +166,7 @@ public class ChatFrame extends javax.swing.JFrame {
 
         pnlContainer.add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/chat.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg_chat.png"))); // NOI18N
         pnlContainer.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 272, 619));
 
         getContentPane().add(pnlContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 272, 619));
@@ -174,6 +188,9 @@ public class ChatFrame extends javax.swing.JFrame {
     private void btnSendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseClicked
         // TODO add your handling code here:
         sendClick();
+        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
+        btnSend.setIcon(imgIcon);
+        
     }//GEN-LAST:event_btnSendMouseClicked
 
     private void pnlTopBorderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
@@ -208,6 +225,26 @@ public class ChatFrame extends javax.swing.JFrame {
         ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
         btnExit.setIcon(imgIcon);
     }//GEN-LAST:event_btnExitMouseReleased
+
+    private void btnSendMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseEntered
+        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
+        btnSend.setIcon(imgIcon);
+    }//GEN-LAST:event_btnSendMouseEntered
+
+    private void btnSendMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseExited
+        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_n.png"));
+        btnSend.setIcon(imgIcon);
+    }//GEN-LAST:event_btnSendMouseExited
+
+    private void btnSendMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMousePressed
+        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_c.png"));
+        btnSend.setIcon(imgIcon);
+    }//GEN-LAST:event_btnSendMousePressed
+
+    private void btnSendMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseReleased
+       ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
+        btnSend.setIcon(imgIcon);
+    }//GEN-LAST:event_btnSendMouseReleased
 
     /**
      * @param args the command line arguments
