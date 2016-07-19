@@ -30,6 +30,8 @@ public class PlayerRound {
   public PenaltyElement penaltyPoints = new PenaltyElement();
   /** Points given for length. */
   private ConstantElement additionLenghtPoints = new ConstantElement(2);
+    /** BonusPoints given for 12 length words. */
+  private ConstantElement AllLettersUsedBonus = new ConstantElement(1000);
 
   public int getTotalLetterValues() {
     return totalLetterValues;
@@ -129,7 +131,9 @@ public class PlayerRound {
     score = 0;
     score = totalLetterValues - penaltyPoints.getPenaltyPoints();
     score += Math.pow(word.getWordLength(), additionLenghtPoints.getValue());
-
+    if(word.getWordLength()==12){
+    score +=AllLettersUsedBonus.getValue();
+    }
     if (isWordSearchUsed) {
       score = PenaltyElement.getWordAutoSearchPenalty(score);
     }
