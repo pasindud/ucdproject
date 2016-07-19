@@ -423,6 +423,11 @@ public class GameScreen extends JFrame {
           System.out.println(segments[1]+" submitted answer");
           panelRoundReadyUp.updateUI();
           break;
+          
+      case PLAYER_JOINED_CHAT:
+          System.out.println("player joinedchat");
+          chatFrame.playerJoinedUpdateMessages(content);
+          break;
     }
   }
 

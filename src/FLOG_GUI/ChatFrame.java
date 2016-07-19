@@ -44,8 +44,25 @@ public class ChatFrame extends javax.swing.JFrame {
     
     public synchronized void updateMessages(String username, String msg)
     {
+     
         String newMsg = username +" :: "+msg;
         String oldMsgs = jTextPane1.getText();
+        jTextPane1.setText(oldMsgs +="\n" +newMsg);
+    }
+    
+    public synchronized void playerJoinedUpdateMessages(String username)
+    {
+        String newMsg;
+        String oldMsgs = jTextPane1.getText();
+        if(username.equals(DataForUI.currentUsername))
+        {
+            newMsg = "SERVER :: You joined";
+        }
+        else
+        {
+            newMsg = "SERVER :: "+username+" joined";
+        }
+        
         jTextPane1.setText(oldMsgs +="\n" +newMsg);
     }
     
