@@ -109,12 +109,14 @@ public class PanelGamePlay extends javax.swing.JPanel {
     pnlOpponents.removeAll();
     pnlOppList = new JPanel();
     pnlOppRow = new JPanel();
+    drawPlayerPosition(DataForUI.myRank);
+    drawPlayerScore(DataForUI.myTotalScore);
     revalidate();
     repaint();
   }
 
   public void drawOpponents(PlayerData[] pdArr) {
-
+    setChannel(DataForUI.currentChannel);
     updateOpponents();
     int count = 0;
     int div3 = (int) pdArr.length / 3;
@@ -235,6 +237,10 @@ public class PanelGamePlay extends javax.swing.JPanel {
       gameScreen.toggleChat();
   }
 
+  public void setChannel(String channel)
+  {
+      channeltxt.setText(channel);
+  }
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -301,6 +307,18 @@ public class PanelGamePlay extends javax.swing.JPanel {
         btnChat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnChatMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnChatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnChatMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnChatMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnChatMouseReleased(evt);
             }
         });
         add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 40, 108));
@@ -1103,10 +1121,31 @@ public class PanelGamePlay extends javax.swing.JPanel {
   }//GEN-LAST:event_lblL11MouseClicked
 
     private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
-        // TODO add your handling code here:
                 chatClicked();
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+                btnChat.setIcon(imgIcon);
 
     }//GEN-LAST:event_btnChatMouseClicked
+
+    private void btnChatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseEntered
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseEntered
+
+    private void btnChatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseExited
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_n.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseExited
+
+    private void btnChatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMousePressed
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_c.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMousePressed
+
+    private void btnChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseReleased
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnChat;

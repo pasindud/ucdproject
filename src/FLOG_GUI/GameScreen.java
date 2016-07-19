@@ -431,7 +431,8 @@ public class GameScreen extends JFrame {
               Player player= game.getPlayerfromName(segments[2]);
               player.setTotalScore((int) (player.getTotalScore()-player.getTotalScore() *0.05));
           }
-          
+          dataForUI.getPlayerList();
+          controllerRoundReadyUp.drawPlayers();
           startRoundUpTimerSystem();
           break;
           
@@ -472,10 +473,15 @@ public class GameScreen extends JFrame {
     //  + 1 so that it counts that person it self.
     if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
       //startRoundUpTimerSystem();
+        String msg=Utils.COMMAND_CODES.CLIENT_PENALIZE_WEKEST+" "+username;
         ArrayList<Player> userMarks = game.processRoundScores(round);
         if(userMarks.size()==0){
             System.out.println("Error in user marks!!!!");
             return;
+        }
+        else if(userMarks.size()==1){
+           multiplayer.publishToQueue(serverQueueName, msg);
+           return;
         }
         String weakestPlayerName=userMarks.get(0).getName();
         if(userMarks.get(0).getName().equals(username)){
@@ -484,7 +490,6 @@ public class GameScreen extends JFrame {
             int res =
         JOptionPane.showConfirmDialog(
             null, "Do you wan to reduce 5% marks from the weakest player out?", "Warning", JOptionPane.YES_NO_OPTION);
-            String msg=Utils.COMMAND_CODES.CLIENT_PENALIZE_WEKEST+" "+username;
             if (res == JOptionPane.YES_OPTION) {               
                 msg+=" " +weakestPlayerName;               
             }

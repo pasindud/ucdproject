@@ -148,14 +148,46 @@ public class PanelWinners extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMainMenuMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMainMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMainMenuMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMainMenuMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnMainMenuMouseReleased(evt);
+            }
         });
-        add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 530, -1, -1));
+        add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 520, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMainMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseClicked
         // TODO add your handling code here:
         gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.STR_WINNER);
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+        
     }//GEN-LAST:event_btnMainMenuMouseClicked
+
+    private void btnMainMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseEntered
+        // TODO add your handling code here:
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMouseEntered
+
+    private void btnMainMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseExited
+        // TODO add your handling code here:
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMouseExited
+
+    private void btnMainMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMousePressed
+         btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMousePressed
+
+    private void btnMainMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseReleased
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnMainMenu;
