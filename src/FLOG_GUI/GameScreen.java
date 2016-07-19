@@ -102,7 +102,7 @@ public class GameScreen extends JFrame {
 
   private void preparePanels() {
     panelMainMenu = new PanelMainMenu();
-    panelPlaying = new PanelGamePlay();
+    panelPlaying = new PanelGamePlay(this);
     panelSettings = new PanelSettings();
     panelRoundReadyUp = new PanelRoundReadyUp();
     panelWinners = new PanelWinners(this);

@@ -50,14 +50,14 @@ public class PanelGamePlay extends javax.swing.JPanel {
     return new String[] {firstLetter, secondLetter};
   }
 
-  public PanelGamePlay() {
+  public PanelGamePlay(GameScreen gameScreen) {
     initComponents();
     bg = new ImageIcon(getClass().getResource("/images/bg_playscreen.png")).getImage();
     pnlOppList = new JPanel();
     pnlOppRow = new JPanel();
     DataForUI = new DataForUI();
-
     lblTime.setText("");
+    this.gameScreen = gameScreen;
     resetValuesForRound();
   }
 
