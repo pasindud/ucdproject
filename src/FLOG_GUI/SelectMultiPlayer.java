@@ -103,7 +103,6 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     gameScreen.channelName = cmbChannels.getEditor().getItem().toString();
     final String channelName = this.channelName;
     setServerStatus("Server will be started soon Server");
-    // Server listen's to it's queue.
     Thread thread =
         new Thread(channelName) {
           @Override
@@ -113,21 +112,22 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
             //                FLOG_LOGIC.startServerApp(channelName);
             //
             try {
-              File file =
-                  new File(
-                      FLOG_LOGIC.class
-                          .getProtectionDomain()
-                          .getCodeSource()
-                          .getLocation()
-                          .toURI()
-                          .getPath());
-              File f = new File(System.getProperty("java.class.path"));
-              File dir = f.getAbsoluteFile().getParentFile();
-              String path2 = dir.toString();
-
-              String path = file.getAbsolutePath();
-              //            Runtime.getRuntime().exec("java -cp " + path + " FLOG_LOGIC.FLOG_LOGIC " + channelName);
-              //            System.out.println("running commadn path -  " + path2 );
+                Runtime.getRuntime().exec("java -cp  Frog.jar  FLOG_LOGIC.FLOG_LOGIC "+channelName);
+//              File file =
+//                  new File(
+//                      FLOG_LOGIC.class
+//                          .getProtectionDomain()
+//                          .getCodeSource()
+//                          .getLocation()
+//                          .toURI()
+//                          .getPath());
+//              File f = new File(System.getProperty("java.class.path"));
+//              File dir = f.getAbsoluteFile().getParentFile();
+//              String path2 = dir.toString();
+//
+//              String path = file.getAbsolutePath();
+//              //            Runtime.getRuntime().exec("java -cp " + path + " FLOG_LOGIC.FLOG_LOGIC " + channelName);
+//              //            System.out.println("running commadn path -  " + path2 );
             } catch (Exception e) {
 
             }
@@ -154,6 +154,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     gameScreen.username = txtPlayerName.getText();
     gameScreen.selectMultiplayerJoinServerClick();
     DataForUI.isConnectedToServer=true;
+    btnStartGame.setEnabled(true);
   }
 
   /**
