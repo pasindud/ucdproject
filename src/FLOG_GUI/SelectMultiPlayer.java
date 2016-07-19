@@ -211,7 +211,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         btnJoin = new javax.swing.JLabel();
         btnStartGame = new javax.swing.JLabel();
         txtPlayerName = new javax.swing.JTextField();
-        cmbChannels = new javax.swing.JComboBox<>();
+        cmbChannels = new javax.swing.JComboBox<String>();
         btnChat = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -324,7 +324,6 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         });
         add(btnStartGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 388, -1, -1));
 
-        txtPlayerName.setEditable(false);
         txtPlayerName.setText("playerNameDc");
         txtPlayerName.setBorder(null);
         txtPlayerName.setOpaque(false);
@@ -336,7 +335,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         add(txtPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(412, 329, 190, 35));
 
         cmbChannels.setEditable(true);
-        cmbChannels.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dc", "ab" }));
+        cmbChannels.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dc", "ab" }));
         add(cmbChannels, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 274, 208, 34));
 
         btnChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_openchat_n.png"))); // NOI18N

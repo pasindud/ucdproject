@@ -17,8 +17,11 @@ public class WordElement extends FlogElement {
   public WordElement(String word) {
     this.word = word;
     if (!word.isEmpty()) {
-      this.letters = word.split("");
+        System.out.println("word init : "+word);
+      this.letters = word.toLowerCase().split("");
+        System.out.println("letter 0 index: "+ this.letters[0]);
     }
+    
   }
 
   public String getWord() {

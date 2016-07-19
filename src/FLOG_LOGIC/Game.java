@@ -50,7 +50,7 @@ public class Game {
     }
   }
 
-  public void processRoundScores(final int round) {
+  public ArrayList<Player> processRoundScores(final int round) {
     ArrayList<Player> tmpPlayerList = playerList;
     Collections.sort(
         tmpPlayerList,
@@ -70,6 +70,7 @@ public class Game {
             }
           }
         });
+    return tmpPlayerList;
     // playerList.get(tmpPlayerList.get(0).getListIndex()).kickPlayer();
   }
 
@@ -79,6 +80,9 @@ public class Game {
 
   public Player getPlayerfromName(String name) {
     int userIndex = getIndexByPlayerName(name);
+    if(userIndex==-1){
+    return null;
+    }
     return getPlayerList().get(userIndex);
   }
 

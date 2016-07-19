@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.HashMap;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -138,8 +139,9 @@ public class GameScreen extends JFrame {
 
   private void showMainMenu() {
     //System.out.println("showmainmenu");
-    //  changeScreen(dataForUI.STR_MAINMENU, null);
-    changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
+      changeScreen(dataForUI.STR_MAINMENU, null);
+      DataForUI.currentUsername="dilshanwn";
+    //changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
   }
 
   /**
@@ -241,7 +243,6 @@ public class GameScreen extends JFrame {
     if(!DataForUI.isConnectedToServer||!DataForUI.isChatOpen)
     {
         chatFrame.setVisible(false);
-        System.out.println("open");
     }
   }
 
@@ -424,6 +425,16 @@ public class GameScreen extends JFrame {
           panelRoundReadyUp.updateUI();
           break;
           
+      case SERVER_PENALIZE_WEKEST:
+          if(segments.length==3){
+              chatFrame.updateMessages("Server", "@"+segments[1]+" reduced 5% from @" +segments[2]);
+              Player player= game.getPlayerfromName(segments[2]);
+              player.setTotalScore((int) (player.getTotalScore()-player.getTotalScore() *0.05));
+          }
+          
+          startRoundUpTimerSystem();
+          break;
+          
       case PLAYER_JOINED_CHAT:
           System.out.println("player joinedchat");
           chatFrame.playerJoinedUpdateMessages(content);
@@ -447,6 +458,7 @@ public class GameScreen extends JFrame {
     {
         word = segments[8];
     }
+    DataForUI.getPlayerList();
     dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setLetterArry(letters, round);
     dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setWordArry(word, round);
     //[/dushan]
@@ -459,7 +471,26 @@ public class GameScreen extends JFrame {
     System.err.println("2222222");
     //  + 1 so that it counts that person it self.
     if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
-      startRoundUpTimerSystem();
+      //startRoundUpTimerSystem();
+        ArrayList<Player> userMarks = game.processRoundScores(round);
+        if(userMarks.size()==0){
+            System.out.println("Error in user marks!!!!");
+            return;
+        }
+        String weakestPlayerName=userMarks.get(0).getName();
+        if(userMarks.get(0).getName().equals(username)){
+        //
+            
+            int res =
+        JOptionPane.showConfirmDialog(
+            null, "Do you wan to reduce 5% marks from the weakest player out?", "Warning", JOptionPane.YES_NO_OPTION);
+            String msg=Utils.COMMAND_CODES.CLIENT_PENALIZE_WEKEST+" "+username;
+            if (res == JOptionPane.YES_OPTION) {               
+                msg+=" " +weakestPlayerName;               
+            }
+            multiplayer.publishToQueue(serverQueueName, msg);
+            
+        }
       noOfRoundScores = 0;
       System.err.println("55555");
     } else {
