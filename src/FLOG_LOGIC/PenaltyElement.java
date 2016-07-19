@@ -13,7 +13,7 @@ class PenaltyElement {
   /** Penalty points for not using other letters. */
   private ConstantElement penalyPointsForAIntialLetter = new ConstantElement(10);
   /** Penalty points for not using other letters. */
-  private ConstantElement penalyPointsForAOtherLetter = new ConstantElement(50);
+  private ConstantElement penalyPointsForAOtherLetter = new ConstantElement(5);
   /** Penalty points for the player. */
   private int penaltyPoints = 0;
 
@@ -37,12 +37,12 @@ class PenaltyElement {
   }
 
   public void calculatePenaltyPoints() {
-    // Every unsed intial letter gets 100 penalty points
+    // Every unsed intial letter gets 10 penalty points
     penaltyPoints = 0;
     penaltyPoints +=
         (maxNumberOfIntialLetters.getValue() - numberOfIntialLettersUsed)
             * penalyPointsForAIntialLetter.getValue();
-    // Every unsed other letter gets 50 penalty points
+    // Every unsed other letter gets 5 penalty points
     penaltyPoints +=
         (maxNumberOfOtherLetters.getValue() - numberOfOtherLettersUsed)
             * penalyPointsForAOtherLetter.getValue();
