@@ -5,6 +5,7 @@ import FLOG_LOGIC.Multiplayer;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -116,19 +117,33 @@ public class ControllerLogin {
                 } else {
                   loginClick(uname.getText(), password);
                 }
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_login_h.png"));
+                panelLogin.setIcon_Login(imgIcon);
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_login_c.png"));
+                panelLogin.setIcon_Login(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_login_h.png"));
+                  panelLogin.setIcon_Login(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_login_h.png"));
+                  panelLogin.setIcon_Login(imgIcon);
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_login_n.png"));
+                  panelLogin.setIcon_Login(imgIcon);
+              }
             });
 
     panelLogin
@@ -138,19 +153,33 @@ public class ControllerLogin {
               @Override
               public void mouseClicked(MouseEvent e) {
                 registerClick();
+             ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_registerl_h.png"));
+                  panelLogin.setIcon_Register(imgIcon);
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_registerl_c.png"));
+                  panelLogin.setIcon_Register(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_registerl_h.png"));
+                  panelLogin.setIcon_Register(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_registerl_h.png"));
+                  panelLogin.setIcon_Register(imgIcon); 
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_registerl_n.png"));
+                  panelLogin.setIcon_Register(imgIcon);
+              }
             });
 
     panelLogin
@@ -160,19 +189,33 @@ public class ControllerLogin {
               @Override
               public void mouseClicked(MouseEvent e) {
                 exitClick();
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelLogin.setIcon_Exit(imgIcon);
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelLogin.setIcon_Exit(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelLogin.setIcon_Exit(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+                  panelLogin.setIcon_Exit(imgIcon);
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_n.png"));
+                  panelLogin.setIcon_Exit(imgIcon);
+              }
             });
   }
 }

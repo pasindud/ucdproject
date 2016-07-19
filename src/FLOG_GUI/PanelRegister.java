@@ -50,6 +50,11 @@ public class PanelRegister extends javax.swing.JPanel {
   public void setIcon_Cancel(ImageIcon imgIcon) {
     this.btnCancel.setIcon(imgIcon);
   }
+  
+  public void setIcon_Exit(ImageIcon imageIcon)
+  {
+      btnExit.setIcon(imageIcon);
+  }
 
   @Override
   protected void paintComponent(Graphics g) {
@@ -88,7 +93,6 @@ public class PanelRegister extends javax.swing.JPanel {
 
         add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
 
-        txtUsername.setText("username");
         txtUsername.setBorder(null);
         txtUsername.setName("uname-reg"); // NOI18N
         add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(381, 224, 140, 25));
@@ -109,7 +113,6 @@ public class PanelRegister extends javax.swing.JPanel {
         btnCancel.setName("cancel-reg"); // NOI18N
         add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 500, -1, -1));
 
-        txtEmail.setText("email");
         txtEmail.setBorder(null);
         add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 456, 207, 28));
     }// </editor-fold>//GEN-END:initComponents

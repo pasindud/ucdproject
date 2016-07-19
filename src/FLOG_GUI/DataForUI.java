@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,8 @@ public class DataForUI {
   public static PlayerData[] sortedPdArrayByScore;
   public static String[] letters;
   public static Game game;
+  public static boolean isChatOpen = false;
+  public static boolean isConnectedToServer =false;
   public static ArrayList<Player> playerList;
 
   //Holds information of Player
@@ -61,6 +65,10 @@ public class DataForUI {
 
   public static String firstLetter;
   public static String secondLetter;
+  
+  public static HashMap<String, Integer> scoresMap = new HashMap<String, Integer>();
+  public int myTotalScore;
+  public static int myRank;
 
   public DataForUI() {
     //To be Used to call data only
@@ -105,9 +113,7 @@ public class DataForUI {
     parsePlayerList();
   }
 
-  public static HashMap<String, Integer> scoresMap = new HashMap<String, Integer>();
-  public int myTotalScore;
-  public int myRank;
+  
   //
   private static void parsePlayerList() {
     int count = 0;
@@ -129,7 +135,7 @@ public class DataForUI {
   public static void preparePlayerArrayForUI()
     {
         sortedPdArrayByScore = sortPlayerArrayByScore(PdArray);
-        
+        myRank = findPlayerRankByName(currentUsername);
     }
   
     public static PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
@@ -138,6 +144,8 @@ public class DataForUI {
         //Bubble Sort
         int length = playerDataArray.length;
         PlayerData tempPlayerData = null;
+        //String tempLetterArray[] = new String[6];
+        //String tempWordArray[] = new String[6];
         
         for(int i=0; i<length;i++)
         {
@@ -151,8 +159,16 @@ public class DataForUI {
                          */
 
                         tempPlayerData = playerDataArray[j + 1];
+                        //tempLetterArray = playerDataArray[j + 1].letterArry;
+                        //tempWordArray = playerDataArray[j+1].WordArry;
+                      
                         playerDataArray[j + 1] = playerDataArray[j];
+                        //playerDataArray[j + 1].letterArry =playerDataArray[j].letterArry;
+                        //playerDataArray[j+1].WordArry=playerDataArray[j].WordArry;
+                        
                         playerDataArray[j] = tempPlayerData;
+                        //playerDataArray[j].letterArry= tempLetterArray;
+                        //playerDataArray[j].WordArry=tempWordArray;
 
                     }
                 }
@@ -166,4 +182,27 @@ public class DataForUI {
         
         return playerDataArray;
     }
+    
+    private static int findPlayerRankByName(String name)
+    {
+       boolean flag = false;
+       int count =0;
+       int rank=count;
+        System.out.println(""+sortedPdArrayByScore.length);
+       while((!flag)&&(count<sortedPdArrayByScore.length))
+       {
+           if(sortedPdArrayByScore[count].name.equals(name))
+           {
+               flag =true;
+               rank = sortedPdArrayByScore[count].getPosition();
+               System.out.println("rank :"+rank);
+           }
+       
+       }
+       
+       return rank;
+    }
+    
+    
+    
 }
