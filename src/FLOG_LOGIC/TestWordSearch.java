@@ -5,7 +5,7 @@
  */
 package FLOG_LOGIC;
 
-import com.sun.xml.internal.fastinfoset.util.CharArray;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
