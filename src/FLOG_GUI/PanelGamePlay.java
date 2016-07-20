@@ -84,7 +84,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
     bl10 = true;
     bl11 = true;
     bl12 = true;
-
+    txtAnswer.setText("Answer");
     for (JLabel x : letter_label_array) {
       x.setText("-");
     }

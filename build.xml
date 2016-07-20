@@ -10,6 +10,13 @@
 <project name="Frog" default="default" basedir=".">
     <description>Builds, tests, and runs the project Frog.</description>
     <import file="nbproject/build-impl.xml"/>
+    <target name="-post-jar">
+    <echo>Adding files to jar...</echo>
+    <copy file="./LCD.TTF" flatten="true" todir="${dist.dir}"/>
+    <copy file="./words.txt" flatten="true" todir="${dist.dir}"/>
+    <copy file="./dist/Frog.jar" flatten="true" todir="."/>  
+    </target>
+
     <!--
 
     There exist several targets which are by default empty and which can be 
