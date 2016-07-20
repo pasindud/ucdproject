@@ -16,12 +16,13 @@ import java.util.*;
  * @author Pasindu
  */
 public class TestWordSearch {
+
     public static final String WORD_FILE_NAME
             = "/Users/Pasindu/Desktop/sep/ucdproject/words.txt";
     public static TreeMap<Double, String> words = new TreeMap<Double, String>();
     public static Integer[] arr = new Integer[26];
     public static TreeMap<String, TreeMap> trie = new TreeMap<String, TreeMap>();
-    public static String testStr = "MORTICEEETOR";
+    public static String testStr = "RYSBNKNPOLAG";
 
     static long startTime = System.currentTimeMillis();
 
@@ -39,144 +40,89 @@ public class TestWordSearch {
         }
         List<String> letters = getListFromWord(testStr, true);
 
-        System.out.println("Per Letters size - " + letters.size());
-
-        Set<String> sh = new HashSet<String>();
+        for (int i = 0; i < testStr.length(); i++) {
+            String c = String.valueOf(testStr.charAt(i));
+            if (lettersMap.containsKey(c)) {
+                Integer value = lettersMap.get(c);
+                lettersMap.put(c, ++value);
+            } else {
+                lettersMap.put(c, 1);
+            }
+        }
+        System.out.println("Letter Map " + lettersMap.toString());
         TreeMap<String, TreeMap> possibles = new TreeMap<String, TreeMap>();
         for (String s : letters) {
-            System.out.println("L - " + s);
-            String a[] = s.split(",");
             possibles.put(s, new TreeMap<String, String>());
-//            possibles.put(a[0], Integer.parseInt(a[1]));
         }
 
-        /*TreeMap<String, Integer> possiblesValues = new TreeMap<String, Integer>();
-        for (int i = 0; i < 500; i++) {
-            for (int j = 0; j < 10; j++) {
-                
-            }
-        }*/
-//        trav(trie, 0);
-//    permutations(sh, new Stack<String>(), sh.size());
-//possibles.clear();
-//possibles.put("C,1", new TreeMap<String, TreeMap>());
-//possibles.put("E,3", new TreeMap<String, TreeMap>());
-//possibles.put("I,1", new TreeMap<String, TreeMap>());
-//possibles.put("M,1", new TreeMap<String, TreeMap>());
-//possibles.put("O,1", new TreeMap<String, TreeMap>());
-//possibles.put("R,2", new TreeMap<String, TreeMap>());
-//possibles.put("T,1", new TreeMap<String, TreeMap>());
-        TreeMap<String, String> done = new TreeMap<String, String>();
         startTime = System.currentTimeMillis();
-        TreeMap<String, TreeMap> as = getEntry(trie, 0,
-                possibles, testStr, new TreeMap<String, TreeMap>(), done);
-        System.out.println("Per size - " + gobalpers.size());
+        search(trie, possibles);
+
         System.out.println("Time Dura " + (System.currentTimeMillis() - startTime));
         for (Map.Entry<String, String> s : found.entrySet()) {
             System.out.println("Long - " + s);
         }
-        System.out.println("Longest is - " + longestWord);
-        int startI = 0;
-        /*for (int i = 0; i < gobalpers.size(); i++) {
-            ArrayList<String> cardsList =
-                    new ArrayList<String>(Arrays.asList(gobalpers.get(i)));
-            TreeMap<String, TreeMap> as = getEntry(trie, startI, cardsList, testStr, new TreeMap<String, TreeMap>());
-            if (as.size() != 0 ) {
-                System.out.println("Something was found");
-                break;
-            }
-//            startI++;
-        }*/
-
+        System.out.println("Longest is - " + longestWord + "  0 " + c);
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode(); //To change body of generated methods, choose Tools | Templates.
-    }
+    public static int c = 0;
 
     public static HashMap<String, String> found = new HashMap<String, String>();
-
+    
+    public static HashMap<String, Integer> lettersMap = 
+            new HashMap<String, Integer>();
+    
     public static void getAllInTheLevel(TreeMap<String, TreeMap> tree) {
-        for (Map.Entry<String, TreeMap> entry2 : tree.entrySet()) {
-            String key = entry2.getKey();
-            TreeMap<String, TreeMap> bb = entry2.getValue();
-//            System.out.println(" k - " + entry2.getKey());
+        for (Map.Entry<String, TreeMap> entry : tree.entrySet()) {
+            HashMap<String, Integer> keyMapFreq = 
+                            new HashMap<String, Integer>();
+            
+            String key = entry.getKey();
             if (!key.matches(".*\\d+.*")) {
-               
-
+                keyMapFreq.clear();
+                if (!found.containsKey(key)) {
+                    found.put(key, key);
+                }
                 boolean correct = true;
+                
                 for (int i = 0; i < key.length(); i++) {
-                    boolean found = false;
-                    for (int j = 0; j < testStr.length(); j++) {
-                        if (key.charAt(i) == testStr.charAt(j)) {
-
-                            found = true;
-                            break;
+                    String c = String.valueOf(key.charAt(i));
+                    if (lettersMap.containsKey(c)) {
+                        if (keyMapFreq.containsKey(c)) {
+                            Integer value = keyMapFreq.get(c);
+                            keyMapFreq.put(c,  value + 1);
+                        } else {
+                            keyMapFreq.put(c, 1);
                         }
+                    } else {
+                     correct = false;
+                     break;
                     }
-                    if (found == false) {
+                }
+                for (Map.Entry<String, Integer> entry2 : keyMapFreq.entrySet()) {
+                    if ( entry2.getValue() > lettersMap.get(entry2.getKey())) {
                         correct = false;
                         break;
                     }
                 }
-
                 if (correct && key.length() >= longestWord.length()) {
                     longestWord = key;
-                     if (!found.containsKey(key)) {
-                    found.put(key, key);
-//                     System.out.println(" - " + key);
-                    }
                 }
             }
-            /*for (Map.Entry<String, TreeMap> entry3 : bb.entrySet()) {
-                System.out.println(" k - " + entry3.getKey());
-            }*/
-        }
-    }
-    public static List<String[]> gobalpers = new ArrayList<String[]>();
-
-    public static void
-            permutations(Set<String> items, Stack<String> permutation, int size) {
-
-        System.out.println("Per size s- " + gobalpers.size());
-        /* permutation stack has become equal to size that we require */
-//    if(permutation.size() == size) {
-        /* print the permutation */
-        gobalpers.add(permutation.toArray(new String[0]));
-
-//        System.out.println(Arrays.toString(permutation.toArray(new String[0])));
-//    }
-
-        /* items available for permutation */
-        String[] availableItems = items.toArray(new String[0]);
-        for (String i : availableItems) {
-            /* add current item */
-            permutation.push(i);
-
-            /* remove item from available item set */
-            items.remove(i);
-
-            /* pass it on for next permutation */
-            permutations(items, permutation, size);
-
-            /* pop and put the removed item back */
-            items.add(permutation.pop());
         }
     }
 
-    public static List<String> getListFromWord(String line, boolean k) {
+    public static String longestWord = "";
+
+    public static List<String> getListFromWord(String line, boolean multiple) {
         List<String> lettersFreq = new ArrayList<String>();
         char[] chars = line.toCharArray();
         Arrays.sort(chars);
         char l = chars[0];
         int freq = 1;
         for (int j = 1; j < chars.length; j++) {
-            if (k) {
-//                System.out.println("Char - " + chars[j]);
-            }
             if (l == chars[j]) {
-                if (k) {
+                if (multiple) {
                     lettersFreq.add(l + "," + freq);
                 }
                 ++freq;
@@ -198,7 +144,6 @@ public class TestWordSearch {
             if (!b.containsKey(key)) {
                 b.put(key, new TreeMap<String, String>());
             }
-
             ++j;
             putEntry(b.get(key), j, list, line);
         } else {
@@ -206,37 +151,23 @@ public class TestWordSearch {
         }
     }
 
-    static int Lookc = 0;
-    public static String longestWord = "";
-
-    public static TreeMap getEntry(TreeMap<String, TreeMap> a,
-            int l, TreeMap<String, TreeMap> list,
-            String word, TreeMap<String, TreeMap> back, TreeMap<String, String> k) {
-        for (Map.Entry<String, TreeMap> entry2 : list.entrySet()) {
-            String key = entry2.getKey();
-            TreeMap value = a.get(key);
-//            getAllInTheLevel(a);
+    /**
+     * Search for the longest word.
+     *
+     * @param lookupMap the map to look up from .
+     * @param
+     */
+    public static TreeMap search(TreeMap<String, TreeMap> lookupMap,
+            TreeMap<String, TreeMap> keysMap) {
+        for (Map.Entry<String, TreeMap> entry : keysMap.entrySet()) {
+            String key = entry.getKey();
+            TreeMap value = lookupMap.get(key);
             if (value != null && value.size() != 0) {
-                getEntry(value, 0, list, word, list, k);
+                search(value, keysMap);
             } else {
-                getAllInTheLevel(a);
+                getAllInTheLevel(lookupMap);
             }
-
         }
         return new TreeMap<String, TreeMap>();
     }
-
-    public static void trav(TreeMap<String, TreeMap> a, int l) {
-        String k = "";
-        for (Map.Entry<String, TreeMap> entry2 : a.entrySet()) {
-            String childKey = entry2.getKey();
-            String out = "";
-            for (int i = 0; i < l; i++) {
-                out += " ";
-            }
-            l++;
-            trav(a.get(childKey), l);
-        }
-    }
-
 }
