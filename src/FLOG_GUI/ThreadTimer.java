@@ -16,6 +16,18 @@ public class ThreadTimer implements Runnable {
 
     int seconds = 0;
 
+    /**
+     * This Thread Class is used by both timers, hence the two constructors
+     */
+        
+    /**
+     * This Constructor is to be used by the GamePlay screen
+     * @param panelGamePlay
+     * @param controllerGamePlay
+     * @param seconds 
+     */
+    
+    
     public ThreadTimer(
             PanelGamePlay panelGamePlay, ControllerGamePlay controllerGamePlay, int seconds) {
         this.panelGamePlay = panelGamePlay;
@@ -24,6 +36,13 @@ public class ThreadTimer implements Runnable {
         isGamePlay = true;
         isRoundReadyUp = false;
     }
+    
+    /**
+     * This Constructor to be used by the Round ready Screen
+     * @param panelRoundReadyUp
+     * @param controllerRoundReadyUp
+     * @param seconds 
+     */
 
     public ThreadTimer(
             PanelRoundReadyUp panelRoundReadyUp,
@@ -47,6 +66,10 @@ public class ThreadTimer implements Runnable {
         return;
     }
 
+    /**
+     * Used to set and run the timer of Gameplay round 
+     * @param sec 
+     */
     private void startCountDown(int sec) {
         for (int i = sec; i >= 0; i--) {
             if (ControllerGamePlay.stopTimer) {
@@ -67,11 +90,16 @@ public class ThreadTimer implements Runnable {
         }
 
         if (DataForUI.RoundNum < DataForUI.RoundLimit) {
-           controllerGamePlay.startNextRound();
+            controllerGamePlay.startNextRound();
         } else {
             controllerGamePlay.endGame();
         }
     }
+
+    /**
+     *
+     * @param sec used to set the timer of Round ready UP screen
+     */
 
     private void startReadyUpCountDown(int sec) {
 
