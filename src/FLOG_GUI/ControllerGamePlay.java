@@ -135,7 +135,7 @@ public class ControllerGamePlay {
         gameScreen.pushtoServerQueue(message);
       }
     }.start();
-    if (DataForUI.RoundNum < 5) {
+    if (DataForUI.RoundNum < 6) {
       DataForUI.RoundNum = DataForUI.RoundNum + 1;
     }
     gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_GAMEPLAY);

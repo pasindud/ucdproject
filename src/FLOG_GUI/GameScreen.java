@@ -105,7 +105,7 @@ public class GameScreen extends JFrame {
     panelMainMenu = new PanelMainMenu();
     panelPlaying = new PanelGamePlay(this);
     panelSettings = new PanelSettings();
-    panelRoundReadyUp = new PanelRoundReadyUp();
+    panelRoundReadyUp = new PanelRoundReadyUp(this);
     panelWinners = new PanelWinners(this);
     panelSelectMultiPlayer = new SelectMultiPlayer(this);
     panelLogin = new PanelLogin();
@@ -212,7 +212,7 @@ public class GameScreen extends JFrame {
   // Run this only when all the scores are returned.
   // Except the first time.
   public void startRoundUpTimerSystem() {
-    if (dataForUI.RoundNum == 5) {
+    if (dataForUI.RoundNum == 6) {
       controllerGamePlay.endGame();
       return;
     }
@@ -240,9 +240,27 @@ public class GameScreen extends JFrame {
   public void moveScreen(int x, int y, int mX, int mY) {
     this.setLocation(x - mX, y - mY);
     chatFrame.setWindow();
-    if(!DataForUI.isConnectedToServer||!DataForUI.isChatOpen)
+    if(!DataForUI.isConnectedToServer)
     {
         chatFrame.setVisible(false);
+        System.out.println("chatFrame: not connected");
+    }
+    else
+    {
+        chatFrame.setVisible(true);
+        System.out.println("chatFrame: connected");
+    }
+    if(!DataForUI.isChatOpen)
+    {
+    
+        chatFrame.setVisible(false);
+        System.out.println("chatFrame: not open");
+    }
+    else
+    {
+        chatFrame.setVisible(true);
+        System.out.println("chatFrame: open");  
+    
     }
   }
 

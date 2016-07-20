@@ -22,8 +22,8 @@ public class PlayerData {
     this.letterTwo = letterTwo;
     
     //initialize arrays
-    this.WordArry = new String[6];
-    this.letterArry = new String[6];
+    this.WordArry = new String[7];
+    this.letterArry = new String[7];
     this.WordArry = initArray(WordArry);
     this.letterArry = initArray(letterArry);
   }
