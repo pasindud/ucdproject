@@ -78,11 +78,12 @@ public class DataForUI {
         RoundNum = 1;
         try {
             LCD
-                    = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("LCD.ttf")))
+                    = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("/LCD.ttf")))
                     .deriveFont(Font.PLAIN, 100);
         } catch (FontFormatException ex) {
             System.out.println(ex.getMessage().toString());
         } catch (IOException ex) {
+            LCD = new Font("Arial Rounded MT Bold", 0, 60);
             System.out.println(ex.getMessage().toString());
         }
     }

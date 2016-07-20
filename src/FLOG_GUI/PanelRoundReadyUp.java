@@ -38,7 +38,7 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
 
   public void setTimer(String tmr) {
      //This line causing null pointer exception when running outside netbeans
-    this.lblReadyUpTimer.setFont(DataForUI.LCD.deriveFont(Font.PLAIN, 40));
+    this.lblReadyUpTimer.setFont(new Font("Arial Rounded MT Bold", 0, 55));
     this.lblReadyUpTimer.setText(tmr);
   }
 

@@ -493,7 +493,9 @@ public class GameScreen extends JFrame {
                 return;
             }
             String weakestPlayerName = userMarks.get(0).getName();
-            if (userMarks.get(0).getName().equals(username)) {
+            
+
+            if (userMarks.get(userMarks.size()-1).getName().equals(username)) {
  
 
                 int res
