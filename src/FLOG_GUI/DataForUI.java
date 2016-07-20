@@ -117,6 +117,13 @@ public class DataForUI {
   //
   private static void parsePlayerList() {
     int count = 0;
+    PlayerData[] tempPdArray=null;
+    try{
+        tempPdArray = PdArray;
+    }catch(Exception e)
+    {
+        System.out.println("for first run initialize exeception escape "+e.getMessage());
+    }
     PdArray = new PlayerData[playerList.size()];
     for (Player p : playerList) {
       int total = p.getTotalScore();
@@ -124,8 +131,14 @@ public class DataForUI {
       scoresMap.put(name, total);
       String[] initialLetters = p.getPlayerRound(RoundNum).getIntialLetters();
       System.err.println("ParseLettesr - " + initialLetters[0] + " - " + initialLetters[1]);
-      PlayerData pd =
-          new PlayerData(p.getListIndex(), name, total, initialLetters[0], initialLetters[1]);
+      PlayerData pd = new PlayerData(p.getListIndex(), name, total, initialLetters[0], initialLetters[1]);
+      try{
+         pd.WordArry = tempPdArray[count].WordArry;
+         pd.letterArry=tempPdArray[count].letterArry;
+      }catch(Exception e){
+           System.out.println("Null Escape at parsePlayerList "+e.getMessage());
+      }
+      
       //change
       PdArray[count] = pd;
       count++;

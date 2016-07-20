@@ -470,10 +470,11 @@ public class GameScreen extends JFrame {
     // Controller up is waiting untils all the users scores are recived.
     ++noOfRoundScores;
     System.err.println("2222222");
+    String msg=Utils.COMMAND_CODES.CLIENT_PENALIZE_WEKEST+" "+username;//***[dushan]
     //  + 1 so that it counts that person it self.
     if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
       //startRoundUpTimerSystem();
-        String msg=Utils.COMMAND_CODES.CLIENT_PENALIZE_WEKEST+" "+username;
+        //***[dushan]
         ArrayList<Player> userMarks = game.processRoundScores(round);
         if(userMarks.size()==0){
             System.out.println("Error in user marks!!!!");
@@ -499,7 +500,8 @@ public class GameScreen extends JFrame {
       noOfRoundScores = 0;
       System.err.println("55555");
     } else {
-      System.err.println("44444");
+      System.err.println("44444"); 
+        multiplayer.publishToQueue(serverQueueName, msg);//***[dushan] 
     }
   }
 

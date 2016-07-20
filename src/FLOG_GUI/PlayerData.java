@@ -11,8 +11,8 @@ public class PlayerData {
   int score;
   String letterOne;
   String letterTwo;
-  String letterArry[] = new String[6];
-  String WordArry[] = new String[6];
+  String letterArry[]; 
+  String WordArry[]; 
 
   public PlayerData(int position, String name, int score, String letterOne, String letterTwo) {
     this.position = position;
@@ -20,6 +20,12 @@ public class PlayerData {
     this.score = score;
     this.letterOne = letterOne;
     this.letterTwo = letterTwo;
+    
+    //initialize arrays
+    this.WordArry = new String[6];
+    this.letterArry = new String[6];
+    this.WordArry = initArray(WordArry);
+    this.letterArry = initArray(letterArry);
   }
 
   public int getPosition() {
@@ -79,7 +85,15 @@ public class PlayerData {
     public void setLetterArry(String letters, int roundNum) {
         this.letterArry[roundNum] = letters;
     }
-
+    private String[] initArray(String[] strArray)
+  {
+      String[] array = strArray;
+      for(int i=0;i<strArray.length;i++)
+      {
+          array[i]="-";
+      }
+      return array;
+  }
          
    
     
