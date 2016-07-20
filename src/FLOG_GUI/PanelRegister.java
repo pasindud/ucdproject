@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package FLOG_GUI;
 
 import java.awt.Component;
@@ -25,21 +21,11 @@ public class PanelRegister extends javax.swing.JPanel {
 
   public Component getCompTop(int x) {
     Component[] cmpList = this.getComponents();
-    /*
-    for(int i =0;i<cmpList.length;i++)
-    {
-          System.out.println(i + " "+cmpList[i].getY()+" "+ cmpList[i].getName() );
-    }*/
     return this.pnlTopBorder.getComponent(x);
   }
 
   public Component getCompCon(int x) {
     Component[] cmpList = this.getComponents();
-
-    /*for(int i =0;i<cmpList.length;i++)
-    {
-          System.out.println(i + " "+cmpList[i].getY()+" "+ cmpList[i].getName() );
-    }*/
     return this.getComponent(x);
   }
 

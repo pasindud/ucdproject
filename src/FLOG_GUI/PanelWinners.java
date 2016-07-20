@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FLOG_GUI;
 
 import java.awt.Graphics;
@@ -18,9 +13,6 @@ import javax.swing.JScrollPane;
  */
 public class PanelWinners extends javax.swing.JPanel {
 
-  /**
-   * Creates new form PanelWinners
-   */
   private Image bg;
   private GameScreen gameScreen;
   int mouseX=0;
@@ -216,19 +208,19 @@ public class PanelWinners extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMainMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseClicked
-        // TODO add your handling code here:
+        
         gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.STR_WINNER);
         btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
         
     }//GEN-LAST:event_btnMainMenuMouseClicked
 
     private void btnMainMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseEntered
-        // TODO add your handling code here:
+       
         btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
     }//GEN-LAST:event_btnMainMenuMouseEntered
 
     private void btnMainMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseExited
-        // TODO add your handling code here:
+        
         btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
     }//GEN-LAST:event_btnMainMenuMouseExited
 
