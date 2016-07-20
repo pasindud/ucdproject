@@ -6,6 +6,9 @@ import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.ProcessBuilder;
 
 /**
  *
@@ -18,13 +21,9 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
   int mouseY = 0;
 
   CardLayout mainPanelCards = new CardLayout();
-  /**
-   * Name of the channel the user is hosting or joined.
-   */
+  /* Name of the channel the user is hosting or joined. */
   public String channelName = null;
-  /**
-   * Name of the player.
-   */
+  /* Name of the player. */
   private String playerName = null;
   int posX = 0, posY = 0;
   private boolean IS_USER_JOINED = false;
@@ -71,14 +70,24 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         new Thread(channelName) {
           @Override
           public void run() {
-
             setServerStatus("Sever started");
-
+            String cmd = "java -cp  Frog.jar  FLOG_LOGIC.FLOG_LOGIC " + channelName;
             try {
-              Runtime.getRuntime().exec("java -cp  Frog.jar  FLOG_LOGIC.FLOG_LOGIC " + channelName);
+                System.out.println("Cmd - " + cmd);
+                String line;
+                 Process p = Runtime.getRuntime().exec(cmd);
+                 BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                 while ((line = input.readLine()) != null) {
+                   System.out.println(line);
+                 }
+                 input.close();
+//              // Alternative 
+//              Runtime runtime =  
+//                      Runtime.getRuntime()
+//                              .exec("java -cp  Frog.jar  FLOG_LOGIC.FLOG_LOGIC 1> /tmp/game.txt 2> /tmp/j2.txt" + channelName).getOutputStream();
 
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
           }
         };
@@ -343,44 +352,44 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
   } // </editor-fold>//GEN-END:initComponents
 
   private void pnlTopBorderMouseDragged(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_pnlTopBorderMouseDragged
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
     // TODO add your handling code here:
     gameScreen.moveScreen(evt.getXOnScreen(), evt.getYOnScreen(), mouseX, mouseY);
-  } //GEN-LAST:event_pnlTopBorderMouseDragged
+  }//GEN-LAST:event_pnlTopBorderMouseDragged
 
   private void pnlTopBorderMousePressed(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_pnlTopBorderMousePressed
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMousePressed
     // TODO add your handling code here:
     mouseX = evt.getX();
     mouseY = evt.getY();
-  } //GEN-LAST:event_pnlTopBorderMousePressed
+  }//GEN-LAST:event_pnlTopBorderMousePressed
 
   private void btnExitMouseClicked(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnExitMouseClicked
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
     // TODO add your handling code here:
     gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.SelectMultiplayer);
-  } //GEN-LAST:event_btnExitMouseClicked
+  }//GEN-LAST:event_btnExitMouseClicked
 
   private void btnStartServerMouseClicked(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartServerMouseClicked
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseClicked
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_h.png"));
     btnStartServer.setIcon(imgIcon);
 
     startServerClicked();
-  } //GEN-LAST:event_btnStartServerMouseClicked
+  }//GEN-LAST:event_btnStartServerMouseClicked
 
   private void btnJoinMouseClicked(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnJoinMouseClicked
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseClicked
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_h.png"));
     btnJoin.setIcon(imgIcon);
 
     joinServerClicked();
-  } //GEN-LAST:event_btnJoinMouseClicked
+  }//GEN-LAST:event_btnJoinMouseClicked
 
   private void btnStartGameMouseClicked(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartGameMouseClicked
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseClicked
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_h.png"));
     btnStartGame.setIcon(imgIcon);
@@ -393,152 +402,152 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     playerName = txtPlayerName.getText();
     // Only the server user can press this.
     gameScreen.selectMulitplayerStartGameClick();
-  } //GEN-LAST:event_btnStartGameMouseClicked
+  }//GEN-LAST:event_btnStartGameMouseClicked
 
   private void txtPlayerNameActionPerformed(
-      java.awt.event.ActionEvent evt) { //GEN-FIRST:event_txtPlayerNameActionPerformed
+      java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlayerNameActionPerformed
     // TODO add your handling code here:
-  } //GEN-LAST:event_txtPlayerNameActionPerformed
+  }//GEN-LAST:event_txtPlayerNameActionPerformed
 
   private void btnStartServerMousePressed(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartServerMousePressed
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMousePressed
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_c.png"));
     btnStartServer.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartServerMousePressed
+  }//GEN-LAST:event_btnStartServerMousePressed
 
   private void btnStartServerMouseEntered(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartServerMouseEntered
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseEntered
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_h.png"));
     btnStartServer.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartServerMouseEntered
+  }//GEN-LAST:event_btnStartServerMouseEntered
 
   private void btnStartServerMouseExited(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartServerMouseExited
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseExited
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_n.png"));
     btnStartServer.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartServerMouseExited
+  }//GEN-LAST:event_btnStartServerMouseExited
 
   private void btnStartServerMouseReleased(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartServerMouseReleased
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartServerMouseReleased
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_hostserver_h.png"));
     btnStartServer.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartServerMouseReleased
+  }//GEN-LAST:event_btnStartServerMouseReleased
 
   private void btnJoinMouseEntered(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnJoinMouseEntered
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseEntered
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_h.png"));
     btnJoin.setIcon(imgIcon);
-  } //GEN-LAST:event_btnJoinMouseEntered
+  }//GEN-LAST:event_btnJoinMouseEntered
 
   private void btnJoinMouseExited(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnJoinMouseExited
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseExited
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_n.png"));
     btnJoin.setIcon(imgIcon);
-  } //GEN-LAST:event_btnJoinMouseExited
+  }//GEN-LAST:event_btnJoinMouseExited
 
   private void btnJoinMousePressed(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnJoinMousePressed
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMousePressed
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_c.png"));
     btnJoin.setIcon(imgIcon);
-  } //GEN-LAST:event_btnJoinMousePressed
+  }//GEN-LAST:event_btnJoinMousePressed
 
   private void btnJoinMouseReleased(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnJoinMouseReleased
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinMouseReleased
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_joinserver_h.png"));
     btnJoin.setIcon(imgIcon);
-  } //GEN-LAST:event_btnJoinMouseReleased
+  }//GEN-LAST:event_btnJoinMouseReleased
 
   private void btnStartGameMouseEntered(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartGameMouseEntered
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseEntered
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_h.png"));
     btnStartGame.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartGameMouseEntered
+  }//GEN-LAST:event_btnStartGameMouseEntered
 
   private void btnStartGameMouseReleased(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartGameMouseReleased
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseReleased
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_h.png"));
     btnStartGame.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartGameMouseReleased
+  }//GEN-LAST:event_btnStartGameMouseReleased
 
   private void btnStartGameMouseExited(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartGameMouseExited
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMouseExited
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_n.png"));
     btnStartGame.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartGameMouseExited
+  }//GEN-LAST:event_btnStartGameMouseExited
 
   private void btnStartGameMousePressed(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnStartGameMousePressed
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartGameMousePressed
     // TODO add your handling code here:
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_c.png"));
     btnStartGame.setIcon(imgIcon);
-  } //GEN-LAST:event_btnStartGameMousePressed
+  }//GEN-LAST:event_btnStartGameMousePressed
 
   private void btnChatMouseClicked(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnChatMouseClicked
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
     // TODO add your handling code here:
     chatClicked();
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
     btnChat.setIcon(imgIcon);
-  } //GEN-LAST:event_btnChatMouseClicked
+  }//GEN-LAST:event_btnChatMouseClicked
 
   private void btnChatMouseEntered(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnChatMouseEntered
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseEntered
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
     btnChat.setIcon(imgIcon);
-  } //GEN-LAST:event_btnChatMouseEntered
+  }//GEN-LAST:event_btnChatMouseEntered
 
   private void btnChatMouseExited(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnChatMouseExited
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseExited
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_n.png"));
     btnChat.setIcon(imgIcon);
-  } //GEN-LAST:event_btnChatMouseExited
+  }//GEN-LAST:event_btnChatMouseExited
 
   private void btnChatMousePressed(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnChatMousePressed
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMousePressed
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_c.png"));
     btnChat.setIcon(imgIcon);
-  } //GEN-LAST:event_btnChatMousePressed
+  }//GEN-LAST:event_btnChatMousePressed
 
   private void btnChatMouseReleased(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnChatMouseReleased
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseReleased
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
     btnChat.setIcon(imgIcon);
-  } //GEN-LAST:event_btnChatMouseReleased
+  }//GEN-LAST:event_btnChatMouseReleased
 
   private void btnExitMouseEntered(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnExitMouseEntered
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
     btnExit.setIcon(imgIcon);
-  } //GEN-LAST:event_btnExitMouseEntered
+  }//GEN-LAST:event_btnExitMouseEntered
 
   private void btnExitMouseExited(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnExitMouseExited
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_n.png"));
     btnExit.setIcon(imgIcon);
-  } //GEN-LAST:event_btnExitMouseExited
+  }//GEN-LAST:event_btnExitMouseExited
 
   private void btnExitMousePressed(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnExitMousePressed
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMousePressed
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
     btnExit.setIcon(imgIcon);
-  } //GEN-LAST:event_btnExitMousePressed
+  }//GEN-LAST:event_btnExitMousePressed
 
   private void btnExitMouseReleased(
-      java.awt.event.MouseEvent evt) { //GEN-FIRST:event_btnExitMouseReleased
+      java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseReleased
     ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
     btnExit.setIcon(imgIcon);
-  } //GEN-LAST:event_btnExitMouseReleased
+  }//GEN-LAST:event_btnExitMouseReleased
 
   // Listen
 

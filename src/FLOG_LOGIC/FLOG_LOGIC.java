@@ -13,17 +13,14 @@ public class FLOG_LOGIC {
     if (args.length == 0) {
       return;
     }
+    System.out.println("Starting ....");
     String channelName = args[0];
     startServerApp(channelName);
   }
 
   public static void startServerApp(String channelName) {
-    Multiplayer multiplayer = new Multiplayer();
-    multiplayer.createServer(channelName);
     Server server = new Server(channelName);
     server.start();
+      System.out.println("Started ....");
   }
-  /**
-   * This main method was for sep assignment2.
-   */
 }

@@ -180,19 +180,10 @@ public class Multiplayer {
       String jsonResponse = queue.toString();
       System.out.println("Log createQueue - " + queue.toString());
     } catch (Exception e) {
-      App42Response app42response = queueService.purgePullQueue(name);
+//      App42Response app42response = queueService.purgePullQueue(name);
       // No internet
       // Queue has already been created.
     }
-    return true;
-  }
-
-  /**
-   *
-   * @param channelName the name of the channel to create.
-   */
-  public boolean createServer(String channelName) {
-    createQueue(getServerQueue(channelName));
     return true;
   }
 

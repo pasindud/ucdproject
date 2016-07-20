@@ -9,27 +9,37 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
- *
+ * Control the game play area.
  * @author Dushan Galappaththi
  */
 public class ControllerGamePlay {
-
+  /* Main game panel. */ 
   PanelGamePlay panelGamePlay;
+  /* Game frame that the panel is in. */
   GameScreen gameScreen;
+  /* Thread used for keeping time of the game. */
   Thread timerThread;
+  /* Whether the timer is stoped. */
   static boolean stopTimer = false;
+  /* Used to move the window. */
   int mouseX = 0;
   int mouseY = 0;
+  /* Letters shown the user. */
   char[] letterArr = new char[12];
+  /* Contains data need to the UIs. */
   DataForUI data;
+  /* Contains the answere give by the user. */
   public String answere;
+  /* Whether auto word generation was used. */
   public boolean isAutoGenerate = false;
-
+  /* total marks of the currect user. */
   int myTotalScore;
+  /* Rank of the user*/
   int rank;
 
-  //Constructor
-
+  /**
+   * Setup the main gaming panel.
+   */
   public ControllerGamePlay(PanelGamePlay panelGamePlay, GameScreen gameScreen) {
 
     this.panelGamePlay = panelGamePlay;
@@ -64,6 +74,7 @@ public class ControllerGamePlay {
     }
   }
 
+  /* Handles submitting of the answer. */
   private void submitClick(String ans) {
     if (ans == "Answer") {
       answere = "";
@@ -81,12 +92,13 @@ public class ControllerGamePlay {
 
   private void consonentsClick() {}
 
+  /* Setup the round before starting. */
   public void preRoundStart() {
     answere = "";
     panelGamePlay.resetValuesForRound();
   }
 
-  //To be called externally to start the round
+  /* Start the round. */
   public void beginRound() {
     runTimer();
   }
