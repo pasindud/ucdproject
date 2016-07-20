@@ -253,32 +253,25 @@ public class GameScreen extends JFrame {
    * @param mY : mouse Y Coordinate relative to the actual screen of the
    * computer
    */
-  public void moveScreen(int x, int y, int mX, int mY) {
-    this.setLocation(x - mX, y - mY);
-    chatFrame.setWindow();
-    if(!DataForUI.isConnectedToServer)
-    {
-        chatFrame.setVisible(false);
-        System.out.println("chatFrame: not connected");
+    public void moveScreen(int x, int y, int mX, int mY) {
+        this.setLocation(x - mX, y - mY);
+        chatFrame.setWindow();
+        if (!DataForUI.isConnectedToServer) {
+            chatFrame.setVisible(false);
+
+        } else {
+            chatFrame.setVisible(true);
+
+        }
+        if (!DataForUI.isChatOpen) {
+
+            chatFrame.setVisible(false);
+
+        } else {
+            chatFrame.setVisible(true);
+
+        }
     }
-    else
-    {
-        chatFrame.setVisible(true);
-        System.out.println("chatFrame: connected");
-    }
-    if(!DataForUI.isChatOpen)
-    {
-    
-        chatFrame.setVisible(false);
-        System.out.println("chatFrame: not open");
-    }
-    else
-    {
-        chatFrame.setVisible(true);
-        System.out.println("chatFrame: open");  
-    
-    }
-  }
 
   public void toggleChat()
   {
