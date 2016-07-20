@@ -62,7 +62,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
   }
   public void restLabels()
   {
-    letter_label_array =  new JLabel[] {lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
+    letter_label_array =  new JLabel[] {lblL1, lblL2, lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
     for(JLabel lbl : letter_label_array)
     {
         lbl.setEnabled(true);
