@@ -29,341 +29,339 @@ import org.json.JSONObject;
  */
 public class Multiplayer {
 
-    /* shephertz.com API key. */
-    private final String API_KEY = "c3fe63a386934d7ef46c80c4c14e0fc824894022523a1039bd2ee7cb67095d34";
-    /* shephertz.com SECRET_KEY key. */
-    private final String SECRET_KEY
-            = "adeab7141118da5a7613a227370be5fc2685e7028080c28cfec3e452f2c1a8c4";
-    /* Flog no sql database name. */
-    private final String DB_NAME = "flogdb";
-    /* Game users online status collection name. */
-    private final String USER_ONLINE_COLLECTION_NAME = "usersonline";
-    /* Time from  which the users where online. */
-    private final long USER_ONLINE_TIME_FROM_NOW = 300000;
-    /* Json field for username. */
-    private final String JSON_USERNAME = "username";
-    /* Json field for the last time the user was online. */
-    private final String JSON_LAST_ONLINE = "last_online";
-    /* Epoch time also know as unix time. */
-    private long epoch;
+  /* shephertz.com API key. */
+  private final String API_KEY = "c3fe63a386934d7ef46c80c4c14e0fc824894022523a1039bd2ee7cb67095d34";
+  /* shephertz.com SECRET_KEY key. */
+  private final String SECRET_KEY =
+      "adeab7141118da5a7613a227370be5fc2685e7028080c28cfec3e452f2c1a8c4";
+  /* Flog no sql database name. */
+  private final String DB_NAME = "flogdb";
+  /* Game users online status collection name. */
+  private final String USER_ONLINE_COLLECTION_NAME = "usersonline";
+  /* Time from  which the users where online. */
+  private final long USER_ONLINE_TIME_FROM_NOW = 300000;
+  /* Json field for username. */
+  private final String JSON_USERNAME = "username";
+  /* Json field for the last time the user was online. */
+  private final String JSON_LAST_ONLINE = "last_online";
+  /* Epoch time also know as unix time. */
+  private long epoch;
 
-    private boolean DEBUG = false;
+  private boolean DEBUG = false;
 
-    /**
-     * Setup API keys.
-     */
-    public Multiplayer() {
-        App42API.initialize(API_KEY, SECRET_KEY);
-        // Used for debugging only.
-        // App42Log.setDebug(true);
+  /**
+   * Setup API keys.
+   */
+  public Multiplayer() {
+    App42API.initialize(API_KEY, SECRET_KEY);
+    // Used for debugging only.
+    // App42Log.setDebug(true);
+  }
+
+  /**
+   * Get the users currently online.
+   *
+   * @return List of users currently online.
+   */
+  public ArrayList<String> getOnlineUsers() throws JSONException {
+    List<String> nowOnlineUsers = new ArrayList<>();
+    try {
+      epoch = System.currentTimeMillis() - USER_ONLINE_TIME_FROM_NOW;
+      epoch = (epoch / 1000);
+
+      Query query = QueryBuilder.build(JSON_LAST_ONLINE, epoch, Operator.GREATER_THAN);
+      StorageService storageService = App42API.buildStorageService();
+      Storage storage;
+      storage = storageService.findDocumentsByQuery(DB_NAME, USER_ONLINE_COLLECTION_NAME, query);
+
+      ArrayList<Storage.JSONDocument> jsonDocList = storage.getJsonDocList();
+      for (int i = 0; i < jsonDocList.size(); i++) {
+        String json = jsonDocList.get(i).getJsonDoc();
+        JSONObject jsonoutput = new JSONObject(json);
+        nowOnlineUsers.add((String) jsonoutput.get(JSON_USERNAME));
+      }
+    } catch (Exception e) {
+      System.out.println("Getonlineusers - exception message - " + e.getMessage());
     }
+    return (ArrayList<String>) nowOnlineUsers;
+  }
 
-    /**
-     * Get the users currently online.
-     *
-     * @return List of users currently online.
-     */
-    public ArrayList<String> getOnlineUsers() throws JSONException {
-        List<String> nowOnlineUsers = new ArrayList<>();
-        try {
-            epoch = System.currentTimeMillis() - USER_ONLINE_TIME_FROM_NOW;
-            epoch = (epoch / 1000);
+  /**
+   * This would be called by a background method every 5 mins to update the
+   * last time the user was online.
+   *
+   * @param username of the user to the set the latest online time.
+   */
+  public void setOnline(String username) {
+    try {
+      epoch = System.currentTimeMillis();
+      epoch = (epoch / 1000);
 
-            Query query = QueryBuilder.build(JSON_LAST_ONLINE, epoch, Operator.GREATER_THAN);
-            StorageService storageService = App42API.buildStorageService();
-            Storage storage;
-            storage = storageService.findDocumentsByQuery(DB_NAME, USER_ONLINE_COLLECTION_NAME, query);
+      String dbName = DB_NAME;
+      String collectionName = USER_ONLINE_COLLECTION_NAME;
+      JSONObject json = new JSONObject();
+      json.put(JSON_LAST_ONLINE, epoch);
+      json.put(JSON_USERNAME, username);
+      StorageService storageService = App42API.buildStorageService();
+      Storage storage =
+          storageService.saveOrUpdateDocumentByKeyValue(
+              dbName, collectionName, JSON_USERNAME, username, json);
 
-            ArrayList<Storage.JSONDocument> jsonDocList = storage.getJsonDocList();
-            for (int i = 0; i < jsonDocList.size(); i++) {
-                String json = jsonDocList.get(i).getJsonDoc();
-                JSONObject jsonoutput = new JSONObject(json);
-                nowOnlineUsers.add((String) jsonoutput.get(JSON_USERNAME));
-            }
-        } catch (Exception e) {
-            System.out.println("Getonlineusers - exception message - " + e.getMessage());
-        }
-        return (ArrayList<String>) nowOnlineUsers;
+      System.out.println("User " + username + " online time updated.");
+    } catch (org.json.JSONException e) {
+      System.out.println("Set online JSONException - " + e.getMessage());
+    } catch (Exception e) {
+      System.out.println("Set online error - " + e.getMessage());
     }
+  }
 
-    /**
-     * This would be called by a background method every 5 mins to update the
-     * last time the user was online.
-     *
-     * @param username of the user to the set the latest online time.
-     */
-    public void setOnline(String username) {
-        try {
-            epoch = System.currentTimeMillis();
-            epoch = (epoch / 1000);
-
-            String dbName = DB_NAME;
-            String collectionName = USER_ONLINE_COLLECTION_NAME;
-            JSONObject json = new JSONObject();
-            json.put(JSON_LAST_ONLINE, epoch);
-            json.put(JSON_USERNAME, username);
-            StorageService storageService = App42API.buildStorageService();
-            Storage storage
-                    = storageService.saveOrUpdateDocumentByKeyValue(
-                            dbName, collectionName, JSON_USERNAME, username, json);
-
-            System.out.println("User " + username + " online time updated.");
-        } catch (org.json.JSONException e) {
-            System.out.println("Set online JSONException - " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Set online error - " + e.getMessage());
-        }
+  /**
+   * Authenticate the user credentials.
+   *
+   * @param username of the user logging in.
+   * @param password of the user logging in.
+   * @return Whether the authentication credentials are correct or not.
+   */
+  public boolean login(String username, String password) {
+    UserService userService = App42API.buildUserService();
+    try {
+      User user = userService.authenticate(username, password);
+      return true;
+    } catch (Exception e) {
+      return false;
     }
+  }
 
-    /**
-     * Authenticate the user credentials.
-     *
-     * @param username of the user logging in.
-     * @param password of the user logging in.
-     * @return Whether the authentication credentials are correct or not.
-     */
-    public boolean login(String username, String password) {
-        UserService userService = App42API.buildUserService();
-        try {
-            User user = userService.authenticate(username, password);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+  /**
+   * Register new users.
+   *
+   * @param username of the user been registered.
+   * @param email of the user been registered.
+   * @param password of the user been registered.
+   * @return Whether the user was registered or not.
+   */
+  public boolean registerUser(String username, String email, String password) {
+    boolean done = false;
+    try {
+      UserService userService = App42API.buildUserService();
+      Profile profile = new User().new Profile();
+      userService.createUser(username, password, email);
+      return true;
+    } catch (Exception e) {
+      return false;
     }
+  }
 
-    /**
-     * Register new users.
-     *
-     * @param username of the user been registered.
-     * @param email of the user been registered.
-     * @param password of the user been registered.
-     * @return Whether the user was registered or not.
-     */
-    public boolean registerUser(String username, String email, String password) {
-        boolean done = false;
-        try {
-            UserService userService = App42API.buildUserService();
-            Profile profile = new User().new Profile();
-            userService.createUser(username, password, email);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+  /**
+   * Get existing users.
+   *
+   * @param username of the user been registered.
+   * @return Whether the user exist or not.
+   */
+  public boolean getUser(String username) {
+    boolean done = false;
+    try {
+      UserService userService = App42API.buildUserService();
+      User user = userService.getUser(username);
+      return true;
+    } catch (Exception e) {
+      return false;
     }
+  }
 
-    /**
-     * Get existing users.
-     *
-     * @param username of the user been registered.
-     * @return Whether the user exist or not.
-     */
-    public boolean getUser(String username) {
-        boolean done = false;
-        try {
-            UserService userService = App42API.buildUserService();
-            User user = userService.getUser(username);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+  /**
+   * Create a queue for the given name.
+   */
+  private boolean createQueue(String name) {
+    String queueDescription = "a";
+    QueueService queueService = App42API.buildQueueService();
+    try {
+      Queue queue = queueService.createPullQueue(name, queueDescription);
+      String jsonResponse = queue.toString();
+      System.out.println("Log createQueue - " + queue.toString());
+    } catch (Exception e) {
+      App42Response app42response = queueService.purgePullQueue(name);
+      // No internet
+      // Queue has already been created.
     }
+    return true;
+  }
 
-    /**
-     * Create a queue for the given name.
-     */
-    private boolean createQueue(String name) {
-        String queueDescription = "a";
-        QueueService queueService = App42API.buildQueueService();
-        try {
-            Queue queue = queueService.createPullQueue(name, queueDescription);
-            String jsonResponse = queue.toString();
-            System.out.println("Log createQueue - " + queue.toString());
-        } catch (Exception e) {
-            App42Response app42response = queueService.purgePullQueue(name);
-            // No internet
-            // Queue has already been created.
-        }
-        return true;
+  /**
+   *
+   * @param channelName the name of the channel to create.
+   */
+  public boolean createServer(String channelName) {
+    createQueue(getServerQueue(channelName));
+    return true;
+  }
+
+  /**
+   * Builds the client queue name.
+   */
+  public String getClientQueue(String channelName, String playerName) {
+    return channelName + "OOOOOO" + playerName;
+  }
+
+  /**
+   * Make the name of the channel server queue. TODO fix issue of non server
+   * user pull messages from the server queue.
+   */
+  public String getServerQueue(String channelName) {
+    return channelName + "OOOOOOserver";
+  }
+
+  public String getClientAppAPIUserName(String channelName, String playerName) {
+    return channelName + playerName;
+  }
+
+  public String getServerAppAPIUserName(String channelName) {
+    return channelName + "server";
+  }
+
+  /**
+   * This is joining a new non server user.
+   */
+  public void joinNewPlayer(String playerName, String channelName) {
+    try {
+      String queueName = getClientQueue(channelName, playerName);
+      // Message format to put in the server queue - 100 <player name>
+      String message = "100 " + playerName;
+      publishToQueue(getServerQueue(channelName), message);
+    } catch (Exception e) {
+      // No internet
+      // Queue already created.
     }
+  }
 
-    /**
-     *
-     * @param channelName the name of the channel to create.
-     */
-    public boolean createServer(String channelName) {
-        createQueue(getServerQueue(channelName));
-        return true;
+  /**
+   * This is starting the new game
+   */
+  public void ackstartNewGame(String playerName, String channelName) {
+    try {
+
+      // send 103 ackGameStarted-playername to server
+      String message = "103 ackGameStarted-" + playerName;
+      publishToQueue(getServerQueue(channelName), message);
+
+    } catch (Exception e) {
+      // No internet
+      // Queue already created.
     }
+  }
 
-    /**
-     * Builds the client queue name.
-     */
-    public String getClientQueue(String channelName, String playerName) {
-        return channelName + "OOOOOO" + playerName;
+  WarpClient myGame;
+
+  public void setMyGame(WarpClient myGame) {
+    this.myGame = myGame;
+  }
+
+  /**
+   * This is passing letters to server
+   */
+  public void sendLettersToServer(
+      String playerName,
+      String channelName,
+      ArrayList<String> players,
+      String letter1,
+      String letter2) {
+    try {
+
+      // send letters
+      //send letters to server
+      //Format 104 <Playername>^<Letter1>^<Letter2>
+      //Ex: 104 dilshan^A^B
+      String message = "104 " + playerName + "^" + letter1 + "^" + letter2;
+      System.out.println(message);
+      publishToQueue(getServerQueue(channelName), message);
+
+      //broadcast letters other players
+      //Format 300 <Playername>^<Letter1>^<Letter2>
+      //Ex: 300 dilshan^A^B
+      message = "300 " + playerName + "^" + letter1 + "^" + letter2;
+
+      this.broadcast(channelName, players, message);
+    } catch (Exception e) {
+      // No internet
+      // Queue already created.
     }
+  }
 
-    /**
-     * Make the name of the channel server queue. TODO fix issue of non server
-     * user pull messages from the server queue.
-     */
-    public String getServerQueue(String channelName) {
-        return channelName + "OOOOOOserver";
+  /**
+   * This is starting a new game
+   */
+  public void startNewgame(String channelName) {
+    try {
+      // Send the message to the channel queue.
+
+      // Message format to put in the server queue - 100 <player name>
+      String message = "101 Start";
+      publishToQueue(getServerQueue(channelName), message);
+
+    } catch (Exception e) {
+      // No internet
+      // Queue already created.
     }
+  }
 
-    public String getClientAppAPIUserName(String channelName, String playerName) {
-        return channelName + playerName;
+  /**
+   * Join the new user.
+   *
+   * Start the game Distribute letters Subsitute letters End the round
+   * Calculate the game score Run the penalty Start the next round again End
+   * the game.
+   *
+   */
+  public boolean publishToQueue(String queueName, String message) {
+    if (myGame != null) {
+      myGame.sendPrivateChat(queueName, message);
+      return true;
     }
+    System.err.println("Message was not sent. ");
+    return false;
+  }
 
-    public String getServerAppAPIUserName(String channelName) {
-        return channelName + "server";
+  public List<String> readQueue(String queueName) {
+    return new ArrayList<String>();
+  }
+
+  public List<String> readQueueDep(String queueName) {
+    //        System.out.println("READ " + queueName);
+    if (DEBUG) {
+      System.out.println("Reading queue - " + queueName);
     }
-
-    /**
-     * This is joining a new non server user.
-     */
-    public void joinNewPlayer(String playerName, String channelName) {
-        try {
-            String queueName = getClientQueue(channelName, playerName);
-            // Message format to put in the server queue - 100 <player name>
-            String message = "100 " + playerName;
-            publishToQueue(getServerQueue(channelName), message);
-        } catch (Exception e) {
-            // No internet
-            // Queue already created.
-        }
-    }
-
-    /**
-     * This is starting the new game
-     */
-    public void ackstartNewGame(String playerName, String channelName) {
-        try {
-
-            // send 103 ackGameStarted-playername to server
-            String message = "103 ackGameStarted-" + playerName;
-            publishToQueue(getServerQueue(channelName), message);
-
-        } catch (Exception e) {
-            // No internet
-            // Queue already created.
-        }
-    }
-
-    WarpClient myGame;
-
-    public void setMyGame(WarpClient myGame) {
-        this.myGame = myGame;
-    }
-
-    /**
-     * This is passing letters to server
-     */
-    public void sendLettersToServer(
-            String playerName,
-            String channelName,
-            ArrayList<String> players,
-            String letter1,
-            String letter2) {
-        try {
-
-            // send letters
-            //send letters to server
-            //Format 104 <Playername>^<Letter1>^<Letter2>
-            //Ex: 104 dilshan^A^B
-            String message = "104 " + playerName + "^" + letter1 + "^" + letter2;
-            System.out.println(message);
-            publishToQueue(getServerQueue(channelName), message);
-
-            //broadcast letters other players
-            //Format 300 <Playername>^<Letter1>^<Letter2>
-            //Ex: 300 dilshan^A^B
-            message = "300 " + playerName + "^" + letter1 + "^" + letter2;
-
-            this.broadcast(channelName, players, message);
-        } catch (Exception e) {
-            // No internet
-            // Queue already created.
-        }
-    }
-
-    /**
-     * This is starting a new game
-     */
-    public void startNewgame(String channelName) {
-        try {
-            // Send the message to the channel queue.
-
-            // Message format to put in the server queue - 100 <player name>
-            String message = "101 Start";
-            publishToQueue(getServerQueue(channelName), message);
-
-        } catch (Exception e) {
-            // No internet
-            // Queue already created.
-        }
-    }
-
-    /**
-     * Join the new user.
-     *
-     * Start the game Distribute letters Subsitute letters End the round
-     * Calculate the game score Run the penalty Start the next round again End
-     * the game.
-     *
-     */
-    public boolean publishToQueue(String queueName, String message) {
-        if (myGame != null) {
-            myGame.sendPrivateChat(queueName, message);
-            return true;
-        }
-        System.err.println("Message was not sent. ");
-        return false;
-    }
-
-    public List<String> readQueue(String queueName) {
-        return new ArrayList<String>();
-    }
-
-    public List<String> readQueueDep(String queueName) {
-        //        System.out.println("READ " + queueName);
+    List<String> messages = new ArrayList<String>();
+    try {
+      long receiveTimeOut = 10000;
+      QueueService queueService = App42API.buildQueueService();
+      Queue queue = queueService.getMessages(queueName, receiveTimeOut);
+      ArrayList<Queue.Message> messageList = queue.getMessageList();
+      for (Queue.Message message : messageList) {
+        messages.add(message.getPayLoad());
+        System.err.println("Recevied Q - [" + queueName + "] M - " + message.getPayLoad());
         if (DEBUG) {
-            System.out.println("Reading queue - " + queueName);
+          System.out.println("correlationId is " + message.getCorrelationId());
+          System.out.println("messageId is " + message.getMessageId());
+          System.out.println("payLoad is " + message.getPayLoad());
         }
-        List<String> messages = new ArrayList<String>();
-        try {
-            long receiveTimeOut = 10000;
-            QueueService queueService = App42API.buildQueueService();
-            Queue queue = queueService.getMessages(queueName, receiveTimeOut);
-            ArrayList<Queue.Message> messageList = queue.getMessageList();
-            for (Queue.Message message : messageList) {
-                messages.add(message.getPayLoad());
-                System.err.println("Recevied Q - [" + queueName + "] M - " + message.getPayLoad());
-                if (DEBUG) {
-                    System.out.println("correlationId is " + message.getCorrelationId());
-                    System.out.println("messageId is " + message.getMessageId());
-                    System.out.println("payLoad is " + message.getPayLoad());
-                }
-            }
-        } catch (Exception e) {
-            // No internet.
-            // Queue has not been created.
-        }
-        return messages;
+      }
+    } catch (Exception e) {
+      // No internet.
+      // Queue has not been created.
     }
+    return messages;
+  }
 
-    public void broadcast(String channelName, ArrayList<String> playerNames, String message) {
-        for (String player : playerNames) {
-            new Thread() {
-                public void run() {
-                    String playerQueueName = getClientQueue(channelName, player);
-                    publishToQueue(playerQueueName, message);
-                }
-            }.start();
+  public void broadcast(String channelName, ArrayList<String> playerNames, String message) {
+    for (String player : playerNames) {
+      new Thread() {
+        public void run() {
+          String playerQueueName = getClientQueue(channelName, player);
+          publishToQueue(playerQueueName, message);
         }
+      }.start();
     }
+  }
 
-    public void pushnotification(String userName, String deviceToken) {
-      
-    }
+  public void pushnotification(String userName, String deviceToken) {}
 }

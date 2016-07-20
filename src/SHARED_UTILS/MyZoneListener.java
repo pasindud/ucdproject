@@ -16,56 +16,35 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.ZoneRequestListene
  *
  * @author Dushan Galappaththi
  */
-public class MyZoneListener implements ZoneRequestListener{
+public class MyZoneListener implements ZoneRequestListener {
 
-    @Override
-    public void onDeleteRoomDone(RoomEvent re) {
-       
-    }
+  @Override
+  public void onDeleteRoomDone(RoomEvent re) {}
 
-    @Override
-    public void onGetAllRoomsDone(AllRoomsEvent are) {
-        
-    }
+  @Override
+  public void onGetAllRoomsDone(AllRoomsEvent are) {}
 
-    @Override
-    public void onCreateRoomDone(RoomEvent re) {
-        
-    }
+  @Override
+  public void onCreateRoomDone(RoomEvent re) {}
 
-    @Override
-    public void onGetOnlineUsersDone(AllUsersEvent aue) {
-        
-    }
+  @Override
+  public void onGetOnlineUsersDone(AllUsersEvent aue) {}
 
-    @Override
-    public void onGetLiveUserInfoDone(LiveUserInfoEvent luie) {
-        
-    }
+  @Override
+  public void onGetLiveUserInfoDone(LiveUserInfoEvent luie) {}
 
-    @Override
-    public void onSetCustomUserDataDone(LiveUserInfoEvent luie) {
-        
-    }
+  @Override
+  public void onSetCustomUserDataDone(LiveUserInfoEvent luie) {}
 
-    @Override
-    public void onGetMatchedRoomsDone(MatchedRoomsEvent mre) {
-        
-    }
+  @Override
+  public void onGetMatchedRoomsDone(MatchedRoomsEvent mre) {}
 
-    @Override
-    public void onGetAllRoomsCountDone(AllRoomsEvent are) {
-       
-    }
+  @Override
+  public void onGetAllRoomsCountDone(AllRoomsEvent are) {}
 
-    @Override
-    public void onGetOnlineUsersCountDone(AllUsersEvent aue) {
-         
-    }
+  @Override
+  public void onGetOnlineUsersCountDone(AllUsersEvent aue) {}
 
-    @Override
-    public void onGetUserStatusDone(LiveUserInfoEvent luie) {
-       
-    }
-    
+  @Override
+  public void onGetUserStatusDone(LiveUserInfoEvent luie) {}
 }

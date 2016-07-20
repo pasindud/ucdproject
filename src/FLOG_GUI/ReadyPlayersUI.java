@@ -22,8 +22,8 @@ public class ReadyPlayersUI extends JPanel {
   int BoundHeight = 290;
   boolean isFirstRound = true;
   private Image bg;
-  private Font player_Trebuchet = new Font("Trebuchet MS",Font.PLAIN, 10);
-  private Font other_arialRounded = new Font("Arial Rounded MT Bold",Font.PLAIN, 10);
+  private Font player_Trebuchet = new Font("Trebuchet MS", Font.PLAIN, 10);
+  private Font other_arialRounded = new Font("Arial Rounded MT Bold", Font.PLAIN, 10);
 
   public ReadyPlayersUI(boolean isFirstRound, int playerIndex) {
     this.isFirstRound = isFirstRound;
@@ -56,32 +56,28 @@ public class ReadyPlayersUI extends JPanel {
     lblName.setHorizontalTextPosition(SwingConstants.CENTER);
     lblName.setBounds(0, 0, 616, 30);
     //lblName.setFont(player_Trebuchet);
-    if(DataForUI.sortedPdArrayByScore[i].getName().equals(DataForUI.currentUsername))
-    {
-        lblName.setForeground(Color.YELLOW);
-    }
-    else{
-        lblName.setForeground(Color.WHITE);
+    if (DataForUI.sortedPdArrayByScore[i].getName().equals(DataForUI.currentUsername)) {
+      lblName.setForeground(Color.YELLOW);
+    } else {
+      lblName.setForeground(Color.WHITE);
     }
     this.add(lblName);
   }
 
   private void otherRounds(int i) {
-      Color color;
-      if(DataForUI.sortedPdArrayByScore[i].getName().equals(DataForUI.currentUsername))
-        {
-            color = Color.YELLOW;
-        }
-        else{
-            color = Color.WHITE;
-        }
+    Color color;
+    if (DataForUI.sortedPdArrayByScore[i].getName().equals(DataForUI.currentUsername)) {
+      color = Color.YELLOW;
+    } else {
+      color = Color.WHITE;
+    }
     JLabel lblName = new JLabel();
     lblName.setText(DataForUI.sortedPdArrayByScore[i].getName());
     lblName.setHorizontalAlignment(SwingConstants.CENTER);
     lblName.setHorizontalTextPosition(SwingConstants.CENTER);
     lblName.setBounds(74, 0, 126, 30);
     lblName.setForeground(color);
-     
+
     JLabel lblRank = new JLabel();
     lblRank.setText(String.valueOf(DataForUI.sortedPdArrayByScore[i].getPosition()));
     lblRank.setHorizontalAlignment(SwingConstants.CENTER);
@@ -90,26 +86,27 @@ public class ReadyPlayersUI extends JPanel {
     lblRank.setForeground(color);
 
     JLabel lblLetters = new JLabel();
-    lblLetters.setText(DataForUI.sortedPdArrayByScore[i].getLetterArry(DataForUI.RoundNum)); //*******
+    lblLetters.setText(
+        DataForUI.sortedPdArrayByScore[i].getLetterArry(DataForUI.RoundNum)); //*******
     lblLetters.setHorizontalAlignment(SwingConstants.CENTER);
     lblLetters.setHorizontalTextPosition(SwingConstants.CENTER);
     lblLetters.setBounds(204, 0, 151, 30);
     lblLetters.setForeground(color);
-       
+
     JLabel lblWord = new JLabel();
-    lblWord.setText(DataForUI.sortedPdArrayByScore[i].getWordArry(DataForUI.RoundNum));//*****
+    lblWord.setText(DataForUI.sortedPdArrayByScore[i].getWordArry(DataForUI.RoundNum)); //*****
     lblWord.setHorizontalAlignment(SwingConstants.CENTER);
     lblWord.setHorizontalTextPosition(SwingConstants.CENTER);
     lblWord.setBounds(358, 0, 135, 30);
     lblWord.setForeground(color);
-    
+
     JLabel lblScore = new JLabel();
     lblScore.setText(String.valueOf(DataForUI.sortedPdArrayByScore[i].getScore()));
     lblScore.setHorizontalAlignment(SwingConstants.CENTER);
     lblScore.setHorizontalTextPosition(SwingConstants.CENTER);
     lblScore.setBounds(497, 0, 100, 30);
     lblScore.setForeground(color);
-  
+
     this.add(lblRank);
     this.add(lblName);
     this.add(lblLetters);

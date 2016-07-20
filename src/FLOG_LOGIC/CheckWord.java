@@ -10,22 +10,22 @@ import java.io.FileReader;
  */
 public class CheckWord {
 
-    /**
-     * Filename of the dictionary.
-     */
-    private static final String WORD_FILE_NAME = "words.txt";
+  /**
+   * Filename of the dictionary.
+   */
+  private static final String WORD_FILE_NAME = "words.txt";
 
-    public static boolean checkWordValidity(String word) {
-        try (BufferedReader br = new BufferedReader(new FileReader("words.txt"))) {
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                if (line.equalsIgnoreCase(word)) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (Exception ex) {
-            return false;
+  public static boolean checkWordValidity(String word) {
+    try (BufferedReader br = new BufferedReader(new FileReader("words.txt"))) {
+      String line = null;
+      while ((line = br.readLine()) != null) {
+        if (line.equalsIgnoreCase(word)) {
+          return true;
         }
+      }
+      return false;
+    } catch (Exception ex) {
+      return false;
     }
+  }
 }
