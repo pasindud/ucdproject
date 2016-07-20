@@ -139,9 +139,9 @@ public class GameScreen extends JFrame {
 
   private void showMainMenu() {
     //System.out.println("showmainmenu");
-      changeScreen(dataForUI.STR_MAINMENU, null);
-      DataForUI.currentUsername="dilshanwn";
-    //changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
+      //changeScreen(dataForUI.STR_MAINMENU, null);
+      //DataForUI.currentUsername="dilshanwn";
+    changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
   }
 
   /**
@@ -174,7 +174,7 @@ public class GameScreen extends JFrame {
           break;
 
         case DataForUI.STR_ROUNDREADYUP:
-          cl.show(container, screenName);
+           cl.show(container, screenName);
           if (dataForUI.RoundNum == 1) {
             startRoundUpTimerSystem();
           }
@@ -508,7 +508,7 @@ public class GameScreen extends JFrame {
             
             int res =
         JOptionPane.showConfirmDialog(
-            null, "Do you wan to reduce 5% marks from the weakest player out?", "Warning", JOptionPane.YES_NO_OPTION);
+            null, "Do you want to reduce 5% marks from "+weakestPlayerName+"?", dataForUI.currentUsername+" Punishing Weakest Player", JOptionPane.YES_NO_OPTION);
             if (res == JOptionPane.YES_OPTION) {               
                 msg+=" " +weakestPlayerName;               
             }
@@ -519,7 +519,7 @@ public class GameScreen extends JFrame {
       System.err.println("55555");
     } else {
       System.err.println("44444"); 
-        multiplayer.publishToQueue(serverQueueName, msg);//***[dushan] 
+        //multiplayer.publishToQueue(serverQueueName, msg);//***[dushan] 
     }
   }
 

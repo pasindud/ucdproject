@@ -58,6 +58,13 @@ public class ReadyPlayersUI extends JPanel {
     lblName.setHorizontalTextPosition(SwingConstants.CENTER);
     lblName.setBounds(0, 0, 616, 30);
     //lblName.setFont(player_Trebuchet);
+    if(DataForUI.sortedPdArrayByScore[i].getName().equals(DataForUI.currentUsername))
+    {
+        lblName.setForeground(Color.YELLOW);
+    }
+    else{
+        lblName.setForeground(Color.WHITE);
+    }
     this.add(lblName);
   }
 
@@ -67,6 +74,7 @@ public class ReadyPlayersUI extends JPanel {
     lblName.setHorizontalAlignment(SwingConstants.CENTER);
     lblName.setHorizontalTextPosition(SwingConstants.CENTER);
     lblName.setBounds(74, 0, 126, 30);
+    lblName.setForeground(Color.WHITE);
     //lblName.setFont(player_Trebuchet);
     
     JLabel lblRank = new JLabel();
