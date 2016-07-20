@@ -5,6 +5,8 @@
  */
 package FLOG_GUI;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
@@ -15,12 +17,30 @@ public class PanelHelp extends javax.swing.JPanel {
 
     int mouseX =0;
     int mouseY=0;
-    ImageIcon bg;
+    Image bg;
     GameScreen gameScreen;
-    
+ 
     public PanelHelp(GameScreen gameScreen) {
         initComponents();
         this.gameScreen = gameScreen;
+        bg = new ImageIcon(getClass().getResource("/images/bg_help.png")).getImage();
+        String help = "<html><center>"
+                + "<i>1</i>. Make sure you are connected to the Internet"
+                + "<br><br><i>2</i>.  Click Start Game"
+                + "<br><br><i>3</i>.  Enter 'Server Name' that you want to Join or Host"
+                + "<br><br><i>3a</i>.  If you want to host, click 'Host Server' button "
+                + "<br><br><i>4</i>.  Click 'Join Server' button"
+                + "<br><br><i>5</i>.  Wait For Players to join"
+                + "<br><br><i>6</i>.  Click 'Start Game' button"
+                + "<br><br><i>7</i>.  Enjoy"
+                + "</center></html>";
+
+        lblInfo.setText(help);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
     }
 
     /**
@@ -32,6 +52,7 @@ public class PanelHelp extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblInfo = new javax.swing.JLabel();
         pnlTopBorder = new javax.swing.JPanel();
         btnExit = new javax.swing.JLabel();
 
@@ -40,6 +61,12 @@ public class PanelHelp extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(900, 619));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblInfo.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInfo.setText("info");
+        add(lblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 450, 340));
+
+        pnlTopBorder.setOpaque(false);
         pnlTopBorder.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 pnlTopBorderMouseDragged(evt);
@@ -112,6 +139,7 @@ public class PanelHelp extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnExit;
+    private javax.swing.JLabel lblInfo;
     private javax.swing.JPanel pnlTopBorder;
     // End of variables declaration//GEN-END:variables
 }
