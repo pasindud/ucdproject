@@ -6,17 +6,16 @@
 package FLOG_LOGIC;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 /**
- *
+ * This class is used for automatic word search.
+ * It uses a compressed ordered trie structure. 
+ * which is be search according to the letters frequencies of the letters set.
  * @author Pasindu
  */
 public class TestWordSearch {
-
     public static final String WORD_FILE_NAME
             = "/Users/Pasindu/Desktop/sep/ucdproject/words.txt";
     public static TreeMap<Double, String> words = new TreeMap<Double, String>();
@@ -24,22 +23,45 @@ public class TestWordSearch {
     public static TreeMap<String, TreeMap> trie = new TreeMap<String, TreeMap>();
     public static String testStr = "RYSBNKNPOLAG";
 
-    static long startTime = System.currentTimeMillis();
-
+    /**
+     * Max time to spend searching for a word.
+     */
+    public static final long MAX_TIME_FOR_WORD_SEARCH = 5000;
+    
+    public static long startTime;
+    public static boolean error  = false;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        // TODO code application logic here
-
-        BufferedReader br = new BufferedReader(new FileReader(WORD_FILE_NAME));
-        String line;
-        while ((line = br.readLine()) != null) {
-            line = line.trim().toUpperCase();
-            putEntry(trie, 0, getListFromWord(line, false), line);
+    public static void main(String[] args) {
+        buildTrie();
+        if (!error) {
+            String longest = getLongest(testStr);
+            System.out.println("Longest word - " + longest);
         }
-        List<String> letters = getListFromWord(testStr, true);
-
+    }
+    
+    /**
+     * Build the trie.
+     */
+    public static void buildTrie(){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(WORD_FILE_NAME));
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim().toUpperCase();
+                putEntry(trie, 0, getListFromWord(line, false), line);
+            }
+        } catch (Exception e){
+            error = true;
+        }
+    }
+    
+    /**
+     * Get the longest word.
+     */
+    public static String getLongest(String strLetters){
+        List<String> letters = getListFromWord(strLetters, true);
         for (int i = 0; i < testStr.length(); i++) {
             String c = String.valueOf(testStr.charAt(i));
             if (lettersMap.containsKey(c)) {
@@ -49,29 +71,28 @@ public class TestWordSearch {
                 lettersMap.put(c, 1);
             }
         }
-        System.out.println("Letter Map " + lettersMap.toString());
         TreeMap<String, TreeMap> possibles = new TreeMap<String, TreeMap>();
         for (String s : letters) {
             possibles.put(s, new TreeMap<String, String>());
         }
-
+    
         startTime = System.currentTimeMillis();
         search(trie, possibles);
-
-        System.out.println("Time Dura " + (System.currentTimeMillis() - startTime));
-        for (Map.Entry<String, String> s : found.entrySet()) {
-            System.out.println("Long - " + s);
+        System.out.println("Time Dura " + 
+                (System.currentTimeMillis() - startTime));
+    
+        if (longestWord.length() == 0) {
+            return "";
         }
-        System.out.println("Longest is - " + longestWord + "  0 " + c);
+        return longestWord;
     }
-
-    public static int c = 0;
 
     public static HashMap<String, String> found = new HashMap<String, String>();
     
     public static HashMap<String, Integer> lettersMap = 
             new HashMap<String, Integer>();
     
+    public static String longestWord = "";
     public static void getAllInTheLevel(TreeMap<String, TreeMap> tree) {
         for (Map.Entry<String, TreeMap> entry : tree.entrySet()) {
             HashMap<String, Integer> keyMapFreq = 
@@ -112,7 +133,6 @@ public class TestWordSearch {
         }
     }
 
-    public static String longestWord = "";
 
     public static List<String> getListFromWord(String line, boolean multiple) {
         List<String> lettersFreq = new ArrayList<String>();
@@ -162,6 +182,11 @@ public class TestWordSearch {
         for (Map.Entry<String, TreeMap> entry : keysMap.entrySet()) {
             String key = entry.getKey();
             TreeMap value = lookupMap.get(key);
+            if ((System.currentTimeMillis() - startTime) > 
+                    MAX_TIME_FOR_WORD_SEARCH) {
+                System.out.println("Runout of time.");
+                return new TreeMap<String, TreeMap>();
+            }
             if (value != null && value.size() != 0) {
                 search(value, keysMap);
             } else {
