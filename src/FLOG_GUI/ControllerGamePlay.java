@@ -120,7 +120,7 @@ public class ControllerGamePlay {
     //        GameScreen gameScreen1 = gameScreen
     new Thread() {
       public void run() {
-          panelGamePlay.resetValuesForRound();
+          panelGamePlay.restLabels();
         String[] initialLetters = panelGamePlay.getInitialLetters();
         String[] otherLetters = panelGamePlay.getOtherLetters();
         // Send 106 message to the server telling about the what happened.

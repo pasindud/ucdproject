@@ -60,9 +60,20 @@ public class PanelGamePlay extends javax.swing.JPanel {
     this.gameScreen = gameScreen;
     resetValuesForRound();
   }
+  public void restLabels()
+  {
+    JLabel[] label_array =  new JLabel[] {lblL1, lblL2, lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
+    for(JLabel lbl : label_array)
+    {
+        lbl.setEnabled(true);
+    
+    }
+  }
+  
 
   public void resetValuesForRound() {
     // Resets default values in each round
+    
     noOfSwaps = 0;
     swapLetterLabelIndex = -99;
     firstLetter = FLOG_LOGIC.Utils.getRandomConsonant();
