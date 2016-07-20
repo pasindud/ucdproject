@@ -71,6 +71,7 @@ public class DataForUI {
   public static HashMap<String, Integer> scoresMap = new HashMap<String, Integer>();
   public static int myTotalScore;
   public static int myRank;
+  public static boolean flagInitialParse=false;
 
     
 
@@ -119,39 +120,80 @@ public class DataForUI {
 
   public static void getPlayerList() {
     playerList = game.getPlayerList();
-    parsePlayerList();
+    if(!flagInitialParse)
+    {
+        initialParsePlayerList();
+        flagInitialParse=true;
+    }
+      parsePlayerList();
+      
   }
 
-  
-  //
-  private static void parsePlayerList() {
-    int count = 0;
-    PlayerData[] tempPdArray=null;
-    try{
-        tempPdArray = PdArray;
-    }catch(Exception e)
+  public static void parsePlayerList()
+  {
+      int count =0;
+      String letterArry[]=new String[7];
+      String wordArry[]=new String[7];
+    for (Player p : playerList) 
     {
-        System.out.println("for first run initialize exeception escape "+e.getMessage());
-    }
-    PdArray = new PlayerData[playerList.size()];
-    for (Player p : playerList) {
       int total = p.getTotalScore();
       String name = p.getName();
       scoresMap.put(name, total);
       String[] initialLetters = p.getPlayerRound(RoundNum).getIntialLetters();
-      System.err.println("ParseLettesr - " + initialLetters[0] + " - " + initialLetters[1]);
       PlayerData pd = new PlayerData(p.getListIndex(), name, total, initialLetters[0], initialLetters[1]);
-      try{
-         pd.WordArry = tempPdArray[count].WordArry;
-         pd.letterArry=tempPdArray[count].letterArry;
-      }catch(Exception e){
-           System.out.println("Null Escape at parsePlayerList "+e.getMessage());
-      }
       
-      //change
-      PdArray[count] = pd;
+      pd.letterArry = PdArray[getIndexByName(name)].letterArry;
+      pd.WordArry =PdArray[getIndexByName(name)].WordArry;
+      
+      PdArray[getIndexByName(name)] = pd;
+      
       count++;
+      
     }
+       
+  
+  }
+  
+  public static void updatePdArray(String name,int totalScore,int round,String letters,String word)
+  {
+      PdArray[getIndexByName(name)].setScore(totalScore);
+      PdArray[getIndexByName(name)].setLetterArry(letters, round);
+      PdArray[getIndexByName(name)].setWordArry(word, round);
+  }
+          
+  
+  public static int getIndexByName(String name)
+  {
+      boolean flag = false;
+       int count =0;
+       int index =0;        
+       int rank=count;
+       while((!flag)&&(count<PdArray.length))
+       {
+           if(PdArray[count].name.equals(name))
+           {
+               flag =true;
+               index=count;
+           }
+           count++;
+       }
+       
+       return index;
+  }
+  
+  //
+  private static void initialParsePlayerList() {
+    int count = 0;
+    PdArray = new PlayerData[playerList.size()];
+    for (Player p : playerList) {
+        int total = p.getTotalScore();
+        String name = p.getName();
+        String[] initialLetters = p.getPlayerRound(RoundNum).getIntialLetters();
+        PlayerData pd = new PlayerData(p.getListIndex(), name, total, initialLetters[0], initialLetters[1]);
+        PdArray[count] = pd;
+        count++;
+    }
+   
   }
   
   public static void preparePlayerArrayForUI()

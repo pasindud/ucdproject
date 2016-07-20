@@ -488,8 +488,16 @@ public class GameScreen extends JFrame {
         word = segments[8];
     }
     DataForUI.getPlayerList();
-    dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setLetterArry(letters, round);
-    dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setWordArry(word, round);
+    DataForUI.updatePdArray(name,totalScore,round,letters,word);
+    
+    
+    for(int i=0;i<dataForUI.PdArray.length;i++){ 
+        
+        for(int k=0;k<dataForUI.PdArray[i].WordArry.length;k++)
+        {
+            System.out.println(dataForUI.PdArray[i].getName()+" "+dataForUI.PdArray[i].WordArry[k]);
+        }
+    }
     //[/dushan]
     System.err.println("1111111");
     dataForUI.game.getPlayerRoundForRound(name, round).setScore(score);
