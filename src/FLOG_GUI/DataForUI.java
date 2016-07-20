@@ -103,6 +103,11 @@ public class DataForUI {
     getPlayerList();
     return PdArray;
   }
+  
+  public static PlayerData[] getSortedPdArrayByScore()
+  {
+      return sortedPdArrayByScore;
+  }
 
   public static String[] getLetters() {
     return letters;
@@ -154,35 +159,19 @@ public class DataForUI {
     public static PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
     {
                
-        //Bubble Sort
+        //Bubble Sort in descending order
         int length = playerDataArray.length;
         PlayerData tempPlayerData = null;
-        //String tempLetterArray[] = new String[6];
-        //String tempWordArray[] = new String[6];
-        
+                
         for(int i=0; i<length;i++)
         {
             for(int j=0;j<(length-i);j++)
             {
                 if ((j + 1) < length) {
                     if (playerDataArray[j + 1].getScore() > playerDataArray[j].getScore()) {
-                        /*tempPlayerData = playerDataArray[j-1];
-                    playerDataArray[j-1] = playerDataArray[j];
-                    playerDataArray[j]=tempPlayerData;
-                         */
-
                         tempPlayerData = playerDataArray[j + 1];
-                        //tempLetterArray = playerDataArray[j + 1].letterArry;
-                        //tempWordArray = playerDataArray[j+1].WordArry;
-                      
                         playerDataArray[j + 1] = playerDataArray[j];
-                        //playerDataArray[j + 1].letterArry =playerDataArray[j].letterArry;
-                        //playerDataArray[j+1].WordArry=playerDataArray[j].WordArry;
-                        
                         playerDataArray[j] = tempPlayerData;
-                        //playerDataArray[j].letterArry= tempLetterArray;
-                        //playerDataArray[j].WordArry=tempWordArray;
-
                     }
                 }
             }

@@ -161,7 +161,7 @@ public class PanelWinners extends javax.swing.JPanel {
                 btnMainMenuMouseReleased(evt);
             }
         });
-        add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 520, -1, -1));
+        add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 500, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMainMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseClicked

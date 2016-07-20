@@ -58,7 +58,13 @@ public class ControllerGamePlay {
   public void drawOpponenets() {
     int total = data.scoresMap.get(gameScreen.username);
     setPlayerInfo(gameScreen.username, 999, total, DataForUI.RoundNum);
-    panelGamePlay.drawOpponents(data.getPdArray());
+    try{
+        data.preparePlayerArrayForUI();
+        panelGamePlay.drawOpponents(data.getSortedPdArrayByScore());
+    }catch(Exception e)
+    {
+        panelGamePlay.drawOpponents(data.getPdArray());
+    }
   }
 
   private void submitClick(String ans) {
