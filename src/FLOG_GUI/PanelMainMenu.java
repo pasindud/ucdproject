@@ -1,8 +1,6 @@
 package FLOG_GUI;
 
-import java.awt.Button;
 import java.awt.Component;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.beans.EventHandler;
@@ -16,55 +14,55 @@ public class PanelMainMenu extends javax.swing.JPanel {
 
     public EventHandler startButton;
     private Image bg;
+
     public PanelMainMenu() {
         initComponents();
         bg = new ImageIcon(getClass().getResource("/images/bg_mainmenu.png")).getImage();
-                     
+
     }
-    public Component getCompTop(int x)
-    {
+
+    public Component getCompTop(int x) {
         Component[] cmpList = this.getComponents();
-       
+
         return this.pnlTopBorder.getComponent(x);
     }
-    public Component getCompCon(int x)
-    {
+
+    public Component getCompCon(int x) {
         Component[] cmpList = this.getComponents();
-       
+
         return this.getComponent(x);
     }
-    
-    public void setIcon_Quit(ImageIcon icon)
-     {
-         this.btnExit.setIcon(icon);
-     
-     }
-    public void setIcon_Start(ImageIcon icon)
-     {
-         this.btnStart.setIcon(icon);
-     
-     }
-    public void setIcon_Settings(ImageIcon icon)
-     {
-         this.btnSettings.setIcon(icon);
-     
-     }
-    public void setIcon_Credits(ImageIcon icon)
-     {
-         this.btnAbout.setIcon(icon);
-     
-     }
-    public void setIcon_Help(ImageIcon icon)
-     {
-         this.btnHelp.setIcon(icon);
-     
-     }
 
-     @Override
-    protected void paintComponent(Graphics g) 
-    {
-         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+    public void setIcon_Quit(ImageIcon icon) {
+        this.btnExit.setIcon(icon);
+
     }
+
+    public void setIcon_Start(ImageIcon icon) {
+        this.btnStart.setIcon(icon);
+
+    }
+
+    public void setIcon_Settings(ImageIcon icon) {
+        this.btnSettings.setIcon(icon);
+
+    }
+
+    public void setIcon_Credits(ImageIcon icon) {
+        this.btnAbout.setIcon(icon);
+
+    }
+
+    public void setIcon_Help(ImageIcon icon) {
+        this.btnHelp.setIcon(icon);
+
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,5 +140,3 @@ public class PanelMainMenu extends javax.swing.JPanel {
     private javax.swing.JPanel pnlTopBorder;
     // End of variables declaration//GEN-END:variables
 }
-
-

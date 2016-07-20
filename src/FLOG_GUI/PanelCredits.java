@@ -17,18 +17,20 @@ public class PanelCredits extends javax.swing.JPanel {
 
     private Image bg;
     GameScreen gameScreen;
-    int mouseX =0;
-    int mouseY=0;
+    int mouseX = 0;
+    int mouseY = 0;
+
     public PanelCredits(GameScreen gameScreen) {
         initComponents();
         this.gameScreen = gameScreen;
         bg = new ImageIcon(getClass().getResource("/images/bg_credits.png")).getImage();
     }
 
-   @Override
-  protected void paintComponent(Graphics g) {
-    g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
-  }
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -125,5 +127,4 @@ public class PanelCredits extends javax.swing.JPanel {
     private javax.swing.JPanel pnlTopBorder;
     // End of variables declaration//GEN-END:variables
 
-   
 }

@@ -2,7 +2,6 @@ package FLOG_GUI;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.BoxLayout;
@@ -18,246 +17,234 @@ import javax.swing.JScrollPane;
  */
 public class PanelGamePlay extends javax.swing.JPanel {
 
-  /**
-   * Creates new form PanelGamePlay
-   */
-  private Image bg;
-  JPanel pnlOppList;
-  JPanel pnlOppRow;
-  JScrollPane jsp;
-  DataForUI DataForUI;
-  private JLabel[] letter_label_array;
-  private int swapLetterLabelIndex;
-  private int noOfSwaps;
-  public String firstLetter;
-  public String secondLetter;
-  public String channelName;
-  public String username;
-  public boolean isAutoWordGenUsed = false;
-  //Use to check if the letter was clicked
-  private boolean bl1, bl2, bl3, bl4, bl5, bl6, bl7, bl8, bl9, bl10, bl11, bl12;
-  private GameScreen gameScreen;
+    /**
+     * Creates new form PanelGamePlay
+     */
+    private Image bg;
+    JPanel pnlOppList;
+    JPanel pnlOppRow;
+    JScrollPane jsp;
+    DataForUI DataForUI;
+    private JLabel[] letter_label_array;
+    private int swapLetterLabelIndex;
+    private int noOfSwaps;
+    public String firstLetter;
+    public String secondLetter;
+    public String channelName;
+    public String username;
+    public boolean isAutoWordGenUsed = false;
+    //Use to check if the letter was clicked
+    private boolean bl1, bl2, bl3, bl4, bl5, bl6, bl7, bl8, bl9, bl10, bl11, bl12;
+    private GameScreen gameScreen;
 
-  public String[] getOtherLetters() {
-    String[] otherLetters = new String[10];
-    for (int i = 0; i < letter_label_array.length; i++) {
-      otherLetters[i] = letter_label_array[i].getText();
-    }
-    return otherLetters;
-  }
-
-  public String[] getInitialLetters() {
-    return new String[] {firstLetter, secondLetter};
-  }
-
-  public PanelGamePlay(GameScreen gameScreen) {
-    initComponents();
-    bg = new ImageIcon(getClass().getResource("/images/bg_playscreen3.png")).getImage();
-    pnlOppList = new JPanel();
-    pnlOppRow = new JPanel();
-    DataForUI = new DataForUI();
-    lblTime.setText("");
-    this.gameScreen = gameScreen;
-    resetValuesForRound();
-  }
-  public void restLabels()
-  {
-    JLabel[] label_array =  new JLabel[] {lblL1, lblL2, lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
-    for(JLabel lbl : label_array)
-    {
-        lbl.setEnabled(true);
-    
-    }
-  }
-  
-
-  public void resetValuesForRound() {
-    // Resets default values in each round
-    
-    noOfSwaps = 0;
-    swapLetterLabelIndex = -99;
-    firstLetter = FLOG_LOGIC.Utils.getRandomConsonant();
-    secondLetter = FLOG_LOGIC.Utils.getRandomVowel();
-    lblL1.setText(firstLetter);
-    lblL2.setText(secondLetter);
-    letter_label_array =
-        new JLabel[] {lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
-    isAutoWordGenUsed = false;
-    bl1 = true;
-    bl2 = true;
-    bl3 = true;
-    bl4 = true;
-    bl5 = true;
-    bl6 = true;
-    bl7 = true;
-    bl8 = true;
-    bl9 = true;
-    bl10 = true;
-    bl11 = true;
-    bl12 = true;
-    txtAnswer.setText("Answer");
-    for (JLabel x : letter_label_array) {
-      x.setText("-");
-    }
-  }
-
-  private boolean checkAllLetters() {
-    boolean check = true;
-    for (JLabel x : letter_label_array) {
-      if (x.getText().equalsIgnoreCase("-")) {
-        check = false;
-      }
-    }
-    return check;
-  }
-
-  @Override
-  protected void paintComponent(Graphics g) {
-    g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
-  }
-
-  public void updateOpponents() {
-    pnlOpponents.removeAll();
-    pnlOppList = new JPanel();
-    pnlOppRow = new JPanel();
-    drawPlayerPosition(DataForUI.myRank);
-    drawPlayerScore(DataForUI.myTotalScore);
-    revalidate();
-    repaint();
-  }
-
-  public void drawOpponents(PlayerData[] pdArr) {
-    setChannel(DataForUI.currentChannel);
-    updateOpponents();
-    int count = 0;
-    int div3 = (int) pdArr.length / 3;
-    int loopTimes = div3 + 1;
-
-    pnlOppRow.setLayout(new BoxLayout(pnlOppRow, BoxLayout.PAGE_AXIS));
-    pnlOppRow.setOpaque(false);
-
-    for (int i = 0; i < loopTimes; i++) {
-      JPanel pnlA = new JPanel();
-      pnlA.setLayout(new FlowLayout(FlowLayout.LEADING));
-      pnlA.setOpaque(false);
-
-      for (int j = 0; j < 3; j++) {
-
-        if (count < pdArr.length) {
-          pnlA.add(
-              new OpponentsUI(
-                  pdArr[count].getPosition(),
-                  pdArr[count].getName(),
-                  pdArr[count].getScore(),
-                  pdArr[count].getLetterOne(),
-                  pdArr[count].letterTwo));
-          count++;
+    public String[] getOtherLetters() {
+        String[] otherLetters = new String[10];
+        for (int i = 0; i < letter_label_array.length; i++) {
+            otherLetters[i] = letter_label_array[i].getText();
         }
-      }
-      pnlOppRow.add(pnlA);
+        return otherLetters;
     }
 
-    jsp = new JScrollPane(pnlOppRow);
-    jsp.setOpaque(false);
-    jsp.setBorder(null);
-    jsp.getViewport().setOpaque(false);
-    pnlOpponents.add(jsp).setBounds(90, 0, 900, 315);
-  }
+    public String[] getInitialLetters() {
+        return new String[]{firstLetter, secondLetter};
+    }
 
-  public void drawPlayerName(String name) {
-    lblPlayerName.setText("Player : "+name);
-  }
+    public PanelGamePlay(GameScreen gameScreen) {
+        initComponents();
+        bg = new ImageIcon(getClass().getResource("/images/bg_playscreen3.png")).getImage();
+        pnlOppList = new JPanel();
+        pnlOppRow = new JPanel();
+        DataForUI = new DataForUI();
+        lblTime.setText("");
+        this.gameScreen = gameScreen;
+        resetValuesForRound();
+    }
 
-  public void drawPlayerScore(int score) {
-    lblScore.setText("Score : " + String.valueOf(score));
-  }
+    public void restLabels() {
+        JLabel[] label_array = new JLabel[]{lblL1, lblL2, lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
+        for (JLabel lbl : label_array) {
+            lbl.setEnabled(true);
 
-  public void drawPlayerPosition(int pos) {
-    lblPos.setText("Rank : " + String.valueOf(pos));
-  }
+        }
+    }
 
-  public void drawRoundNumber(int num) {
-    lblRound.setText("Round : " + String.valueOf(num));
-  }
+    public void resetValuesForRound() {
+        // Resets default values in each round
 
-  public void drawTweleveLetters(String[] letterArr) {
-    lblL1.setText(letterArr[0]);
-    lblL2.setText(letterArr[1]);
-    lblL3.setText(letterArr[2]);
-    lblL4.setText(letterArr[3]);
-    lblL5.setText(letterArr[4]);
-    lblL6.setText(letterArr[5]);
-    lblL7.setText(letterArr[6]);
-    lblL8.setText(letterArr[7]);
-    lblL9.setText(letterArr[8]);
-    lblL10.setText(letterArr[9]);
-    lblL11.setText(letterArr[10]);
-    lblL12.setText(letterArr[11]);
-  }
+        noOfSwaps = 0;
+        swapLetterLabelIndex = -99;
+        firstLetter = FLOG_LOGIC.Utils.getRandomConsonant();
+        secondLetter = FLOG_LOGIC.Utils.getRandomVowel();
+        lblL1.setText(firstLetter);
+        lblL2.setText(secondLetter);
+        letter_label_array
+                = new JLabel[]{lblL3, lblL4, lblL5, lblL6, lblL7, lblL8, lblL9, lblL10, lblL11, lblL12};
+        isAutoWordGenUsed = false;
+        bl1 = true;
+        bl2 = true;
+        bl3 = true;
+        bl4 = true;
+        bl5 = true;
+        bl6 = true;
+        bl7 = true;
+        bl8 = true;
+        bl9 = true;
+        bl10 = true;
+        bl11 = true;
+        bl12 = true;
+        txtAnswer.setText("Answer");
+        for (JLabel x : letter_label_array) {
+            x.setText("-");
+        }
+    }
 
-  public Component getCompTop(int x) {
-    Component[] cmpList = this.getComponents();
+    private boolean checkAllLetters() {
+        boolean check = true;
+        for (JLabel x : letter_label_array) {
+            if (x.getText().equalsIgnoreCase("-")) {
+                check = false;
+            }
+        }
+        return check;
+    }
 
-    /* for (int i = 0; i < cmpList.length; i++) {
-        System.out.println(i + " " + cmpList[i].getY() + " " + cmpList[i].getName());
-    }*/
-    return this.pnlTop.getComponent(x);
-  }
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+    }
 
-  public Component getCompBottom(int x) {
-    Component[] cmpList = this.pnlBottom.getComponents();
+    public void updateOpponents() {
+        pnlOpponents.removeAll();
+        pnlOppList = new JPanel();
+        pnlOppRow = new JPanel();
+        drawPlayerPosition(DataForUI.myRank);
+        drawPlayerScore(DataForUI.myTotalScore);
+        revalidate();
+        repaint();
+    }
 
-    /*for (int i = 0; i < cmpList.length; i++) {
-        System.out.println(i + " " + cmpList[i].getY() + " " + cmpList[i].getName());
-    }*/
-    return this.pnlBottom.getComponent(x);
-  }
+    public void drawOpponents(PlayerData[] pdArr) {
+        setChannel(DataForUI.currentChannel);
+        updateOpponents();
+        int count = 0;
+        int div3 = (int) pdArr.length / 3;
+        int loopTimes = div3 + 1;
 
-  public Component getCompTopBorder(int x) {
-    Component[] cmpList = this.pnlTopBorder.getComponents();
+        pnlOppRow.setLayout(new BoxLayout(pnlOppRow, BoxLayout.PAGE_AXIS));
+        pnlOppRow.setOpaque(false);
 
-    /*for (int i = 0; i < cmpList.length; i++) {
-        System.out.println(i + " " + cmpList[i].getY() + " " + cmpList[i].getName());
-    }*/
-    return this.pnlTopBorder.getComponent(x);
-  }
+        for (int i = 0; i < loopTimes; i++) {
+            JPanel pnlA = new JPanel();
+            pnlA.setLayout(new FlowLayout(FlowLayout.LEADING));
+            pnlA.setOpaque(false);
 
-  public void setIcon_Vowels(ImageIcon icon) {
-    this.btnVowels.setIcon(icon);
-  }
+            for (int j = 0; j < 3; j++) {
 
-  public void setIcon_Consonents(ImageIcon icon) {
-    this.btnConsonents.setIcon(icon);
-  }
+                if (count < pdArr.length) {
+                    pnlA.add(
+                            new OpponentsUI(
+                                    pdArr[count].getPosition(),
+                                    pdArr[count].getName(),
+                                    pdArr[count].getScore(),
+                                    pdArr[count].getLetterOne(),
+                                    pdArr[count].letterTwo));
+                    count++;
+                }
+            }
+            pnlOppRow.add(pnlA);
+        }
 
-  public void setIcon_Gen(ImageIcon icon) {
-    this.btnGenerate.setIcon(icon);
-  }
+        jsp = new JScrollPane(pnlOppRow);
+        jsp.setOpaque(false);
+        jsp.setBorder(null);
+        jsp.getViewport().setOpaque(false);
+        pnlOpponents.add(jsp).setBounds(90, 0, 900, 315);
+    }
 
-  public void setIcon_Submit(ImageIcon icon) {
-    this.btnSubmit.setIcon(icon);
-  }
+    public void drawPlayerName(String name) {
+        lblPlayerName.setText("Player : " + name);
+    }
 
-  public void setTimer(String tmr) {
-    this.lblTime.setFont(DataForUI.LCD);
-    this.lblTime.setText(tmr);
-  }
-  
-  private void chatClicked()
-  {
-      gameScreen.toggleChat();
-  }
+    public void drawPlayerScore(int score) {
+        lblScore.setText("Score : " + String.valueOf(score));
+    }
 
-  public void setChannel(String channel)
-  {
-      channeltxt.setText("Server : "+channel);
-  }
-  /**
-   * This method is called from within the constructor to initialize the form.
-   * WARNING: Do NOT modify this code. The content of this method is always
-   * regenerated by the Form Editor.
-   */
-  @SuppressWarnings("unchecked")
+    public void drawPlayerPosition(int pos) {
+        lblPos.setText("Rank : " + String.valueOf(pos));
+    }
+
+    public void drawRoundNumber(int num) {
+        lblRound.setText("Round : " + String.valueOf(num));
+    }
+
+    public void drawTweleveLetters(String[] letterArr) {
+        lblL1.setText(letterArr[0]);
+        lblL2.setText(letterArr[1]);
+        lblL3.setText(letterArr[2]);
+        lblL4.setText(letterArr[3]);
+        lblL5.setText(letterArr[4]);
+        lblL6.setText(letterArr[5]);
+        lblL7.setText(letterArr[6]);
+        lblL8.setText(letterArr[7]);
+        lblL9.setText(letterArr[8]);
+        lblL10.setText(letterArr[9]);
+        lblL11.setText(letterArr[10]);
+        lblL12.setText(letterArr[11]);
+    }
+
+    public Component getCompTop(int x) {
+        Component[] cmpList = this.getComponents();
+
+        return this.pnlTop.getComponent(x);
+    }
+
+    public Component getCompBottom(int x) {
+        Component[] cmpList = this.pnlBottom.getComponents();
+
+        return this.pnlBottom.getComponent(x);
+    }
+
+    public Component getCompTopBorder(int x) {
+        Component[] cmpList = this.pnlTopBorder.getComponents();
+
+        return this.pnlTopBorder.getComponent(x);
+    }
+
+    public void setIcon_Vowels(ImageIcon icon) {
+        this.btnVowels.setIcon(icon);
+    }
+
+    public void setIcon_Consonents(ImageIcon icon) {
+        this.btnConsonents.setIcon(icon);
+    }
+
+    public void setIcon_Gen(ImageIcon icon) {
+        this.btnGenerate.setIcon(icon);
+    }
+
+    public void setIcon_Submit(ImageIcon icon) {
+        this.btnSubmit.setIcon(icon);
+    }
+
+    public void setTimer(String tmr) {
+        this.lblTime.setFont(DataForUI.LCD);
+        this.lblTime.setText(tmr);
+    }
+
+    private void chatClicked() {
+        gameScreen.toggleChat();
+    }
+
+    public void setChannel(String channel) {
+        channeltxt.setText("Server : " + channel);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -759,396 +746,395 @@ public class PanelGamePlay extends javax.swing.JPanel {
         add(pnlBottom, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 387, 900, 232));
     }// </editor-fold>//GEN-END:initComponents
 
-  private void pnlTopBorderMouseDragged(
+    private void pnlTopBorderMouseDragged(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
 
-    //System.out.println("dragged");
 
   }//GEN-LAST:event_pnlTopBorderMouseDragged
 
-  private void pnlTopBorderMousePressed(
+    private void pnlTopBorderMousePressed(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMousePressed
-    //System.out.println("pressed");
+
   }//GEN-LAST:event_pnlTopBorderMousePressed
 
-  private void btnGenerateMouseClicked(
+    private void btnGenerateMouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateMouseClicked
-    if (checkAllLetters()) {
-      isAutoWordGenUsed = true;
-      String[] WordArray={lblL1.getText(),
-              lblL2.getText(),
-              lblL3.getText(),
-              lblL4.getText(),
-              lblL5.getText(),
-              lblL6.getText(),
-              lblL7.getText(),
-              lblL8.getText(),
-              lblL9.getText(),
-              lblL10.getText(),
-              lblL11.getText(),
-              lblL12.getText()};
-      FLOG_LOGIC.WordAutoGenerator wordgen =
-          new FLOG_LOGIC.WordAutoGenerator(WordArray);
-      txtAnswer.setText(wordgen.getLongestWord());
-    } else {
-      JOptionPane.showMessageDialog(this, "Select All 12 letters first!");
-    }
+        if (checkAllLetters()) {
+            isAutoWordGenUsed = true;
+            String[] WordArray = {lblL1.getText(),
+                lblL2.getText(),
+                lblL3.getText(),
+                lblL4.getText(),
+                lblL5.getText(),
+                lblL6.getText(),
+                lblL7.getText(),
+                lblL8.getText(),
+                lblL9.getText(),
+                lblL10.getText(),
+                lblL11.getText(),
+                lblL12.getText()};
+            FLOG_LOGIC.WordAutoGenerator wordgen
+                    = new FLOG_LOGIC.WordAutoGenerator(WordArray);
+            txtAnswer.setText(wordgen.getLongestWord());
+        } else {
+            JOptionPane.showMessageDialog(this, "Select All 12 letters first!");
+        }
 
-    // JOptionPane.showMessageDialog(this, "clicked");
+
   }//GEN-LAST:event_btnGenerateMouseClicked
 
-  private void btnVowelsMouseClicked(
+    private void btnVowelsMouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVowelsMouseClicked
-    for (JLabel x : letter_label_array) {
-      if (x.getText().equalsIgnoreCase("-")) {
-        x.setText(FLOG_LOGIC.Utils.getRandomVowel());
-        break;
-      }
-    }
+        for (JLabel x : letter_label_array) {
+            if (x.getText().equalsIgnoreCase("-")) {
+                x.setText(FLOG_LOGIC.Utils.getRandomVowel());
+                break;
+            }
+        }
   }//GEN-LAST:event_btnVowelsMouseClicked
 
-  private void btnConsonentsMouseClicked(
+    private void btnConsonentsMouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConsonentsMouseClicked
 
-    for (JLabel x : letter_label_array) {
-      if (x.getText().equalsIgnoreCase("-")) {
-        x.setText(FLOG_LOGIC.Utils.getRandomConsonant());
-        break;
-      }
-    }
+        for (JLabel x : letter_label_array) {
+            if (x.getText().equalsIgnoreCase("-")) {
+                x.setText(FLOG_LOGIC.Utils.getRandomConsonant());
+                break;
+            }
+        }
   }//GEN-LAST:event_btnConsonentsMouseClicked
 
-  private void lblL1MouseReleased(
+    private void lblL1MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL1MouseReleased
-    // TODO add your handling code here:
+
   }//GEN-LAST:event_lblL1MouseReleased
 
-  private void lblL3MouseReleased(
+    private void lblL3MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL3MouseReleased
-    if (evt.isPopupTrigger() && !lblL3.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL3.getX() + evt.getX(),
-          pnlBottom.getY() + lblL3.getY() + evt.getY());
+        if (evt.isPopupTrigger() && !lblL3.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL3.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL3.getY() + evt.getY());
 
-      swapLetterLabelIndex = 0;
-    }
+            swapLetterLabelIndex = 0;
+        }
   }//GEN-LAST:event_lblL3MouseReleased
 
-  private void lblL4MouseReleased(
+    private void lblL4MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL4MouseReleased
-    if (evt.isPopupTrigger() && !lblL4.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      // jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL4.getX() + evt.getX(),
-          pnlBottom.getY() + lblL4.getY() + evt.getY());
-      swapLetterLabelIndex = 1;
-    }
+        if (evt.isPopupTrigger() && !lblL4.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL4.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL4.getY() + evt.getY());
+            swapLetterLabelIndex = 1;
+        }
   }//GEN-LAST:event_lblL4MouseReleased
 
-  private void lblL5MouseReleased(
+    private void lblL5MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL5MouseReleased
-    if (evt.isPopupTrigger() && !lblL5.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL5.getX() + evt.getX(),
-          pnlBottom.getY() + lblL5.getY() + evt.getY());
-      swapLetterLabelIndex = 2;
-    }
+        if (evt.isPopupTrigger() && !lblL5.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL5.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL5.getY() + evt.getY());
+            swapLetterLabelIndex = 2;
+        }
   }//GEN-LAST:event_lblL5MouseReleased
 
-  private void lblL6MouseReleased(
+    private void lblL6MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL6MouseReleased
-    if (evt.isPopupTrigger() && !lblL6.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL6.getX() + evt.getX(),
-          pnlBottom.getY() + lblL6.getY() + evt.getY());
-      swapLetterLabelIndex = 3;
-    }
+        if (evt.isPopupTrigger() && !lblL6.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL6.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL6.getY() + evt.getY());
+            swapLetterLabelIndex = 3;
+        }
   }//GEN-LAST:event_lblL6MouseReleased
 
-  private void lblL7MouseReleased(
+    private void lblL7MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL7MouseReleased
-    if (evt.isPopupTrigger() && !lblL7.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL7.getX() + evt.getX(),
-          pnlBottom.getY() + lblL7.getY() + evt.getY());
-      swapLetterLabelIndex = 4;
-    }
+        if (evt.isPopupTrigger() && !lblL7.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL7.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL7.getY() + evt.getY());
+            swapLetterLabelIndex = 4;
+        }
   }//GEN-LAST:event_lblL7MouseReleased
 
-  private void lblL8MouseReleased(
+    private void lblL8MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL8MouseReleased
-    if (evt.isPopupTrigger() && !lblL8.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL8.getX() + evt.getX(),
-          pnlBottom.getY() + lblL8.getY() + evt.getY());
-      swapLetterLabelIndex = 5;
-    }
+        if (evt.isPopupTrigger() && !lblL8.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL8.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL8.getY() + evt.getY());
+            swapLetterLabelIndex = 5;
+        }
   }//GEN-LAST:event_lblL8MouseReleased
 
-  private void lblL9MouseReleased(
+    private void lblL9MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL9MouseReleased
-    if (evt.isPopupTrigger() && !lblL9.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL9.getX() + evt.getX(),
-          pnlBottom.getY() + lblL9.getY() + evt.getY());
-      swapLetterLabelIndex = 6;
-    }
+        if (evt.isPopupTrigger() && !lblL9.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL9.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL9.getY() + evt.getY());
+            swapLetterLabelIndex = 6;
+        }
   }//GEN-LAST:event_lblL9MouseReleased
 
-  private void lblL10MouseReleased(
+    private void lblL10MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL10MouseReleased
-    if (evt.isPopupTrigger() && !lblL10.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL10.getX() + evt.getX(),
-          pnlBottom.getY() + lblL10.getY() + evt.getY());
-      swapLetterLabelIndex = 7;
-    }
+        if (evt.isPopupTrigger() && !lblL10.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL10.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL10.getY() + evt.getY());
+            swapLetterLabelIndex = 7;
+        }
   }//GEN-LAST:event_lblL10MouseReleased
 
-  private void lblL11MouseReleased(
+    private void lblL11MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL11MouseReleased
-    if (evt.isPopupTrigger() && !lblL11.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      // jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL11.getX() + evt.getX(),
-          pnlBottom.getY() + lblL11.getY() + evt.getY());
-      swapLetterLabelIndex = 8;
-    }
+        if (evt.isPopupTrigger() && !lblL11.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL11.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL11.getY() + evt.getY());
+            swapLetterLabelIndex = 8;
+        }
   }//GEN-LAST:event_lblL11MouseReleased
 
-  private void lblL12MouseReleased(
+    private void lblL12MouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL12MouseReleased
-    if (evt.isPopupTrigger() && !lblL12.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
-      //jPopupMenu1.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-      jPopupMenu1.show(
-          this,
-          pnlBottom.getX() + lblL12.getX() + evt.getX(),
-          pnlBottom.getY() + lblL12.getY() + evt.getY());
-      swapLetterLabelIndex = 9;
-    }
+        if (evt.isPopupTrigger() && !lblL12.getText().equalsIgnoreCase("-") && noOfSwaps < 2) {
+
+            jPopupMenu1.show(
+                    this,
+                    pnlBottom.getX() + lblL12.getX() + evt.getX(),
+                    pnlBottom.getY() + lblL12.getY() + evt.getY());
+            swapLetterLabelIndex = 9;
+        }
   }//GEN-LAST:event_lblL12MouseReleased
 
-  private void lblL12MouseClicked(
+    private void lblL12MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL12MouseClicked
-    if (!lblL12.getText().equalsIgnoreCase("-") && bl12) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL12.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL12.getText());
-      }
-      lblL12.setEnabled(false);
-      bl12 = false;
-    }
+        if (!lblL12.getText().equalsIgnoreCase("-") && bl12) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL12.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL12.getText());
+            }
+            lblL12.setEnabled(false);
+            bl12 = false;
+        }
   }//GEN-LAST:event_lblL12MouseClicked
 
-  private void jMenuItem1ActionPerformed(
+    private void jMenuItem1ActionPerformed(
       java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
-    if (swapLetterLabelIndex != -99) {
-      JLabel clickedLable = letter_label_array[swapLetterLabelIndex];
-      clickedLable.setText(FLOG_LOGIC.Utils.SwapLetter(clickedLable.getText()));
-      noOfSwaps = noOfSwaps + 1;
-    }
+        if (swapLetterLabelIndex != -99) {
+            JLabel clickedLable = letter_label_array[swapLetterLabelIndex];
+            clickedLable.setText(FLOG_LOGIC.Utils.SwapLetter(clickedLable.getText()));
+            noOfSwaps = noOfSwaps + 1;
+        }
   }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-  private void txtAnswerMouseReleased(
+    private void txtAnswerMouseReleased(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAnswerMouseReleased
-    if (evt.isPopupTrigger()) {
-      jPopupMenu2.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
-    }
+        if (evt.isPopupTrigger()) {
+            jPopupMenu2.show(this, evt.getXOnScreen() - 240, evt.getYOnScreen() - 50);
+        }
   }//GEN-LAST:event_txtAnswerMouseReleased
 
-  private void jMenuItem2ActionPerformed(
+    private void jMenuItem2ActionPerformed(
       java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-    txtAnswer.setText("");
-    lblL1.setEnabled(true);
-    lblL2.setEnabled(true);
-    lblL3.setEnabled(true);
-    lblL4.setEnabled(true);
-    lblL5.setEnabled(true);
-    lblL6.setEnabled(true);
-    lblL7.setEnabled(true);
-    lblL8.setEnabled(true);
-    lblL9.setEnabled(true);
-    lblL10.setEnabled(true);
-    lblL11.setEnabled(true);
-    lblL12.setEnabled(true);
-    bl1 = true;
-    bl2 = true;
-    bl3 = true;
-    bl4 = true;
-    bl5 = true;
-    bl6 = true;
-    bl7 = true;
-    bl8 = true;
-    bl9 = true;
-    bl10 = true;
-    bl11 = true;
-    bl12 = true;
+        txtAnswer.setText("");
+        lblL1.setEnabled(true);
+        lblL2.setEnabled(true);
+        lblL3.setEnabled(true);
+        lblL4.setEnabled(true);
+        lblL5.setEnabled(true);
+        lblL6.setEnabled(true);
+        lblL7.setEnabled(true);
+        lblL8.setEnabled(true);
+        lblL9.setEnabled(true);
+        lblL10.setEnabled(true);
+        lblL11.setEnabled(true);
+        lblL12.setEnabled(true);
+        bl1 = true;
+        bl2 = true;
+        bl3 = true;
+        bl4 = true;
+        bl5 = true;
+        bl6 = true;
+        bl7 = true;
+        bl8 = true;
+        bl9 = true;
+        bl10 = true;
+        bl11 = true;
+        bl12 = true;
   }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-  private void lblL1MouseClicked(
+    private void lblL1MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL1MouseClicked
-    if (!lblL1.getText().equalsIgnoreCase("-") && bl1) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL1.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL1.getText());
-      }
-      lblL1.setEnabled(false);
-      bl1 = false;
-    }
+        if (!lblL1.getText().equalsIgnoreCase("-") && bl1) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL1.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL1.getText());
+            }
+            lblL1.setEnabled(false);
+            bl1 = false;
+        }
   }//GEN-LAST:event_lblL1MouseClicked
 
-  private void lblL2MouseClicked(
+    private void lblL2MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL2MouseClicked
-    if (!lblL2.getText().equalsIgnoreCase("-") && bl2) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL2.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL2.getText());
-      }
-      lblL2.setEnabled(false);
-      bl2 = false;
-    }
+        if (!lblL2.getText().equalsIgnoreCase("-") && bl2) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL2.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL2.getText());
+            }
+            lblL2.setEnabled(false);
+            bl2 = false;
+        }
   }//GEN-LAST:event_lblL2MouseClicked
 
-  private void lblL3MouseClicked(
+    private void lblL3MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL3MouseClicked
-    if (!lblL3.getText().equalsIgnoreCase("-") && bl3) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL3.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL3.getText());
-      }
-      lblL3.setEnabled(false);
-      bl3 = false;
-    }
+        if (!lblL3.getText().equalsIgnoreCase("-") && bl3) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL3.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL3.getText());
+            }
+            lblL3.setEnabled(false);
+            bl3 = false;
+        }
   }//GEN-LAST:event_lblL3MouseClicked
 
-  private void lblL4MouseClicked(
+    private void lblL4MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL4MouseClicked
-    if (!lblL4.getText().equalsIgnoreCase("-") && bl4) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL4.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL4.getText());
-      }
-      lblL4.setEnabled(false);
-      bl4 = false;
-    }
+        if (!lblL4.getText().equalsIgnoreCase("-") && bl4) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL4.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL4.getText());
+            }
+            lblL4.setEnabled(false);
+            bl4 = false;
+        }
   }//GEN-LAST:event_lblL4MouseClicked
 
-  private void lblL5MouseClicked(
+    private void lblL5MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL5MouseClicked
-    if (!lblL5.getText().equalsIgnoreCase("-") && bl5) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL5.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL5.getText());
-      }
-      lblL5.setEnabled(false);
-      bl5 = false;
-    }
+        if (!lblL5.getText().equalsIgnoreCase("-") && bl5) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL5.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL5.getText());
+            }
+            lblL5.setEnabled(false);
+            bl5 = false;
+        }
   }//GEN-LAST:event_lblL5MouseClicked
 
-  private void lblL6MouseClicked(
+    private void lblL6MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL6MouseClicked
-    if (!lblL6.getText().equalsIgnoreCase("-") && bl6) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL6.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL6.getText());
-      }
-      lblL6.setEnabled(false);
-      bl6 = false;
-    }
+        if (!lblL6.getText().equalsIgnoreCase("-") && bl6) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL6.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL6.getText());
+            }
+            lblL6.setEnabled(false);
+            bl6 = false;
+        }
   }//GEN-LAST:event_lblL6MouseClicked
 
-  private void lblL7MouseClicked(
+    private void lblL7MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL7MouseClicked
-    if (!lblL7.getText().equalsIgnoreCase("-") && bl7) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL7.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL7.getText());
-      }
-      lblL7.setEnabled(false);
-      bl7 = false;
-    }
+        if (!lblL7.getText().equalsIgnoreCase("-") && bl7) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL7.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL7.getText());
+            }
+            lblL7.setEnabled(false);
+            bl7 = false;
+        }
   }//GEN-LAST:event_lblL7MouseClicked
 
-  private void lblL8MouseClicked(
+    private void lblL8MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL8MouseClicked
-    if (!lblL8.getText().equalsIgnoreCase("-") && bl8) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL8.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL8.getText());
-      }
-      lblL8.setEnabled(false);
-      bl8 = false;
-    }
+        if (!lblL8.getText().equalsIgnoreCase("-") && bl8) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL8.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL8.getText());
+            }
+            lblL8.setEnabled(false);
+            bl8 = false;
+        }
   }//GEN-LAST:event_lblL8MouseClicked
 
-  private void lblL9MouseClicked(
+    private void lblL9MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL9MouseClicked
-    if (!lblL9.getText().equalsIgnoreCase("-") && bl9) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL9.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL9.getText());
-      }
-      lblL9.setEnabled(false);
-      bl9 = false;
-    }
+        if (!lblL9.getText().equalsIgnoreCase("-") && bl9) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL9.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL9.getText());
+            }
+            lblL9.setEnabled(false);
+            bl9 = false;
+        }
   }//GEN-LAST:event_lblL9MouseClicked
 
-  private void lblL10MouseClicked(
+    private void lblL10MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL10MouseClicked
-    if (!lblL10.getText().equalsIgnoreCase("-") && bl10) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL10.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL10.getText());
-      }
-      lblL10.setEnabled(false);
-      bl10 = false;
-    }
+        if (!lblL10.getText().equalsIgnoreCase("-") && bl10) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL10.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL10.getText());
+            }
+            lblL10.setEnabled(false);
+            bl10 = false;
+        }
   }//GEN-LAST:event_lblL10MouseClicked
 
-  private void lblL11MouseClicked(
+    private void lblL11MouseClicked(
       java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblL11MouseClicked
-    if (!lblL11.getText().equalsIgnoreCase("-") && bl11) {
-      if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
-        txtAnswer.setText(lblL11.getText());
-      } else {
-        txtAnswer.setText(txtAnswer.getText() + lblL11.getText());
-      }
-      lblL11.setEnabled(false);
-      bl11 = false;
-    }
+        if (!lblL11.getText().equalsIgnoreCase("-") && bl11) {
+            if (txtAnswer.getText().equalsIgnoreCase("Answer")) {
+                txtAnswer.setText(lblL11.getText());
+            } else {
+                txtAnswer.setText(txtAnswer.getText() + lblL11.getText());
+            }
+            lblL11.setEnabled(false);
+            bl11 = false;
+        }
   }//GEN-LAST:event_lblL11MouseClicked
 
     private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
-                chatClicked();
-                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
-                btnChat.setIcon(imgIcon);
+        chatClicked();
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
 
     }//GEN-LAST:event_btnChatMouseClicked
 
