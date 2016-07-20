@@ -5,7 +5,6 @@
  */
 package FLOG_LOGIC;
 
-import com.sun.xml.internal.fastinfoset.util.CharArray;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,7 +16,6 @@ import java.util.*;
  * @author Pasindu
  */
 public class TestWordSearch {
-
     public static final String WORD_FILE_NAME
             = "/Users/Pasindu/Desktop/sep/ucdproject/words.txt";
     public static TreeMap<Double, String> words = new TreeMap<Double, String>();
