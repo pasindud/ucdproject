@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.HashMap;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,6 +53,8 @@ public class GameScreen extends JFrame {
   private SelectMultiPlayer panelSelectMultiPlayer;
   private PanelLogin panelLogin;
   private PanelRegister panelRegister;
+  private PanelCredits panelCredits;
+  private PanelHelp panelHelp;
   public ChatFrame chatFrame;
 
   //Holds the CardLayout
@@ -104,11 +107,13 @@ public class GameScreen extends JFrame {
     panelMainMenu = new PanelMainMenu();
     panelPlaying = new PanelGamePlay(this);
     panelSettings = new PanelSettings();
-    panelRoundReadyUp = new PanelRoundReadyUp();
+    panelRoundReadyUp = new PanelRoundReadyUp(this);
     panelWinners = new PanelWinners(this);
     panelSelectMultiPlayer = new SelectMultiPlayer(this);
     panelLogin = new PanelLogin();
     panelRegister = new PanelRegister();
+    panelCredits = new PanelCredits(this);
+    panelHelp = new PanelHelp(this);
     
     //Adding Panels to Card Layout
     container = new JPanel();
@@ -122,6 +127,8 @@ public class GameScreen extends JFrame {
     container.add(panelSelectMultiPlayer, dataForUI.SelectMultiplayer);
     container.add(panelLogin, dataForUI.STR_LOGIN);
     container.add(panelRegister, dataForUI.STR_REGISTER);
+    container.add(panelCredits,dataForUI.STR_CREDITS);
+    container.add(panelHelp,dataForUI.STR_HELP);
     this.getContentPane().add(container, BorderLayout.CENTER);
 
     //TestGUI_Inputs testing = new TestGUI_Inputs();
@@ -138,7 +145,8 @@ public class GameScreen extends JFrame {
 
   private void showMainMenu() {
     //System.out.println("showmainmenu");
-    //  changeScreen(dataForUI.STR_MAINMENU, null);
+      //changeScreen(dataForUI.STR_MAINMENU, null);
+      //DataForUI.currentUsername="dilshanwn";
     changeScreen(dataForUI.STR_LOGIN, dataForUI.STR_LOGIN);
   }
 
@@ -172,7 +180,7 @@ public class GameScreen extends JFrame {
           break;
 
         case DataForUI.STR_ROUNDREADYUP:
-          cl.show(container, screenName);
+           cl.show(container, screenName);
           if (dataForUI.RoundNum == 1) {
             startRoundUpTimerSystem();
           }
@@ -193,10 +201,20 @@ public class GameScreen extends JFrame {
 
         case DataForUI.STR_LOGIN:
           cl.show(container, screenName);
+          break;
 
         case DataForUI.STR_REGISTER:
           cl.show(container, screenName);
-
+          break;
+        
+        case DataForUI.STR_CREDITS:
+          cl.show(container, screenName);
+          break;
+        
+        case DataForUI.STR_HELP:
+          cl.show(container, screenName);
+          break;
+          
         default:
           cl.show(container, screenName);
           break;
@@ -210,7 +228,7 @@ public class GameScreen extends JFrame {
   // Run this only when all the scores are returned.
   // Except the first time.
   public void startRoundUpTimerSystem() {
-    if (dataForUI.RoundNum == 5) {
+    if (dataForUI.RoundNum == 6) {
       controllerGamePlay.endGame();
       return;
     }
@@ -235,15 +253,25 @@ public class GameScreen extends JFrame {
    * @param mY : mouse Y Coordinate relative to the actual screen of the
    * computer
    */
-  public void moveScreen(int x, int y, int mX, int mY) {
-    this.setLocation(x - mX, y - mY);
-    chatFrame.setWindow();
-    if(!DataForUI.isConnectedToServer||!DataForUI.isChatOpen)
-    {
-        chatFrame.setVisible(false);
-        System.out.println("open");
+    public void moveScreen(int x, int y, int mX, int mY) {
+        this.setLocation(x - mX, y - mY);
+        chatFrame.setWindow();
+        if (!DataForUI.isConnectedToServer) {
+            chatFrame.setVisible(false);
+
+        } else {
+            chatFrame.setVisible(true);
+
+        }
+        if (!DataForUI.isChatOpen) {
+
+            chatFrame.setVisible(false);
+
+        } else {
+            chatFrame.setVisible(true);
+
+        }
     }
-  }
 
   public void toggleChat()
   {
@@ -424,6 +452,18 @@ public class GameScreen extends JFrame {
           panelRoundReadyUp.updateUI();
           break;
           
+      case SERVER_PENALIZE_WEKEST:
+          if(segments.length==3){
+              chatFrame.updateMessages("Server", "@"+segments[1]+" reduced 5% from @" +segments[2]);
+              Player player= game.getPlayerfromName(segments[2]);
+              player.setTotalScore((int) (player.getTotalScore()-player.getTotalScore() *0.05));
+          }
+          dataForUI.getPlayerList();
+          dataForUI.preparePlayerArrayForUI();//***
+          controllerRoundReadyUp.drawPlayers();
+          startRoundUpTimerSystem();
+          break;
+          
       case PLAYER_JOINED_CHAT:
           System.out.println("player joinedchat");
           chatFrame.playerJoinedUpdateMessages(content);
@@ -447,6 +487,7 @@ public class GameScreen extends JFrame {
     {
         word = segments[8];
     }
+    DataForUI.getPlayerList();
     dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setLetterArry(letters, round);
     dataForUI.PdArray[dataForUI.game.getIndexByPlayerName(name)].setWordArry(word, round);
     //[/dushan]
@@ -457,13 +498,38 @@ public class GameScreen extends JFrame {
     // Controller up is waiting untils all the users scores are recived.
     ++noOfRoundScores;
     System.err.println("2222222");
+    String msg=Utils.COMMAND_CODES.CLIENT_PENALIZE_WEKEST+" "+username;//***[dushan]
     //  + 1 so that it counts that person it self.
     if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
-      startRoundUpTimerSystem();
+      //startRoundUpTimerSystem();
+        //***[dushan]
+        ArrayList<Player> userMarks = game.processRoundScores(round);
+        if(userMarks.size()==0){
+            System.out.println("Error in user marks!!!!");
+            return;
+        }
+        else if(userMarks.size()==1){
+           multiplayer.publishToQueue(serverQueueName, msg);
+           return;
+        }
+        String weakestPlayerName=userMarks.get(0).getName();
+        if(userMarks.get(0).getName().equals(username)){
+        //
+            
+            int res =
+        JOptionPane.showConfirmDialog(
+            null, "Do you want to reduce 5% marks from "+weakestPlayerName+"?", dataForUI.currentUsername+" Punishing Weakest Player", JOptionPane.YES_NO_OPTION);
+            if (res == JOptionPane.YES_OPTION) {               
+                msg+=" " +weakestPlayerName;               
+            }
+            multiplayer.publishToQueue(serverQueueName, msg);
+            
+        }
       noOfRoundScores = 0;
       System.err.println("55555");
     } else {
-      System.err.println("44444");
+      System.err.println("44444"); 
+        //multiplayer.publishToQueue(serverQueueName, msg);//***[dushan] 
     }
   }
 

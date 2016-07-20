@@ -23,6 +23,8 @@ public class PanelWinners extends javax.swing.JPanel {
    */
   private Image bg;
   private GameScreen gameScreen;
+  int mouseX=0;
+  int mouseY=0;
 
   public PanelWinners(GameScreen gameScreen) {
     initComponents();
@@ -95,7 +97,9 @@ public class PanelWinners extends javax.swing.JPanel {
     jsp.getViewport().setOpaque(false);
     pnlPlayerInfoContainer.add(jsp).setBounds(-82, -2, 800, 236);
   }
-
+  private void chatClicked() {
+        gameScreen.toggleChat();
+    }
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,6 +115,8 @@ public class PanelWinners extends javax.swing.JPanel {
         lblSR = new javax.swing.JLabel();
         pnlPlayerInfoContainer = new javax.swing.JPanel();
         btnMainMenu = new javax.swing.JLabel();
+        pnlTopBorder = new javax.swing.JPanel();
+        btnChat = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(900, 619));
         setMinimumSize(new java.awt.Dimension(900, 619));
@@ -134,35 +140,151 @@ public class PanelWinners extends javax.swing.JPanel {
         pnlPlayerInfoContainer.setLayout(pnlPlayerInfoContainerLayout);
         pnlPlayerInfoContainerLayout.setHorizontalGroup(
             pnlPlayerInfoContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
         pnlPlayerInfoContainerLayout.setVerticalGroup(
             pnlPlayerInfoContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 290, Short.MAX_VALUE)
         );
 
-        add(pnlPlayerInfoContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 240, 616, 290));
+        add(pnlPlayerInfoContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(134, 240, 650, 290));
 
         btnMainMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png"))); // NOI18N
         btnMainMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMainMenuMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMainMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMainMenuMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMainMenuMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnMainMenuMouseReleased(evt);
+            }
         });
-        add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 530, -1, -1));
+        add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 500, -1, -1));
+
+        pnlTopBorder.setOpaque(false);
+        pnlTopBorder.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnlTopBorderMouseDragged(evt);
+            }
+        });
+        pnlTopBorder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlTopBorderMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlTopBorderLayout = new javax.swing.GroupLayout(pnlTopBorder);
+        pnlTopBorder.setLayout(pnlTopBorderLayout);
+        pnlTopBorderLayout.setHorizontalGroup(
+            pnlTopBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 900, Short.MAX_VALUE)
+        );
+        pnlTopBorderLayout.setVerticalGroup(
+            pnlTopBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 38, Short.MAX_VALUE)
+        );
+
+        add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
+
+        btnChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_openchat_n.png"))); // NOI18N
+        btnChat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnChatMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnChatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnChatMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnChatMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnChatMouseReleased(evt);
+            }
+        });
+        add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 40, 108));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMainMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseClicked
         // TODO add your handling code here:
         gameScreen.changeScreen(DataForUI.STR_MAINMENU, DataForUI.STR_WINNER);
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+        
     }//GEN-LAST:event_btnMainMenuMouseClicked
 
+    private void btnMainMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseEntered
+        // TODO add your handling code here:
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMouseEntered
+
+    private void btnMainMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseExited
+        // TODO add your handling code here:
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMouseExited
+
+    private void btnMainMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMousePressed
+         btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMousePressed
+
+    private void btnMainMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMainMenuMouseReleased
+        btnMainMenu.setIcon(new ImageIcon(getClass().getResource("/images/btn_mainmenu_n.png")));
+    }//GEN-LAST:event_btnMainMenuMouseReleased
+
+    private void pnlTopBorderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
+        gameScreen.moveScreen(evt.getXOnScreen(), evt.getYOnScreen(), mouseX, mouseY);
+    }//GEN-LAST:event_pnlTopBorderMouseDragged
+
+    private void pnlTopBorderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMousePressed
+        mouseX = evt.getX();
+        mouseY = evt.getY();
+    }//GEN-LAST:event_pnlTopBorderMousePressed
+
+    private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
+        chatClicked();
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseClicked
+
+    private void btnChatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseEntered
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseEntered
+
+    private void btnChatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseExited
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_n.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseExited
+
+    private void btnChatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMousePressed
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_c.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMousePressed
+
+    private void btnChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseReleased
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnChat;
     private javax.swing.JLabel btnMainMenu;
     private javax.swing.JLabel lblFR;
     private javax.swing.JLabel lblLost;
     private javax.swing.JLabel lblSR;
     private javax.swing.JLabel lblWinner;
     private javax.swing.JPanel pnlPlayerInfoContainer;
+    private javax.swing.JPanel pnlTopBorder;
     // End of variables declaration//GEN-END:variables
+
+    
 }

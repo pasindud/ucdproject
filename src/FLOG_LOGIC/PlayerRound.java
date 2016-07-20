@@ -93,6 +93,7 @@ public class PlayerRound {
   }
 
   public void calculateScore() {
+      System.out.println("score before : ");
     calculateWordLetterScores();
     String[] allLetters = (String[]) ArrayUtils.addAll(intialLetters, otherLetters);
     penaltyPoints = new PenaltyElement();
@@ -138,5 +139,8 @@ public class PlayerRound {
     if (isWordSearchUsed) {
       score = PenaltyElement.getWordAutoSearchPenalty(score);
     }
+  
+      System.out.println("score letter value: "+totalLetterValues );
+      System.out.println("score penalty values :"+penaltyPoints.getPenaltyPoints() );
   }
 }

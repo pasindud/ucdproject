@@ -58,7 +58,13 @@ public class ControllerGamePlay {
   public void drawOpponenets() {
     int total = data.scoresMap.get(gameScreen.username);
     setPlayerInfo(gameScreen.username, 999, total, DataForUI.RoundNum);
-    panelGamePlay.drawOpponents(data.getPdArray());
+    try{
+        data.preparePlayerArrayForUI();
+        panelGamePlay.drawOpponents(data.getSortedPdArrayByScore());
+    }catch(Exception e)
+    {
+        panelGamePlay.drawOpponents(data.getPdArray());
+    }
   }
 
   private void submitClick(String ans) {
@@ -129,7 +135,7 @@ public class ControllerGamePlay {
         gameScreen.pushtoServerQueue(message);
       }
     }.start();
-    if (DataForUI.RoundNum < 5) {
+    if (DataForUI.RoundNum < 6) {
       DataForUI.RoundNum = DataForUI.RoundNum + 1;
     }
     gameScreen.changeScreen(DataForUI.STR_ROUNDREADYUP, DataForUI.STR_GAMEPLAY);

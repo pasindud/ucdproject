@@ -62,13 +62,17 @@ public class DataForUI {
   public static final String STR_WINNER = "WinnerList";
   public static final String STR_LOGIN = "Login";
   public static final String STR_REGISTER = "Register";
+  public static final String STR_CREDITS = "Credits";
+  public static final String STR_HELP = "Help";
 
   public static String firstLetter;
   public static String secondLetter;
   
   public static HashMap<String, Integer> scoresMap = new HashMap<String, Integer>();
-  public int myTotalScore;
+  public static int myTotalScore;
   public static int myRank;
+
+    
 
   public DataForUI() {
     //To be Used to call data only
@@ -103,6 +107,11 @@ public class DataForUI {
     getPlayerList();
     return PdArray;
   }
+  
+  public static PlayerData[] getSortedPdArrayByScore()
+  {
+      return sortedPdArrayByScore;
+  }
 
   public static String[] getLetters() {
     return letters;
@@ -117,6 +126,13 @@ public class DataForUI {
   //
   private static void parsePlayerList() {
     int count = 0;
+    PlayerData[] tempPdArray=null;
+    try{
+        tempPdArray = PdArray;
+    }catch(Exception e)
+    {
+        System.out.println("for first run initialize exeception escape "+e.getMessage());
+    }
     PdArray = new PlayerData[playerList.size()];
     for (Player p : playerList) {
       int total = p.getTotalScore();
@@ -124,8 +140,14 @@ public class DataForUI {
       scoresMap.put(name, total);
       String[] initialLetters = p.getPlayerRound(RoundNum).getIntialLetters();
       System.err.println("ParseLettesr - " + initialLetters[0] + " - " + initialLetters[1]);
-      PlayerData pd =
-          new PlayerData(p.getListIndex(), name, total, initialLetters[0], initialLetters[1]);
+      PlayerData pd = new PlayerData(p.getListIndex(), name, total, initialLetters[0], initialLetters[1]);
+      try{
+         pd.WordArry = tempPdArray[count].WordArry;
+         pd.letterArry=tempPdArray[count].letterArry;
+      }catch(Exception e){
+           System.out.println("Null Escape at parsePlayerList "+e.getMessage());
+      }
+      
       //change
       PdArray[count] = pd;
       count++;
@@ -136,40 +158,25 @@ public class DataForUI {
     {
         sortedPdArrayByScore = sortPlayerArrayByScore(PdArray);
         myRank = findPlayerRankByName(currentUsername);
+        myTotalScore = findPlayerScoreByName(currentUsername); 
     }
   
     public static PlayerData[] sortPlayerArrayByScore(PlayerData[] playerDataArray)
     {
                
-        //Bubble Sort
+        //Bubble Sort in descending order
         int length = playerDataArray.length;
         PlayerData tempPlayerData = null;
-        //String tempLetterArray[] = new String[6];
-        //String tempWordArray[] = new String[6];
-        
+                
         for(int i=0; i<length;i++)
         {
             for(int j=0;j<(length-i);j++)
             {
                 if ((j + 1) < length) {
                     if (playerDataArray[j + 1].getScore() > playerDataArray[j].getScore()) {
-                        /*tempPlayerData = playerDataArray[j-1];
-                    playerDataArray[j-1] = playerDataArray[j];
-                    playerDataArray[j]=tempPlayerData;
-                         */
-
                         tempPlayerData = playerDataArray[j + 1];
-                        //tempLetterArray = playerDataArray[j + 1].letterArry;
-                        //tempWordArray = playerDataArray[j+1].WordArry;
-                      
                         playerDataArray[j + 1] = playerDataArray[j];
-                        //playerDataArray[j + 1].letterArry =playerDataArray[j].letterArry;
-                        //playerDataArray[j+1].WordArry=playerDataArray[j].WordArry;
-                        
                         playerDataArray[j] = tempPlayerData;
-                        //playerDataArray[j].letterArry= tempLetterArray;
-                        //playerDataArray[j].WordArry=tempWordArray;
-
                     }
                 }
             }
@@ -188,7 +195,7 @@ public class DataForUI {
        boolean flag = false;
        int count =0;
        int rank=count;
-        System.out.println(""+sortedPdArrayByScore.length);
+        //System.out.println(""+sortedPdArrayByScore.length);
        while((!flag)&&(count<sortedPdArrayByScore.length))
        {
            if(sortedPdArrayByScore[count].name.equals(name))
@@ -203,6 +210,22 @@ public class DataForUI {
        return rank;
     }
     
-    
+    private static int findPlayerScoreByName(String name)
+    {
+       boolean flag = false;
+       int count =0;
+       int score =0;
+       while((!flag)&&(count<sortedPdArrayByScore.length))
+       {
+           if(sortedPdArrayByScore[count].name.equals(name))
+           {
+               flag =true;
+               score= sortedPdArrayByScore[count].getScore();
+               
+           }
+           count++;
+       }
+       return score;
+    }
     
 }

@@ -8,7 +8,7 @@ import java.util.Map;
  */
 class LetterValueElement {
   /** Points received for using a letter. */
-  ConstantElement letterMultiValue = new ConstantElement(100);
+  ConstantElement letterMultiValue = new ConstantElement(20);
   /** Map of letter values. */
   private Map<String, Integer> letterValues = new HashMap<String, Integer>();
   /** Array of vowels. */
@@ -72,7 +72,11 @@ class LetterValueElement {
   public int calculateWordValue(WordElement word) {
     int totalPoints = 0;
     // Letter value is multipled by 10.
+    if(word==null){
+        System.out.println("Word is null!!!!!!!!!!!!");
+    }
     for (int i = 0; i < word.getWordLength(); i++) {
+        System.out.println("word letter: " + word.getLetter(i));
       totalPoints += getLettersValue(word.getLetter(i)) * letterMultiValue.getValue();
     }
     return totalPoints;

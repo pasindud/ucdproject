@@ -52,7 +52,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
   public PanelGamePlay(GameScreen gameScreen) {
     initComponents();
-    bg = new ImageIcon(getClass().getResource("/images/bg_playscreen.png")).getImage();
+    bg = new ImageIcon(getClass().getResource("/images/bg_playscreen3.png")).getImage();
     pnlOppList = new JPanel();
     pnlOppRow = new JPanel();
     DataForUI = new DataForUI();
@@ -109,12 +109,14 @@ public class PanelGamePlay extends javax.swing.JPanel {
     pnlOpponents.removeAll();
     pnlOppList = new JPanel();
     pnlOppRow = new JPanel();
+    drawPlayerPosition(DataForUI.myRank);
+    drawPlayerScore(DataForUI.myTotalScore);
     revalidate();
     repaint();
   }
 
   public void drawOpponents(PlayerData[] pdArr) {
-
+    setChannel(DataForUI.currentChannel);
     updateOpponents();
     int count = 0;
     int div3 = (int) pdArr.length / 3;
@@ -152,7 +154,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
   }
 
   public void drawPlayerName(String name) {
-    lblPlayerName.setText(name);
+    lblPlayerName.setText("Player : "+name);
   }
 
   public void drawPlayerScore(int score) {
@@ -164,7 +166,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
   }
 
   public void drawRoundNumber(int num) {
-    lblRound.setText("ROUND " + String.valueOf(num));
+    lblRound.setText("Round : " + String.valueOf(num));
   }
 
   public void drawTweleveLetters(String[] letterArr) {
@@ -235,6 +237,10 @@ public class PanelGamePlay extends javax.swing.JPanel {
       gameScreen.toggleChat();
   }
 
+  public void setChannel(String channel)
+  {
+      channeltxt.setText("Server : "+channel);
+  }
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -302,6 +308,18 @@ public class PanelGamePlay extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnChatMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnChatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnChatMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnChatMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnChatMouseReleased(evt);
+            }
         });
         add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 40, 108));
 
@@ -337,20 +355,34 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
         pnlTop.add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 40));
 
-        lblPlayerName.setText("jLabel1");
-        pnlTop.add(lblPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+        lblPlayerName.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblPlayerName.setForeground(new java.awt.Color(255, 255, 255));
+        lblPlayerName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPlayerName.setText("Player : dcdushan");
+        pnlTop.add(lblPlayerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 42, 180, 30));
 
-        lblScore.setText("jLabel1");
-        pnlTop.add(lblScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, -1, -1));
+        lblScore.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblScore.setForeground(new java.awt.Color(255, 255, 255));
+        lblScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblScore.setText("Score : 0");
+        pnlTop.add(lblScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 42, 120, 30));
 
-        lblPos.setText("jLabel1");
-        pnlTop.add(lblPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
+        lblPos.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblPos.setForeground(new java.awt.Color(255, 255, 255));
+        lblPos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPos.setText("Rank : 1");
+        pnlTop.add(lblPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 42, 90, 30));
 
-        lblRound.setText("jLabel1");
-        pnlTop.add(lblRound, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 50, -1, -1));
+        lblRound.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblRound.setForeground(new java.awt.Color(255, 255, 255));
+        lblRound.setText("Round : 1");
+        pnlTop.add(lblRound, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 42, 90, 30));
 
-        channeltxt.setText("jLabel1");
-        pnlTop.add(channeltxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, -1));
+        channeltxt.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        channeltxt.setForeground(new java.awt.Color(204, 204, 204));
+        channeltxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        channeltxt.setText("Server : NoNameYet");
+        pnlTop.add(channeltxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 42, 190, 30));
 
         add(pnlTop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 72));
 
@@ -1103,10 +1135,31 @@ public class PanelGamePlay extends javax.swing.JPanel {
   }//GEN-LAST:event_lblL11MouseClicked
 
     private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
-        // TODO add your handling code here:
                 chatClicked();
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+                btnChat.setIcon(imgIcon);
 
     }//GEN-LAST:event_btnChatMouseClicked
+
+    private void btnChatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseEntered
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseEntered
+
+    private void btnChatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseExited
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_n.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseExited
+
+    private void btnChatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMousePressed
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_c.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMousePressed
+
+    private void btnChatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseReleased
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_openchat_h.png"));
+        btnChat.setIcon(imgIcon);
+    }//GEN-LAST:event_btnChatMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnChat;

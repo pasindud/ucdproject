@@ -41,7 +41,8 @@ public class Server {
   private boolean isServerStart = false;
   private Game game = null;
   WarpClient myGame;
-
+  private boolean isGameStart = false;
+  
   public Server(String channelName) {
     WarpClient.initialize(Utils.WRAP_API_KEY, Utils.WRAP_SECRET_KEY);
     this.channelName = channelName;
@@ -103,6 +104,7 @@ public class Server {
     strPlagerNames = strPlagerNames.replaceFirst("^,", "");
     String message = "201 startgame " + strPlagerNames;
     multiplayer.broadcast(channelName, playerNames, message);
+    
   }
 
   /**
@@ -125,6 +127,12 @@ public class Server {
       case CLIENT_JOIN_GAME_CODE:
         String playerName = content;
         content = content.trim();
+        if(game.getPlayerfromName(content) != null || isGameStart){
+            return;
+        }
+        else{
+            System.out.println("777 Player name "+content);
+        }
         String playerQueue = multiplayer.getClientQueue(channelName, content);
         // Message to acknowledge that the server received the message
         clientMessage.append(Utils.COMMAND_CODES.SERVER_USER_JOINED_ACK  + " ")
@@ -139,6 +147,7 @@ public class Server {
         break;
       case CLIENT_GAME_START_CODE:
         // Start game
+          isGameStart=true;
         startGame();
         break;
       case BROADCAST_JOIN_GAME_CODE: // Initial Letters for next round.
@@ -159,6 +168,15 @@ public class Server {
         }
         handleEndRound(segments);
         break;
+      case CLIENT_PENALIZE_WEKEST:
+          //Format 115 <Winner> <Weakest>
+          String weakestMsg = Utils.COMMAND_CODES.SERVER_PENALIZE_WEKEST + " " + segments[1] ;
+          if (segments.length == 3 ){
+              weakestMsg+= " " +segments[2];
+          }
+
+          multiplayer.broadcast(channelName, playerNames, weakestMsg);
+          break;
       default:
         System.err.println("Found nothing");
         break;
@@ -184,6 +202,8 @@ public class Server {
     if (currentRound == null) {
       System.err.println("Current round is null - i " + round + " name " + name);
     }
+      System.out.println("Word is : "+word);
+      
     currentRound.setWord(new WordElement(word));
     currentRound.setIsWordSearchUsed(isAutoGenUsed);
     currentRound.setOtherLetters(otherLetters);

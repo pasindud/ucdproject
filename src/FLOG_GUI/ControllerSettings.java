@@ -4,6 +4,7 @@ package FLOG_GUI;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.ImageIcon;
 import org.omg.CORBA.MARSHAL;
 
 /**
@@ -63,7 +64,7 @@ public class ControllerSettings {
   }
 
   private void setSavedSettings() {
-    panelSettings.setPlayerName(playerName);
+    panelSettings.setPlayerName(DataForUI.currentUsername);
     panelSettings.setSoundLevel(soundLevel);
   }
 
@@ -133,20 +134,34 @@ public class ControllerSettings {
               @Override
               public void mouseClicked(MouseEvent e) {
                 saveSettings(panelSettings.getplayerName());
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_back_h.png"));
+                panelSettings.setIcon_Back(imgIcon);
                 backClick();
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_back_c.png"));
+                panelSettings.setIcon_Back(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_back_h.png"));
+                panelSettings.setIcon_Back(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_back_h.png"));
+                panelSettings.setIcon_Back(imgIcon);
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_back_n.png"));
+                panelSettings.setIcon_Back(imgIcon);
+              }
             });
 
     panelSettings
@@ -156,20 +171,34 @@ public class ControllerSettings {
 
               @Override
               public void mouseClicked(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_soundon_h.png"));
+                panelSettings.setIcon_Sound(imgIcon);
                 soundToggleClick();
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_soundon_c.png"));
+                panelSettings.setIcon_Sound(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_soundon_h.png"));
+                panelSettings.setIcon_Sound(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_soundon_h.png"));
+                panelSettings.setIcon_Sound(imgIcon);
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_soundon_n.png"));
+                panelSettings.setIcon_Sound(imgIcon);
+              }
             });
 
     panelSettings
@@ -179,20 +208,35 @@ public class ControllerSettings {
 
               @Override
               public void mouseClicked(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_plus_h.png"));
+                panelSettings.setIcon_VolIncrease(imgIcon);
+                  
                 volIncreaseClick();
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_plus_c.png"));
+                panelSettings.setIcon_VolIncrease(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_plus_h.png"));
+                panelSettings.setIcon_VolIncrease(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_plus_h.png"));
+                panelSettings.setIcon_VolIncrease(imgIcon);
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_plus_n.png"));
+                panelSettings.setIcon_VolIncrease(imgIcon);
+              }
             });
 
     panelSettings
@@ -202,20 +246,34 @@ public class ControllerSettings {
 
               @Override
               public void mouseClicked(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_minus_h.png"));
+                panelSettings.setIcon_VolReduce(imgIcon);
                 volReduceClick();
               }
 
               @Override
-              public void mousePressed(MouseEvent e) {}
+              public void mousePressed(MouseEvent e) {
+              ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_minus_c.png"));
+                panelSettings.setIcon_VolReduce(imgIcon);
+              }
 
               @Override
-              public void mouseReleased(MouseEvent e) {}
+              public void mouseReleased(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_minus_h.png"));
+                panelSettings.setIcon_VolReduce(imgIcon);
+              }
 
               @Override
-              public void mouseEntered(MouseEvent e) {}
+              public void mouseEntered(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_minus_h.png"));
+                panelSettings.setIcon_VolReduce(imgIcon);
+              }
 
               @Override
-              public void mouseExited(MouseEvent e) {}
+              public void mouseExited(MouseEvent e) {
+                  ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_minus_n.png"));
+                panelSettings.setIcon_VolReduce(imgIcon);
+              }
             });
   }
 }
