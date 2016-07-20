@@ -15,11 +15,11 @@ import javax.swing.ImageIcon;
  */
 public class PanelHelp extends javax.swing.JPanel {
 
-    int mouseX =0;
-    int mouseY=0;
+    int mouseX = 0;
+    int mouseY = 0;
     Image bg;
     GameScreen gameScreen;
- 
+
     public PanelHelp(GameScreen gameScreen) {
         initComponents();
         this.gameScreen = gameScreen;

@@ -5,7 +5,6 @@
  */
 package FLOG_GUI;
 
-import FLOG_LOGIC.FLOG_LOGIC;
 import FLOG_LOGIC.Multiplayer;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -17,76 +16,62 @@ import javax.swing.ImageIcon;
  */
 public class ChatFrame extends javax.swing.JFrame {
 
-    Multiplayer multiplayer=new Multiplayer();
-    int mouseX=0;
-    int mouseY=0;
+    Multiplayer multiplayer = new Multiplayer();
+    int mouseX = 0;
+    int mouseY = 0;
     GameScreen gameScreen;
     private Image bg;
-    public ChatFrame(GameScreen gameScreen) 
-    {
+
+    public ChatFrame(GameScreen gameScreen) {
         initComponents();
         this.gameScreen = gameScreen;
         setWindow();
-        
-        
-        
+
     }
-    
-    public void setWindow()
-    {
+
+    public void setWindow() {
         this.setSize(new Dimension(272, 619));
         this.setResizable(false);
-        this.setLocation(gameScreen.getLocationOnScreen().x + gameScreen.getWidth() + 20
-                , gameScreen.getLocationOnScreen().y);
+        this.setLocation(gameScreen.getLocationOnScreen().x + gameScreen.getWidth() + 20, gameScreen.getLocationOnScreen().y);
         this.validate();
         this.setVisible(false);
     }
-    
-    public synchronized void updateMessages(String username, String msg)
-    {
-     
-        String newMsg = username +" :: "+msg;
+
+    public synchronized void updateMessages(String username, String msg) {
+
+        String newMsg = username + " :: " + msg;
         String oldMsgs = jTextPane1.getText();
-        jTextPane1.setText(oldMsgs +="\n" +newMsg);
+        jTextPane1.setText(oldMsgs += "\n" + newMsg);
     }
-    
-    public synchronized void playerJoinedUpdateMessages(String username)
-    {
+
+    public synchronized void playerJoinedUpdateMessages(String username) {
         String newMsg;
         String oldMsgs = jTextPane1.getText();
-        if(username.equals(DataForUI.currentUsername))
-        {
+        if (username.equals(DataForUI.currentUsername)) {
             newMsg = "SERVER :: You joined";
+        } else {
+            newMsg = "SERVER :: " + username + " joined";
         }
-        else
-        {
-            newMsg = "SERVER :: "+username+" joined";
-        }
-        
-        jTextPane1.setText(oldMsgs +="\n" +newMsg);
+
+        jTextPane1.setText(oldMsgs += "\n" + newMsg);
     }
-    
-    public void sendClick()
-    {
-        
-        String msg =txtMessage.getText();
+
+    public void sendClick() {
+
+        String msg = txtMessage.getText();
         //Broadcast the message here
-        if(!msg.equals(""))
-        {
-            updateMessages(DataForUI.currentUsername,msg);
-            msg = DataForUI.currentUsername+" :: "+msg;
-            msg="110 "+msg.trim().replaceAll(" ","_");
+        if (!msg.equals("")) {
+            updateMessages(DataForUI.currentUsername, msg);
+            msg = DataForUI.currentUsername + " :: " + msg;
+            msg = "110 " + msg.trim().replaceAll(" ", "_");
             //msg = 110 dilshanwn_::_Hi_every_one
             gameScreen.multiplayer.broadcast(DataForUI.currentChannel, gameScreen.otherPlayerNames, msg);
-            System.out.println("message :" +msg +" "+ gameScreen.otherPlayerNames.size());
+            System.out.println("message :" + msg + " " + gameScreen.otherPlayerNames.size());
             txtMessage.setText("");//Clear messagebox after sent
         }
-        
-        
+
     }
-    
-    
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,76 +183,74 @@ public class ChatFrame extends javax.swing.JFrame {
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
         btnExit.setIcon(imgIcon);
     }//GEN-LAST:event_btnExitMouseClicked
 
     private void btnSendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseClicked
         // TODO add your handling code here:
         sendClick();
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
         btnSend.setIcon(imgIcon);
-        
+
     }//GEN-LAST:event_btnSendMouseClicked
 
     private void pnlTopBorderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
         // TODO add your handling code here:
-        setLocation(evt.getXOnScreen()-mouseX,evt.getYOnScreen()-mouseY);
-        
+        setLocation(evt.getXOnScreen() - mouseX, evt.getYOnScreen() - mouseY);
+
     }//GEN-LAST:event_pnlTopBorderMouseDragged
 
     private void pnlTopBorderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMousePressed
         // TODO add your handling code here:
-        mouseX=evt.getX();
-        mouseY=evt.getY();
+        mouseX = evt.getX();
+        mouseY = evt.getY();
     }//GEN-LAST:event_pnlTopBorderMousePressed
 
     private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
         // TODO add your handling code here:
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
         btnExit.setIcon(imgIcon);
     }//GEN-LAST:event_btnExitMouseEntered
 
     private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_exit_n.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_n.png"));
         btnExit.setIcon(imgIcon);
     }//GEN-LAST:event_btnExitMouseExited
 
     private void btnExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMousePressed
-       ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
         btnExit.setIcon(imgIcon);
     }//GEN-LAST:event_btnExitMousePressed
 
     private void btnExitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseReleased
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_exit_h.png"));
         btnExit.setIcon(imgIcon);
     }//GEN-LAST:event_btnExitMouseReleased
 
     private void btnSendMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseEntered
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
         btnSend.setIcon(imgIcon);
     }//GEN-LAST:event_btnSendMouseEntered
 
     private void btnSendMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseExited
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_n.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_send_n.png"));
         btnSend.setIcon(imgIcon);
     }//GEN-LAST:event_btnSendMouseExited
 
     private void btnSendMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMousePressed
-        ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_c.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_send_c.png"));
         btnSend.setIcon(imgIcon);
     }//GEN-LAST:event_btnSendMousePressed
 
     private void btnSendMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendMouseReleased
-       ImageIcon imgIcon =new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_send_h.png"));
         btnSend.setIcon(imgIcon);
     }//GEN-LAST:event_btnSendMouseReleased
 
     /**
      * @param args the command line arguments
      */
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnExit;
