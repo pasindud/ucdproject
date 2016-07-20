@@ -450,6 +450,7 @@ public class GameScreen extends JFrame {
               player.setTotalScore((int) (player.getTotalScore()-player.getTotalScore() *0.05));
           }
           dataForUI.getPlayerList();
+          dataForUI.preparePlayerArrayForUI();//***
           controllerRoundReadyUp.drawPlayers();
           startRoundUpTimerSystem();
           break;

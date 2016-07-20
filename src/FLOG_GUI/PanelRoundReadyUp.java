@@ -25,6 +25,8 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
   private Image bg;
   DataForUI DataForUI;
   GameScreen gameScreen;
+  int mouseX =0;
+  int mouseY=0;
 
   public PanelRoundReadyUp(GameScreen gameScreen) {
     initComponents();
@@ -110,6 +112,7 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
         lblTitlePlayers = new javax.swing.JLabel();
         lblTitlePlayersInfo = new javax.swing.JLabel();
         btnChat = new javax.swing.JLabel();
+        pnlTopBorder = new javax.swing.JPanel();
 
         setMaximumSize(new java.awt.Dimension(900, 619));
         setMinimumSize(new java.awt.Dimension(900, 619));
@@ -129,7 +132,7 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
         pnlPlayerInfoContainer.setBackground(new java.awt.Color(204, 255, 255));
         pnlPlayerInfoContainer.setOpaque(false);
         pnlPlayerInfoContainer.setLayout(null);
-        add(pnlPlayerInfoContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 240, 616, 290));
+        add(pnlPlayerInfoContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(134, 240, 650, 290));
 
         lblTitlePlayers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lbl_players.png"))); // NOI18N
         lblTitlePlayers.setToolTipText("");
@@ -157,6 +160,19 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
             }
         });
         add(btnChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 250, 40, 108));
+
+        pnlTopBorder.setOpaque(false);
+        pnlTopBorder.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnlTopBorderMouseDragged(evt);
+            }
+        });
+        pnlTopBorder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlTopBorderMousePressed(evt);
+            }
+        });
+        add(pnlTopBorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 38));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChatMouseClicked
@@ -185,6 +201,15 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
         btnChat.setIcon(imgIcon);
     }//GEN-LAST:event_btnChatMouseReleased
 
+    private void pnlTopBorderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMousePressed
+         mouseX = evt.getX();
+         mouseY = evt.getY();
+    }//GEN-LAST:event_pnlTopBorderMousePressed
+
+    private void pnlTopBorderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTopBorderMouseDragged
+       gameScreen.moveScreen(evt.getXOnScreen(), evt.getYOnScreen(), mouseX, mouseY);
+    }//GEN-LAST:event_pnlTopBorderMouseDragged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnChat;
     private javax.swing.JLabel lblReadyUpTimer;
@@ -192,5 +217,6 @@ public class PanelRoundReadyUp extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitlePlayers;
     private javax.swing.JLabel lblTitlePlayersInfo;
     private javax.swing.JPanel pnlPlayerInfoContainer;
+    private javax.swing.JPanel pnlTopBorder;
     // End of variables declaration//GEN-END:variables
 }

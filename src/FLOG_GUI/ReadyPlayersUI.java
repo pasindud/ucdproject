@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.color.ColorSpace;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -69,12 +70,20 @@ public class ReadyPlayersUI extends JPanel {
   }
 
   private void otherRounds(int i) {
+      Color color;
+      if(DataForUI.sortedPdArrayByScore[i].getName().equals(DataForUI.currentUsername))
+        {
+            color = Color.YELLOW;
+        }
+        else{
+            color = Color.WHITE;
+        }
     JLabel lblName = new JLabel();
     lblName.setText(DataForUI.sortedPdArrayByScore[i].getName());
     lblName.setHorizontalAlignment(SwingConstants.CENTER);
     lblName.setHorizontalTextPosition(SwingConstants.CENTER);
     lblName.setBounds(74, 0, 126, 30);
-    lblName.setForeground(Color.WHITE);
+    lblName.setForeground(color);
     //lblName.setFont(player_Trebuchet);
     
     JLabel lblRank = new JLabel();
@@ -82,6 +91,7 @@ public class ReadyPlayersUI extends JPanel {
     lblRank.setHorizontalAlignment(SwingConstants.CENTER);
     lblRank.setHorizontalTextPosition(SwingConstants.CENTER);
     lblRank.setBounds(0, 0, 74, 30);
+    lblRank.setForeground(color);
     //lblRank.setFont(other_arialRounded);
 
     JLabel lblLetters = new JLabel();
@@ -89,6 +99,7 @@ public class ReadyPlayersUI extends JPanel {
     lblLetters.setHorizontalAlignment(SwingConstants.CENTER);
     lblLetters.setHorizontalTextPosition(SwingConstants.CENTER);
     lblLetters.setBounds(204, 0, 151, 30);
+    lblLetters.setForeground(color);
     //lblLetters.setFont(other_arialRounded);
     
     JLabel lblWord = new JLabel();
@@ -96,6 +107,7 @@ public class ReadyPlayersUI extends JPanel {
     lblWord.setHorizontalAlignment(SwingConstants.CENTER);
     lblWord.setHorizontalTextPosition(SwingConstants.CENTER);
     lblWord.setBounds(358, 0, 135, 30);
+    lblWord.setForeground(color);
     //lblWord.setFont(other_arialRounded);
 
     JLabel lblScore = new JLabel();
@@ -103,6 +115,7 @@ public class ReadyPlayersUI extends JPanel {
     lblScore.setHorizontalAlignment(SwingConstants.CENTER);
     lblScore.setHorizontalTextPosition(SwingConstants.CENTER);
     lblScore.setBounds(497, 0, 100, 30);
+    lblScore.setForeground(color);
     //lblScore.setFont(other_arialRounded);
 
     this.add(lblRank);

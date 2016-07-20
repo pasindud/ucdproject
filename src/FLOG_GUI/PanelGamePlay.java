@@ -52,7 +52,7 @@ public class PanelGamePlay extends javax.swing.JPanel {
 
   public PanelGamePlay(GameScreen gameScreen) {
     initComponents();
-    bg = new ImageIcon(getClass().getResource("/images/bg_playscreen.png")).getImage();
+    bg = new ImageIcon(getClass().getResource("/images/bg_playscreen3.png")).getImage();
     pnlOppList = new JPanel();
     pnlOppRow = new JPanel();
     DataForUI = new DataForUI();
