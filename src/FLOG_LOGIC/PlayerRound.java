@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FLOG_LOGIC;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -150,7 +145,6 @@ public class PlayerRound {
                 penaltyPoints.setNumberOfIntialLettersUsed(numberOfInitialLetters);
                 penaltyPoints.setNumberOfOtherLettersUsed(numberOfOtherLetters);
 
-                
                 penaltyPoints.calculatePenaltyPoints();
                 score = totalLetterValues - penaltyPoints.getPenaltyPoints();
                 score += Math.pow(word.getWordLength(), additionLenghtPoints.getValue());

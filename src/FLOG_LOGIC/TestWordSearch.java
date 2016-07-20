@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FLOG_LOGIC;
 
 import java.io.BufferedReader;
@@ -68,15 +63,15 @@ public class TestWordSearch {
     public static int c = 0;
 
     public static HashMap<String, String> found = new HashMap<String, String>();
-    
-    public static HashMap<String, Integer> lettersMap = 
-            new HashMap<String, Integer>();
-    
+
+    public static HashMap<String, Integer> lettersMap
+            = new HashMap<String, Integer>();
+
     public static void getAllInTheLevel(TreeMap<String, TreeMap> tree) {
         for (Map.Entry<String, TreeMap> entry : tree.entrySet()) {
-            HashMap<String, Integer> keyMapFreq = 
-                            new HashMap<String, Integer>();
-            
+            HashMap<String, Integer> keyMapFreq
+                    = new HashMap<String, Integer>();
+
             String key = entry.getKey();
             if (!key.matches(".*\\d+.*")) {
                 keyMapFreq.clear();
@@ -84,23 +79,23 @@ public class TestWordSearch {
                     found.put(key, key);
                 }
                 boolean correct = true;
-                
+
                 for (int i = 0; i < key.length(); i++) {
                     String c = String.valueOf(key.charAt(i));
                     if (lettersMap.containsKey(c)) {
                         if (keyMapFreq.containsKey(c)) {
                             Integer value = keyMapFreq.get(c);
-                            keyMapFreq.put(c,  value + 1);
+                            keyMapFreq.put(c, value + 1);
                         } else {
                             keyMapFreq.put(c, 1);
                         }
                     } else {
-                     correct = false;
-                     break;
+                        correct = false;
+                        break;
                     }
                 }
                 for (Map.Entry<String, Integer> entry2 : keyMapFreq.entrySet()) {
-                    if ( entry2.getValue() > lettersMap.get(entry2.getKey())) {
+                    if (entry2.getValue() > lettersMap.get(entry2.getKey())) {
                         correct = false;
                         break;
                     }
