@@ -15,7 +15,7 @@ import java.util.*;
  * which is be search according to the letters frequencies of the letters set.
  * @author Pasindu
  */
-public class TestWordSearch {
+public class WordSearch {
   public static final String WORD_FILE_NAME = "/Users/Pasindu/Desktop/sep/ucdproject/words.txt";
   public static TreeMap<Double, String> words = new TreeMap<Double, String>();
   public static Integer[] arr = new Integer[26];
@@ -85,6 +85,7 @@ public class TestWordSearch {
     return longestWord;
   }
 
+  /* Contains found words. */
   public static HashMap<String, String> found = new HashMap<String, String>();
 
   public static HashMap<String, Integer> lettersMap = new HashMap<String, Integer>();

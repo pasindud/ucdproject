@@ -71,15 +71,6 @@ public class PlayerRound {
     return intialLetters;
   }
 
-  public void getWordSearch() {
-    String[] allLetters = (String[]) ArrayUtils.addAll(intialLetters, otherLetters);
-    WordSearch wordSearch = new WordSearch(allLetters);
-
-    WordElement wordElement = new WordElement(wordSearch.search());
-    this.word = wordElement;
-    isWordSearchUsed = true;
-  }
-
   public void setIntialLetters(String[] intialLetters) {
     this.intialLetters = intialLetters;
   }
