@@ -506,7 +506,48 @@ public class GameScreen extends JFrame {
       }
       noOfRoundScores = 0;
 
+<<<<<<< HEAD
     } else {
+=======
+        System.err.println("1111111");
+        dataForUI.game.getPlayerRoundForRound(name, round).setScore(score);
+        dataForUI.game.getPlayerfromName(name).setTotalScore(totalScore);
+        controllerRoundReadyUp.drawPlayers();
+        // Controller up is waiting untils all the users scores are recived.
+        ++noOfRoundScores;
+        System.err.println("2222222");
+        String msg = Utils.COMMAND_CODES.CLIENT_PENALIZE_WEKEST + " " + username;
+        //  + 1 so that it counts that person it self.
+        if (noOfRoundScores == (otherPlayerNames.size() + 1)) {
+
+            ArrayList<Player> userMarks = game.processRoundScores(round);
+            if (userMarks.size() == 0) {
+                System.out.println("Error in user marks!!!!");
+                return;
+            } else if (userMarks.size() == 1) {
+                multiplayer.publishToQueue(serverQueueName, msg);
+                return;
+            }
+            String weakestPlayerName = userMarks.get(0).getName();
+            
+
+            if (userMarks.get(userMarks.size()-1).getName().equals(username)) {
+ 
+
+                int res
+                        = JOptionPane.showConfirmDialog(
+                                null, "Do you want to reduce 5% marks from the weakest player?", " Punishing Weakest Player", JOptionPane.YES_NO_OPTION);
+                if (res == JOptionPane.YES_OPTION) {
+                    msg += " " + weakestPlayerName;
+                }
+                multiplayer.publishToQueue(serverQueueName, msg);
+
+            }
+            noOfRoundScores = 0;
+
+        } else {
+
+>>>>>>> 5b0306fb1a2569381631bb90292f679d62ffc1a8
 
     }
   }
