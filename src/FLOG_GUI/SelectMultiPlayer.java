@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package FLOG_GUI;
 
 import FLOG_LOGIC.Multiplayer;
@@ -10,7 +5,6 @@ import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 
 /**
@@ -36,17 +30,11 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
     private boolean IS_USER_JOINED = false;
     public boolean IS_THE_SERVER = false;
     GameScreen gameScreen;
-  // Consumer producer client
-    //    Catcher clientCatcher = new Catcher();
-    //    Thrower clientThrower = new Thrower();
 
     Multiplayer multiplayer = new Multiplayer();
     Thread backgroundClientQueueCheck;
     private WarpClient myGame;
 
-    /**
-     * Creates new form SelectMultiPlayer
-     */
     public SelectMultiPlayer(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         initComponents();
@@ -81,34 +69,19 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         setServerStatus("Server will be started soon Server");
         Thread thread
                 = new Thread(channelName) {
-                    @Override
-                    public void run() {
-                        //                multiplayer.createServer(channelName);
-                        setServerStatus("Sever started");
-            //                FLOG_LOGIC.startServerApp(channelName);
-                        //
-                        try {
-                            Runtime.getRuntime().exec("java -cp  Frog.jar  FLOG_LOGIC.FLOG_LOGIC 1> temp.txt 2> temp2.txt" + channelName);
-//              File file =
-//                  new File(
-//                      FLOG_LOGIC.class
-//                          .getProtectionDomain()
-//                          .getCodeSource()
-//                          .getLocation()
-//                          .toURI()
-//                          .getPath());
-//              File f = new File(System.getProperty("java.class.path"));
-//              File dir = f.getAbsoluteFile().getParentFile();
-//              String path2 = dir.toString();
-//
-//              String path = file.getAbsolutePath();
-//              //            Runtime.getRuntime().exec("java -cp " + path + " FLOG_LOGIC.FLOG_LOGIC " + channelName);
-//              //            System.out.println("running commadn path -  " + path2 );
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
+            @Override
+            public void run() {
+
+                setServerStatus("Sever started");
+
+                try {
+                    Runtime.getRuntime().exec("java -cp  Frog.jar  FLOG_LOGIC.FLOG_LOGIC " + channelName);
+
+                } catch (Exception e) {
+
+                }
+            }
+        };
         thread.setDaemon(true);
         thread.start();
     }
@@ -378,9 +351,9 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
       ImageIcon imgIcon = new ImageIcon(getClass().getResource("/images/btn_startgamem_h.png"));
       btnStartGame.setIcon(imgIcon);
       /*btnStartGame.setEnabled(false);
-       channelName = txtChannelName.getText();
-       playerName = txtPlayerName.getText();
-       server.startGame();*/
+    channelName = txtChannelName.getText();
+    playerName = txtPlayerName.getText();
+    server.startGame();*/
       btnStartGame.setEnabled(false);
       channelName = cmbChannels.getEditor().getItem().toString();
       playerName = txtPlayerName.getText();
@@ -524,7 +497,7 @@ public class SelectMultiPlayer extends javax.swing.JPanel {
         btnExit.setIcon(imgIcon);
     }//GEN-LAST:event_btnExitMouseReleased
 
-  // Listen
+    // Listen
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnChat;

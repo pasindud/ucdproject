@@ -45,7 +45,7 @@ public class WordAutoGenerator {
      * Longest word
      */
     private String longestWord = "";
-
+    
   public WordAutoGenerator(String[] letters){
       this.letters = letters;
         calculateHashMap(getString(letters));
@@ -119,10 +119,10 @@ public class WordAutoGenerator {
                     this.longestWord = line;
                 }
                 }
-                if ((System.currentTimeMillis() - startTime)
-                        > MAX_TIME_FOR_WORD_SEARCH) {
-                    break;
-                }
+//                if ((System.currentTimeMillis() - startTime)
+//                        > MAX_TIME_FOR_WORD_SEARCH) {
+//                    break;
+//                }
             
             }
         } catch (Exception ex) {
