@@ -48,9 +48,13 @@ public class ControllerMainMenu {
     gameScreen.changeScreen(DataForUI.STR_SETTINGS, DataForUI.STR_MAINMENU);
   }
 
-  private void helpClick() {}
+  private void helpClick() {
+      gameScreen.changeScreen(DataForUI.STR_HELP, DataForUI.STR_MAINMENU);
+  }
 
-  private void aboutClick() {}
+  private void aboutClick() {
+    gameScreen.changeScreen(DataForUI.STR_CREDITS, DataForUI.STR_MAINMENU);
+  }
 
   //Exit Game
   private void exitClick() {

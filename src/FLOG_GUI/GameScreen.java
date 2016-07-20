@@ -53,6 +53,8 @@ public class GameScreen extends JFrame {
   private SelectMultiPlayer panelSelectMultiPlayer;
   private PanelLogin panelLogin;
   private PanelRegister panelRegister;
+  private PanelCredits panelCredits;
+  private PanelHelp panelHelp;
   public ChatFrame chatFrame;
 
   //Holds the CardLayout
@@ -110,6 +112,8 @@ public class GameScreen extends JFrame {
     panelSelectMultiPlayer = new SelectMultiPlayer(this);
     panelLogin = new PanelLogin();
     panelRegister = new PanelRegister();
+    panelCredits = new PanelCredits(this);
+    panelHelp = new PanelHelp(this);
     
     //Adding Panels to Card Layout
     container = new JPanel();
@@ -123,6 +127,8 @@ public class GameScreen extends JFrame {
     container.add(panelSelectMultiPlayer, dataForUI.SelectMultiplayer);
     container.add(panelLogin, dataForUI.STR_LOGIN);
     container.add(panelRegister, dataForUI.STR_REGISTER);
+    container.add(panelCredits,dataForUI.STR_CREDITS);
+    container.add(panelHelp,dataForUI.STR_HELP);
     this.getContentPane().add(container, BorderLayout.CENTER);
 
     //TestGUI_Inputs testing = new TestGUI_Inputs();
@@ -195,10 +201,20 @@ public class GameScreen extends JFrame {
 
         case DataForUI.STR_LOGIN:
           cl.show(container, screenName);
+          break;
 
         case DataForUI.STR_REGISTER:
           cl.show(container, screenName);
-
+          break;
+        
+        case DataForUI.STR_CREDITS:
+          cl.show(container, screenName);
+          break;
+        
+        case DataForUI.STR_HELP:
+          cl.show(container, screenName);
+          break;
+          
         default:
           cl.show(container, screenName);
           break;

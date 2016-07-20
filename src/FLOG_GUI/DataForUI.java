@@ -62,6 +62,8 @@ public class DataForUI {
   public static final String STR_WINNER = "WinnerList";
   public static final String STR_LOGIN = "Login";
   public static final String STR_REGISTER = "Register";
+  public static final String STR_CREDITS = "Credits";
+  public static final String STR_HELP = "Help";
 
   public static String firstLetter;
   public static String secondLetter;
